@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, inital-scale=1.0">
+        <title>JavaScript</title>
+        <style>
+            .buttonStyle{
+                background-color: rgb(160, 221, 216);
+            }
+            table{
+                border-collapse: collapse;
+                height: 80px;
+                margin: 0 auto;
+            }
+            th{
+                padding: 5px 30px;
+            }
+            table, th, td{
+                border: 1px solid #000;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h2 style="text-align: center;">Order Comfire</h2>
+        
+
+        <!-- <button class="buttonStyle"> Click 1 </button>
+        <button> Click 2 </button>
+        <button> Click 3 </button>
+        <button> Click 4 </button> -->
+        <script>
+            let price = +prompt('Please give the price: ')
+            let num = +prompt('Please give the menge: ')
+            let address = prompt('Please give the address')
+
+
+            let bts = document.querySelectorAll('button')
+            for(let i=0; i<bts.length; i++){
+                bts[i].addEventListener('click', function(){
+                    document.querySelector('.buttonStyle').className = ''
+                    this.className = 'buttonStyle'
+                })
+            }
+
+            document.write(`
+                <table>
+                    <tr>
+                        <th> Article </th>
+                        <th> Price </th>
+                        <th> Menge </th>
+                        <th> Total </th>
+                        <th> Address </th>
+                    </tr>
+                    <tr>
+                        <th> iPhone 15 Pro Max </th>
+                        <th> ${price} € </th>
+                        <th> ${num} </th>
+                        <th> ${price * num} € </th>
+                        <th> ${address} </th>
+                    </tr>
+                </table>
+            `)// webseit output
+            // alert('fick')  // popup
+            // let name = prompt('Whar is your name?')  // popup for input
+            // document.write('Your name: ' + name)
+            // console.log(name)
+        </script>
+        <!-- <scrip src="BasisJS.js"/> -->
+    </body>
+</html>

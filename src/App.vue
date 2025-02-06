@@ -1,6 +1,5 @@
 <script setup>
-import Greeting from './components/Greeting.vue'
-// import TheWelcome from './components/TheWelcome.vue'
+import CompanyTitel from './components/CompanyTitel.vue'
 </script>
 
 <script>
@@ -19,6 +18,8 @@ export default {
       console.log('提交的数据：', this.formData);
       alert(`提交成功！姓名：${this.formData.name}，邮箱：${this.formData.email}`);
       this.showTable = false; // 隐藏表格，重置状态
+      this.formData.name = ''; // 提交后清空输入框
+      this.formData.email = ''; // 提交后清空输入框
     }
   }
 };
@@ -29,7 +30,7 @@ export default {
     <img alt="Vue logo" class="logo" src="./assets/logo.png" width="125" height="125" />
 
     <div class="wrapper">
-      <Greeting msg="ScopeVisio AG" />
+      <CompanyTitel msg="ScopeVisio AG" />
     
       <svg v-if="!showTable" class="arrow-icon" @click="showTable=true"  viewBox="0 0 48 48" width="96" height="96">
         <path stroke="gold" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
@@ -39,16 +40,24 @@ export default {
 
   <main v-if="showTable">
     <form class="form">
-      <h2>请输入您的信息</h2>
+      <h2>New information</h2>
       <div class="form-group">
-        <label for="name">姓名：</label>
-        <input type="text" id="name" v-model="formData.name" placeholder="请输入您的姓名" />
+        <label for="firstname">First Name：</label>
+        <input type="text" id="name" v-model="formData.name" placeholder="Please input your first name" />
       </div>
       <div class="form-group">
-        <label for="email">邮箱：</label>
-        <input type="email" id="email" v-model="formData.email" placeholder="请输入您的邮箱" />
+        <label for="name">Family Name：</label>
+        <input type="text" id="name" v-model="formData.name" placeholder="Please input your family name" />
       </div>
-      <button type="button" @click="submitForm">提交</button>
+      <div class="form-group">
+        <label for="email">Email：</label>
+        <input type="email" id="email" v-model="formData.email" placeholder="Please input your email address" />
+      </div>
+      <div class="button-group">
+        <button type="button" @click="submitForm">submit</button>
+        <button type="button" @click="showTable=false">cancel</button>
+      </div>
+      
     </form>
   </main>
 </template>
@@ -56,21 +65,24 @@ export default {
 <style scoped>
 header {
   line-height: 1.5;
+  position: relative; /* 为绝对定位的箭头提供参考 */
+  padding-right: 200px; /* 为箭头放大留出空间 */
 }
 
 .wrapper {
   display: flex;
   align-items: center;
-  gap: 100px; /* Greeting 和箭头之间的间距 */
+  gap: 200px; /* Greeting 和箭头之间的间距 */
 }
 
 .arrow-icon {
   cursor: pointer;
   transition: transform 0.3s;
+  transform-origin: center; /* 以左侧为中心缩放 */
 }
 
 .arrow-icon:hover {
-  transform: scale(2);
+  transform: scale(1.5);
 }
 
 .form {
@@ -80,6 +92,10 @@ header {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   margin: 20px auto;
+  font-family: Arial, sans-serif;
+  background-color: #2c3e50; /* 深蓝色 */
+  color: #ffffff; /* 白色 */
+  border-bottom: 2px solid #e0e0e0; /* 浅灰色边框 */
 }
 
 .form-group {
@@ -100,17 +116,27 @@ input {
   box-sizing: border-box;
 }
 
+input.selected {
+  background-color: #e8f5e9; /* 浅绿色 */
+  color: #1b5e20; /* 深绿色文字 */
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between; /* 按钮左右对齐 */
+  gap: 10px; /* 按钮之间的间距 */
+}
+
 button {
-  padding: 10px 15px;
-  background: #ffa500;
-  color: white;
+  padding: 8px 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-  background: #1324e0;
+  background-color: #45a049; /* 深绿色 */
+  transform: scale(1.2);
 }
 </style>

@@ -12,8 +12,6 @@ defineProps({
     <h1 style="color: gold;">{{ msg }}</h1>
     <h3>
       Welcome to scopevisio insurance calculation service
-      <!-- <a href="https://vite.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>. -->
     </h3>
   </div>
 </template>
@@ -24,11 +22,13 @@ h1 {
   font-size: 2.6rem;
   position: relative;
   top: -10px;
+  white-space: nowrap; /* 禁止换行 */
 }
 
 h3 {
   font-size: 1.2rem;
   color: yellow;
+  white-space: nowrap; /* 禁止换行 */
 }
 
 .greetings h1,

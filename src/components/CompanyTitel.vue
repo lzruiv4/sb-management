@@ -9,23 +9,29 @@ defineProps({
 
 <template>
   <div class="greetings">
-    <h1 style="color: gold;">{{ msg }}</h1>
-    <h3>
+    <h1 class="company_name">{{ msg }}</h1>
+    <h3 class="welcome">
       Welcome to scopevisio insurance calculation service
     </h3>
   </div>
 </template>
 
 <style scoped>
-h1 {
+.company_name {
+  font-size: 48px;
   font-weight: 500;
-  font-size: 2.6rem;
   position: relative;
   top: -10px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #fff 0%, #ffa500 50%, #fff 100%);
+  background-size: 200% auto;
+  color: transparent;
   white-space: nowrap; /* 禁止换行 */
+  background-clip: text;
+  animation: glow-wave 2s linear infinite;
 }
 
-h3 {
+.welcome {
   font-size: 1.2rem;
   color: yellow;
   white-space: nowrap; /* 禁止换行 */
@@ -34,6 +40,15 @@ h3 {
 .greetings h1,
 .greetings h3 {
   text-align: center;
+}
+
+@keyframes glow-wave {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 @media (min-width: 1024px) {

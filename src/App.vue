@@ -26,7 +26,7 @@ export default {
 </script>
 
 <template>
-  <header>
+  <header class="header">
     <img alt="Vue logo" class="logo" src="./assets/logo.png" width="125" height="125" />
 
     <div class="wrapper">
@@ -62,8 +62,14 @@ export default {
   </main>
 </template>
 
-<style scoped>
-header {
+<style>
+
+body {
+  background-color: black !important;  /* 强制黑色背景 */
+  color: rgb(0, 0, 0) !important;            /* 强制白色文字 */
+}
+
+.header {
   line-height: 1.5;
   position: relative; /* 为绝对定位的箭头提供参考 */
   padding-right: 200px; /* 为箭头放大留出空间 */
@@ -76,12 +82,24 @@ header {
 }
 
 .arrow-icon {
+  /* position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateX(-50%);
   cursor: pointer;
-  transition: transform 0.3s;
-  transform-origin: center; /* 以左侧为中心缩放 */
+  transition: transform 0.3s ease; */
+  /* transform-origin: center;  */
+  /* 以左侧为中心缩放 */
+
+  /* position: absolute; */
+  right: 10px;
+  top: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 .arrow-icon:hover {
+  filter: drop-shadow(0 0 10px #ffa500); /* 发光效果 */
   transform: scale(1.5);
 }
 
@@ -93,9 +111,14 @@ header {
   max-width: 400px;
   margin: 20px auto;
   font-family: Arial, sans-serif;
-  background-color: #2c3e50; /* 深蓝色 */
-  color: #ffffff; /* 白色 */
+  background-color: #2F2F2F; /* 深蓝色 */
+  color: #FFD700; /* 白色 */
   border-bottom: 2px solid #e0e0e0; /* 浅灰色边框 */
+  /* position: fixed; /* 固定定位，避免影响 header 布局 */
+  left: 50%;
+  top: 50px;
+  z-index: 1000;
+  transform: translateX(-50%); 
 }
 
 .form-group {
@@ -137,6 +160,7 @@ button {
 
 button:hover {
   background-color: #45a049; /* 深绿色 */
+  filter: drop-shadow(0 0 10px #45a049);
   transform: scale(1.2);
 }
 </style>

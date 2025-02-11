@@ -15,8 +15,8 @@ export default {
   },
   methods: {
     submitForm() {
-      console.log('提交的数据：', this.formData);
-      alert(`提交成功！姓名：${this.formData.name}，邮箱：${this.formData.email}`);
+      console.log('Submitted Data：', this.formData);
+      alert(`Submit successfully！Name：${this.formData.name}，Email：${this.formData.email}`);
       this.showTable = false; // 隐藏表格，重置状态
       this.formData.name = ''; // 提交后清空输入框
       this.formData.email = ''; // 提交后清空输入框

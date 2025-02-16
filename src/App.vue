@@ -30,7 +30,7 @@ export default {
     <img alt="Vue logo" class="logo" src="./assets/logo.png" width="125" height="125" />
 
     <div class="wrapper">
-      <CompanyTitel msg="ScopeVisio AG" />
+      <CompanyTitel msg="Lin Group" />
     
       <svg v-if="!showTable" class="arrow-icon" @click="showTable=true"  viewBox="0 0 48 48" width="96" height="96">
         <path stroke="gold" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
@@ -40,7 +40,7 @@ export default {
 
   <main v-if="showTable">
     <form class="form">
-      <h2>New information</h2>
+      <h2>New User</h2>
       <div class="form-group">
         <label for="firstname">First Name：</label>
         <input type="text" id="name" v-model="formData.name" placeholder="Please input your first name" />

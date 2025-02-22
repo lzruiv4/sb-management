@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-  msg: {
+  companyName: {
     type: String,
     required: true,
   },
@@ -9,10 +9,14 @@ defineProps({
 
 <template>
   <div class="greetings">
-    <h1 class="company_name">{{ msg }}</h1>
-    <h3 class="welcome">
-      Welcome to user management service
-    </h3>
+    <div>
+      <h1 class="company_name">{{ companyName }}</h1>
+    </div>
+    <div>
+      <h3 class="welcome">
+        Welcome to user management service
+      </h3>
+    </div>
   </div>
 </template>
 
@@ -20,8 +24,7 @@ defineProps({
 .company_name {
   font-size: 48px;
   font-weight: 500;
-  position: relative;
-  top: -10px;
+  top: 10px;
   font-weight: bold;
   background: linear-gradient(90deg, #fff 0%, #ffa500 50%, #fff 100%);
   background-size: 200% auto;
@@ -37,10 +40,10 @@ defineProps({
   white-space: nowrap; /* 禁止换行 */
 }
 
-.greetings h1,
+/* .greetings h1,
 .greetings h3 {
   text-align: center;
-}
+} */
 
 @keyframes glow-wave {
   0% {
@@ -51,10 +54,10 @@ defineProps({
   }
 }
 
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
   .greetings h1,
   .greetings h3 {
     text-align: left;
   }
-}
+} */
 </style>

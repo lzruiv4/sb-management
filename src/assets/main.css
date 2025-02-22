@@ -15,6 +15,14 @@
   padding: 3px;
 } */
 
+/**
+全局css，只要是没指定都使用下面的样式
+*/
+*{
+  font-size: 30px;
+  color: rgb(226, 43, 43);
+}
+
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);

@@ -26,17 +26,17 @@ export default {
 </script>
 
 <template>
-  <header class="header">
-    <img alt="Vue logo" class="logo" src="./assets/logo.png" width="125" height="125" />
-
-    <div class="wrapper">
-      <CompanyTitel msg="Lin Group" />
-    
-      <svg v-if="!showTable" class="arrow-icon" @click="showTable=true"  viewBox="0 0 48 48" width="96" height="96">
-        <path stroke="gold" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
-      </svg>
-    </div>
-  </header>
+  <div id="homeContainer">
+      <div id="companyInfo">
+        <img alt="Vue logo" class="logo" src="./assets/logo.png" width="100" height="100" />
+        <CompanyTitel companyName="Lin Group" />
+      </div>
+      <div id="addUser">
+        <svg v-if="!showTable" class="arrow-icon" @click="showTable=true"  viewBox="0 0 48 48" width="96" height="96">
+          <path stroke="gold" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </div>
+  </div>
 
   <main v-if="showTable">
     <form class="form">
@@ -63,38 +63,20 @@ export default {
 </template>
 
 <style>
-
 body {
   background-color: black !important;  /* 强制黑色背景 */
   color: rgb(0, 0, 0) !important;            /* 强制白色文字 */
 }
-
-.header {
-  line-height: 1.5;
-  position: relative; /* 为绝对定位的箭头提供参考 */
-  padding-right: 200px; /* 为箭头放大留出空间 */
+#homeContainer{
+  display: flex;
 }
 
-.wrapper {
-  display: flex;
-  align-items: center;
-  gap: 200px; /* Greeting 和箭头之间的间距 */
+#companyInfo{
+  margin-right: 100px;
 }
 
 .arrow-icon {
-  /* position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateX(-50%);
-  cursor: pointer;
-  transition: transform 0.3s ease; */
-  /* transform-origin: center;  */
-  /* 以左侧为中心缩放 */
-
-  /* position: absolute; */
-  right: 10px;
-  top: 50%;
-  cursor: pointer;
+  align-items: center;
   transition: transform 0.3s ease;
 }
 

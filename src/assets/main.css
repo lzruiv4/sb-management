@@ -18,10 +18,10 @@
 /**
 全局css，只要是没指定都使用下面的样式
 */
-*{
-  font-size: 30px;
-  color: rgb(226, 43, 43);
-}
+/* *{ */
+  /* font-size: 30px;
+  color: rgb(226, 43, 43); */
+/* } */
 
 @media (hover: hover) {
   a:hover {

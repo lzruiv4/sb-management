@@ -31,7 +31,8 @@ const closeTable = defineEmits(["close"]);
   <div class="form-group">
     <form v-if="visible">
       <h2 style="padding: 10px; font-weight: bold">New User</h2>
-      <div class="userInfo">
+      <div class="name">
+        <div class="userInfo">
         <label for="firstname">First Name：</label>
         <input
           type="text"
@@ -47,6 +48,8 @@ const closeTable = defineEmits(["close"]);
           placeholder="Please input your family name"
         />
       </div>
+      </div>
+      
       <div class="userInfo">
         <label for="email">Email：</label>
         <input
@@ -65,6 +68,8 @@ const closeTable = defineEmits(["close"]);
 
 <style>
 .form-group {
+  width: 400px;
+  
   padding: 20px;
   border-radius: 8px;
   box-shadow: 4px 4px 4px #fff200;
@@ -73,15 +78,20 @@ const closeTable = defineEmits(["close"]);
   background-color: #2f2f2f; /* 深蓝色 */
   color: #ffd700; /* 白色 */
   /* border-bottom: 2px solid #e0e0e0; 浅灰色边框 */
-  /* position: fixed; /* 固定定位，避免影响 header 布局 */
+  position: absolute; /* 固定定位，避免影响 header 布局 */
   /* left: 50%; */
-  /* top: 50px; */
-  float: left;
+  top: 30%;
+  right: 10%;
+  /* float: left; */
   /* z-index: 1000; */
 }
 
 .userInfo {
   padding: 10px;
+}
+
+.name{
+  display: flex;
 }
 
 label {
@@ -111,6 +121,7 @@ input.selected {
 }
 
 button {
+  width: 100px;
   padding: 8px 16px;
   /* border: none; */
   border-radius: 4px;

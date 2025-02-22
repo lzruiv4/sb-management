@@ -13,9 +13,9 @@ defineProps({
       <h1 class="company_name">{{ companyName }}</h1>
     </div>
     <div>
-      <h3 class="welcome">
+      <p class="welcome">
         Welcome to user management service
-      </h3>
+      </p>
     </div>
   </div>
 </template>
@@ -40,11 +40,6 @@ defineProps({
   white-space: nowrap; /* 禁止换行 */
 }
 
-/* .greetings h1,
-.greetings h3 {
-  text-align: center;
-} */
-
 @keyframes glow-wave {
   0% {
     background-position: 200% 0;
@@ -54,10 +49,4 @@ defineProps({
   }
 }
 
-/* @media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
-} */
 </style>

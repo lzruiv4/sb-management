@@ -28,7 +28,7 @@ export default {
 <template>
   <div id="homeContainer">
       <div id="companyInfo">
-        <img alt="Vue logo" class="logo" src="./assets/logo.png" width="100" height="100" />
+        <img alt="Vue logo" class="logo" src="./assets/icons/logo.png" width="100" height="100" />
         <CompanyTitel companyName="Lin Group" />
       </div>
       <div id="addUser">

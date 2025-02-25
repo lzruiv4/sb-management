@@ -16,14 +16,11 @@ defineProps({
 
 <style scoped>
 .companyInfo{
-  /* margin: 10px; */
-  margin-bottom: 10px;
+  margin: 5px;
 }
 
 h1 {
   font-size: 48px;
-  font-weight: 500;
-  /* top: 10px; */
   font-weight: bold;
   background: linear-gradient(90deg, #fff 0%, #ffa500 50%, #fff 100%);
   background-size: 200% auto;

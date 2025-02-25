@@ -18,7 +18,6 @@ export default {
       this.firstname = "";
       this.lastname = "";
       this.email = "";
-      //   this.$emit("changeFormStatus", !this.visible);
       this.isVisible = !this.isVisible;
     },
     closeTable() {
@@ -68,7 +67,7 @@ export default {
 
 <style scoped>
 .form-group {
-  width: 500px;
+  width: 400px;
   align-items: center;
   padding: 20px;
   border-radius: 8px;
@@ -106,7 +105,7 @@ input.selected {
 }
 
 .button-group {
-  margin: 20px;
+  margin: 10px;
   display: flex;
   justify-content: space-between; /* 按钮左右对齐 */
   gap: 10px; /* 按钮之间的间距 */

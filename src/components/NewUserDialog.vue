@@ -6,7 +6,6 @@ export default {
       firstname: "",
       lastname: "",
       email: "",
-      isVisible: true,
     };
   },
   methods: {
@@ -21,14 +20,14 @@ export default {
       this.isVisible = !this.isVisible;
     },
     closeTable() {
-        this.isVisible = !this.isVisible;
+      //   this.$emit("changeFormStatus", false);
     },
   },
 };
 </script>
 
 <template>
-  <form v-if="isVisible" class="form-group">
+  <form class="form-group">
     <h2 style="padding: 10px; font-weight: bold">New User</h2>
 
     <div class="userInfo">
@@ -59,8 +58,8 @@ export default {
     </div>
 
     <div class="button-group">
-      <button type="button" @click="submitForm">Submit</button>
-      <button type="button" @click="closeTable">Cancel</button>
+      <button type="button" @click="submitForm">submit</button>
+      <button type="button" @click="closeTable">cancel</button>
     </div>
   </form>
 </template>

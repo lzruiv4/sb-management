@@ -31,7 +31,7 @@ h1 {
 }
 
 p {
-  font-size: 1.2rem;
+  font-size: 0.5rem;
   color: yellow;
   white-space: nowrap; /* 禁止换行 */
 }

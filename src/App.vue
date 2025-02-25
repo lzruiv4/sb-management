@@ -2,7 +2,7 @@
 import CompanyTitel from "./components/CompanyTitel.vue";
 import AddUserButton from "./components/AddUserButton.vue";
 import CompanyLogo from "./components/CompanyLogo.vue";
-// import Test from "./components/study/VTest.vue";
+import Test from "./components/study/VTest.vue";
 
 // 定义 showTable，初始值为 false
 // const showTable = ref(false);
@@ -37,9 +37,9 @@ import CompanyLogo from "./components/CompanyLogo.vue";
     <CompanyTitel companyName="Lin Group" />
     <AddUserButton/>
   </div>
-  <!-- <div>
+  <div style="width: 90%;">
     <Test/>
-  </div> -->
+  </div>
 </template>
 
 <style>
@@ -58,5 +58,6 @@ body {
 
 #div{
   margin: 10px;
+  bottom: 20px;
 }
 </style>

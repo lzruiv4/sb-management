@@ -1,41 +1,4 @@
-<template>
-  <div>
-    <p>V-if</p>
-    <div v-if="flag" class="inhalte">Flag ist true</div>
-    <div v-else class="inhalte">Flag ist false</div>
-  </div>
-
-  <div>
-    <p>v-for</p>
-    <ul>
-      <li
-        @click="callNewHandler(item.title)" 
-        v-for="item in newList"
-        :key="item.id"
-        class="inhalte"
-      >
-        {{ item.title }}
-      </li>
-    </ul>
-  </div>
-
-  <div>
-    <p>v-on:click</p>
-    <button v-on:click="count += 1">Click {{ count }}</button>
-    <button @click="clickHandle">Click {{ times }}</button>
-  </div>
-
-  <div>
-    <p>v-model</p>
-    <input v-model.trim="username">
-    <p >Your username : {{ username }}</p>
-    <input v-model.lazy="username1">
-    <p >Your username lazy : {{ username1 }}</p>
-  </div>
-
-</template>
-
-<script scoped>
+<script>
 export default {
   controller() {
     return {
@@ -47,8 +10,8 @@ export default {
     return {
       count: 1,
       times: 0,
-      username : "",
-      username1 : "",
+      username: "",
+      username1: "",
       newList: [
         {
           id: 1001,
@@ -72,22 +35,70 @@ export default {
     },
     clickHandle() {
       this.times += 1;
-    }
+    },
   },
 };
 </script>
 
-<style>
+<template>
+  <div class="windows">
+    <div class="div_box">
+      <p>V-if</p>
+      <div v-if="flag" class="inhalte">Flag ist true</div>
+      <div v-else class="inhalte">Flag ist false</div>
+    </div>
+
+    <div class="div_box">
+      <p>v-for</p>
+      <ul>
+        <li
+          @click="callNewHandler(item.title)"
+          v-for="item in newList"
+          :key="item.id"
+          class="inhalte"
+        >
+          {{ item.title }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="div_box">
+      <p>v-on:click</p>
+      <button v-on:click="count += 1">Click {{ count }}</button>
+      <button @click="clickHandle">Click {{ times }}</button>
+    </div>
+
+    <div class="div_box">
+      <p>v-model</p>
+      <input v-model.trim="username" />
+      <p>Your username : {{ username }}</p>
+      <input v-model.lazy="username1" />
+      <p>Your username lazy : {{ username1 }}</p>
+    </div>
+  </div>
+</template>
+
+<style scoped>
 p {
   top: 20px;
   bottom: 30px;
   color: aqua;
-  font-size: 50px;
+  font-size: 30px;
   font-weight: bolder;
 }
 
+.windows {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.div_box {
+  width: 30%;
+}
+
 .inhalte {
-  font-size: 25px;
+  font-size: 30px;
   color: antiquewhite;
 }
 </style>

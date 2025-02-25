@@ -1,9 +1,10 @@
 @import './base.css';
 
 #app {
-  max-width: 1280px;
+  /* max-width: 1280px;  */
   margin: 0 auto;
   padding: 2rem;
+  /* display:grid; */
   font-weight: normal;
 }
 
@@ -18,10 +19,10 @@
 /**
 全局css，只要是没指定都使用下面的样式
 */
-/* *{ */
-  /* font-size: 30px;
-  color: rgb(226, 43, 43); */
-/* } */
+*{
+  font-size: 30px;
+  color: rgb(226, 43, 43);
+}
 
 @media (hover: hover) {
   a:hover {
@@ -36,7 +37,7 @@
   }
 
   #app {
-    display: grid;
+    /* display: grid; */
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }

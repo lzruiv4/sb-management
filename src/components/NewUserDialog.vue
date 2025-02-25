@@ -18,7 +18,7 @@ export default {
       this.firstname = "";
       this.lastname = "";
       this.email = "";
-      this.isVisible = !this.isVisible;
+      this.closeTable();
     },
     closeTable() {
       this.isVisible = !this.isVisible;

@@ -2,43 +2,23 @@
 import CompanyTitel from "./components/CompanyTitel.vue";
 import AddUserButton from "./components/AddUserButton.vue";
 import CompanyLogo from "./components/CompanyLogo.vue";
-import Test from "./components/study/VTest.vue";
-
-// 定义 showTable，初始值为 false
-// const showTable = ref(false);
-
-// 切换 showTable 的方法
-// const toggleTable = () => {
-//   showTable.value = !showTable.value;
-// };
-
-// function changeFormStatus(status) {
-//   showTable.value = false;
-// }
-
-// const users = ref([]);
-
-// const fetchUsers = async () => {
-//   try{
-//     const response = await fetch("http://localhost:8080/clients/all")
-//     if(!response.ok) throw new Error("404");
-//     users.value = await response.json();
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-// console.log(users.value)
-// onMounted(fetchUsers);
+// import Test from "./components/study/VTest.vue";
+import UserInfo from "./components/UserInfo.vue";
 </script>
 
 <template>
-  <div id="headerContainer">
-    <CompanyLogo/>
-    <CompanyTitel companyName="Lin Group" />
-    <AddUserButton/>
-  </div>
-  <div style="width: 90%;">
-    <Test/>
+  <div>
+    <div id="headerContainer">
+      <CompanyLogo />
+      <CompanyTitel companyName="Lin Group" />
+      <AddUserButton />
+    </div>
+    <!-- <div>
+      <Test />
+    </div> -->
+    <div id="tableId">
+      <UserInfo />
+    </div>
   </div>
 </template>
 
@@ -51,13 +31,19 @@ body {
 #headerContainer {
   display: flex;
   height: 100px;
-  position: fixed;
-  top: 5px;
-  left: 50px;
+  /* position: fixed; */
+  margin-top: 5px;
+  margin-left: 50px;
+  margin-bottom: 40px;
 }
 
-#div{
-  margin: 10px;
-  bottom: 20px;
+#div {
+  margin-top: auto;
+  margin-left: 10%;
+}
+
+#tableId {
+  padding-top: 30px;
+  margin-left: 20px;
 }
 </style>

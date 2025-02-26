@@ -1,42 +1,91 @@
 <script setup>
-const getUsers = function (url) {
-  const promise = new Promise(function (resolve, reject) {
-    const handler = function () {
-      if (this.readyState !== 4) {
-        return;
-      }
-      if (this.status === 200) {
-        resolve(this.response);
-      } else {
-        reject(new Error("404"));
-      }
-    };
-    // const users = new Image();
-    const client = new XMLHttpRequest();
-    client.open("GET", url);
-    client.onreadystatechange = handler;
-    client.responseType = "json";
-    client.setRequestHeader("Accept", "application/json");
-    client.send();
-  });
-  return promise;
-};
+import { ref, onMounted } from "vue";
+import Car from "./CarLogo.vue";
 
-getUsers(
-    // "https://cdn.pixabay.com/photo/2023/12/22/16/29/sheet-music-8463988_1280.jpg"
-  "http://localhost:8080/clients/all"
-).then(
-  function (data) {
-    console.log(data);
-  },
-  function (error) {
-    console.log(error);
-  }
-);
+const users = ref([]);
+const headers = ref([]);
+
+const url = "http://localhost:8080/clients/all";
+
+function getUsers() {
+  return new Promise((resolve, reject) => {
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("No response!");
+        }
+        return response.json();
+      })
+      .then((data) => resolve(data))
+      .catch((error) => reject(error));
+  });
+}
+
+onMounted(() => {
+  getUsers()
+    .then((data) => {
+      users.value = data;
+      headers.value = users.value.length > 0 ? Object.keys(users.value[0]) : [];
+      console.log(headers.value);
+    })
+    .catch((error) => {
+      console.error("Fetch error.", error);
+    });
+});
 </script>
 
 <template>
-  <div id="users" style="color: aliceblue">waiting</div>
+  <div class="table-container">
+    <h2 style="color: aliceblue">User Info</h2>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th v-for="key in headers" :key="key">{{ key }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in users" :key="item.clientId">
+          <td v-for="(value, key) in item" :key="key">
+            <span v-if="key === 'cars'">
+              <Car />
+            </span>
+            <span v-else>{{ value }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.table-container {
+  width: 60%;
+  margin: 20px auto;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+.styled-table th {
+  background-color: #4caf50;
+  color: white;
+}
+
+.styled-table tr:nth-child(even) {
+  background-color: #000000;
+}
+
+.styled-table tr:hover {
+  background-color: #ddd;
+}
+</style>

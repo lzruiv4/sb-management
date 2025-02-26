@@ -16,7 +16,7 @@ defineProps({
 
 <style scoped>
 .companyInfo{
-  margin: 5px;
+  padding: 5px;
 }
 
 h1 {
@@ -31,7 +31,7 @@ h1 {
 }
 
 p {
-  font-size: 0.5rem;
+  font-size: 1rem;
   color: yellow;
   white-space: nowrap; /* 禁止换行 */
 }

@@ -87,6 +87,11 @@ p {
   font-weight: bolder;
 }
 
+input {
+  width: 200px;
+  height: 30px;
+}
+
 .windows {
   display: flex;
   flex-wrap: wrap;
@@ -95,6 +100,9 @@ p {
 
 .div_box {
   width: 30%;
+  background-color: rgb(97, 97, 97);
+  margin: 20px;
+  padding-left: 20px;
 }
 
 .inhalte {

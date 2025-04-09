@@ -1,49 +1,77 @@
-<script setup>
-import CompanyTitel from "./components/CompanyTitel.vue";
-import AddUserButton from "./components/AddUserButton.vue";
-import CompanyLogo from "./components/CompanyLogo.vue";
-// import Test from "./components/study/VTest.vue";
-import UserInfo from "./components/UserInfo.vue";
-</script>
-
 <template>
-  <div>
-    <div id="headerContainer">
-      <CompanyLogo />
-      <CompanyTitel companyName="Lin Group" />
-      <AddUserButton />
-    </div>
-    <!-- <div>
-      <Test />
-    </div> -->
-    <div id="tableId">
-      <UserInfo />
-    </div>
+  <div class="app">
+    <h2 style="color: #f0f2e6">VUE STUDY</h2>
   </div>
+  <!-- Navi place -->
+  <div class="navigate">
+    <!--- 三种to网页的写法 -->
+    <!-- <RouterLink to="/home" active-class="showActive">Home</RouterLink> -->
+    <RouterLink :to="{ name: 'home' }" active-class="showActive"
+      >Home</RouterLink
+    >
+    <RouterLink :to="{ name: 'pokemons' }" active-class="showActive"
+      >Pokédex</RouterLink
+    >
+    <RouterLink :to="{ name: 'about' }" active-class="showActive"
+      >About</RouterLink
+    >
+  </div>
+  <!--Content-->
+  <div class="main-content"><RouterView></RouterView></div>
 </template>
+
+<script lang="ts" setup name="App">
+import { RouterView, RouterLink } from "vue-router";
+</script>
 
 <style>
 body {
-  background-color: black !important; /* 强制黑色背景 */
-  color: rgb(255, 255, 255) !important; /* 强制白色文字 */
+  font-family: "Microsoft YaHei", sans-serif;
+  text-align: center;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
 }
 
-#headerContainer {
-  display: flex;
-  height: 100px;
-  /* position: fixed; */
-  margin-top: 5px;
-  margin-left: 50px;
-  margin-bottom: 40px;
+.app {
+  background: linear-gradient(to right, #fe73a2, #eee);
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 0 5px #999;
+  margin-bottom: 20px;
 }
 
-#div {
-  margin-top: auto;
-  margin-left: 10%;
+/* 按钮区域 */
+.navigate {
+  margin-bottom: 20px;
 }
 
-#tableId {
-  padding-top: 30px;
-  margin-left: 20px;
+.navigate a {
+  background-color: #ed0000;
+  color: #f0f2e6;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.navigate a.showActive {
+  background-color: #000;
+}
+
+/* 内容展示区域 */
+.main-content {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #333;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.6;
 }
 </style>

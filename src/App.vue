@@ -16,12 +16,18 @@
       >About</RouterLink
     >
   </div>
+  <div>
+    <Father />
+  </div>
+  <!--LoveTalk /> -->
   <!--Content-->
   <div class="main-content"><RouterView></RouterView></div>
 </template>
 
 <script lang="ts" setup name="App">
 import { RouterView, RouterLink } from "vue-router";
+import Father from "./components/study/commication/01FatherToSon/Father.vue";
+// import LoveTalk from "./components/LoveTalk.vue";
 </script>
 
 <style>

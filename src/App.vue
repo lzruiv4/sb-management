@@ -16,9 +16,9 @@
       >About</RouterLink
     >
   </div>
-  <div>
+  <!-- <div>
     <Father />
-  </div>
+  </div> -->
   <!--LoveTalk /> -->
   <!--Content-->
   <div class="main-content"><RouterView></RouterView></div>

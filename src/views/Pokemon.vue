@@ -38,16 +38,18 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import { RouterLink, RouterView } from "vue-router";
 import { PokemonAPI } from "@/model/PokemonAPI";
+import { IPokemonAPIList } from "@/model/IPokemonAPIList";
+import { IPokemon } from "@/model/IPokemon";
 
-const pokemons = ref([]);
+const pokemons = ref<IPokemon[]>([]);
 
 onMounted(async () => {
   try {
     const res = await axios.get(PokemonAPI);
-    const results = res.data.results;
+    const results: IPokemonAPIList[] = res.data.results;
 
-    const detailed = await Promise.all(
-      results.map(async (pokemon) => {
+    const detailed: IPokemon[] = await Promise.all(
+      results.map(async (pokemon): Promise<IPokemon> => {
         const detailRes = await axios.get(pokemon.url);
         return {
           id: detailRes.data.id,

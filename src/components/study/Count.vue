@@ -1,6 +1,6 @@
 <template>
   <div class="count">
-    <h2>Akktuelle : {{ countStore.$state.sum }}</h2>
+    <h2>Aktuelle : {{ countStore.$state.sum }}</h2>
     <select v-model.number="n">
       <option value="1">1</option>
       <option value="2">2</option>

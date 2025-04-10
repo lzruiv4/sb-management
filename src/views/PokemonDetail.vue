@@ -17,6 +17,6 @@ const imagePath = computed(() => {
 .imgSize {
   justify-items: center;
   align-items: center;
-  width: 80%;
+  width: 70%;
 }
 </style>

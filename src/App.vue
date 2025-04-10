@@ -45,29 +45,32 @@ body {
   display: flex;
   background: linear-gradient(to right, #fe73a2, #eee);
   padding: 10px;
-  font-size: 24px;
+  font-size: 60px;
   font-weight: bold;
   box-shadow: 0 0 5px #999;
   margin-bottom: 20px;
+  gap: 60px;
+  /* height: 50px; */
 }
 
 .app_title {
-  flex: 1;
-  color: #f0f2e6;
+  flex: 2;
+  color: #3d3d3d;
+  height: 50px;
+  /* font-size: 100px; */
 }
 
 /* 按钮区域 */
 .navigate {
-  flex: 6;
+  flex: 3;
   display: flex;
   align-items: center;
   justify-items: center;
 }
 
 .navigate a {
-  background-color: #ed0000;
-  color: #f0f2e6;
-  /* border: none; */
+  background-color: #92c6d9;
+  color: #feece8;
   padding: 10px 20px;
   margin: 0 10px;
   font-size: 30px;

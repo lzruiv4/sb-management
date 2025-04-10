@@ -3,7 +3,12 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { useRoute } from "vue-router";
+
 const route = useRoute();
-const imagePath = route.query.imagePath as string;
+const imagePath = computed(() => {
+  const path = route.query.imagePath;
+  return typeof path === "string" ? path : "";
+});
 </script>

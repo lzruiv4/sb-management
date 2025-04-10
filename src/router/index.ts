@@ -23,7 +23,7 @@ export default createRouter({
           name: "detail1",
           path: "detail",
           component: PokemonDetail,
-          // query: true,
+          props: true,
         },
       ],
     },

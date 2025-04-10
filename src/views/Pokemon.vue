@@ -54,12 +54,9 @@ onMounted(async () => {
         return {
           id: detailRes.data.id,
           name: pokemon.name,
-          image:
-            detailRes.data.sprites.front_default ||
-            "https://via.placeholder.com/80?text=?",
+          image: detailRes.data.sprites.front_default || "",
           biggerImage:
-            detailRes.data.sprites.other.dream_world.front_default ||
-            "https://via.placeholder.com/80?text=?",
+            detailRes.data.sprites.other.dream_world.front_default || "",
         };
       })
     );
@@ -68,6 +65,8 @@ onMounted(async () => {
     console.error("Get Pokémon fail：", error);
   }
 });
+
+console.log(pokemons);
 </script>
 
 <style scoped>

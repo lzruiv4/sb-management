@@ -4,8 +4,8 @@
 npm run build
 ```
 
-### Lints and fixes files
+### Run the project
 
 ```
-npm run lint
+npm run dev
 ```

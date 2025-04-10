@@ -1,5 +1,5 @@
 <template>
-  <img :src="imagePath" style="width: 90%" />
+  <img :src="imagePath" style="height: 90%; align-items: center" />
 </template>
 
 <script setup lang="ts">

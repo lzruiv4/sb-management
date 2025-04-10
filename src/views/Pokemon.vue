@@ -3,7 +3,7 @@
     <div class="pokemon-list">
       <ul>
         <li
-          v-for="pokemon in pokemons"
+          v-for="pokemon in pokemonPaginated"
           :key="pokemon.id"
           style="list-style: none"
         >
@@ -30,23 +30,36 @@
             <a class="pname">{{ pokemon.name.toUpperCase() }}</a>
           </RouterLink>
         </li>
+        <PokemonListPagination
+          :current-page="currentPage"
+          :total-pages="totalPages"
+          @prev="prevPage"
+          @next="nextPage"
+        />
       </ul>
     </div>
     <div class="pokemon-detail">
-      <RouterView></RouterView>
+      <router-view v-slot="{ Component }">
+        <component v-if="Component" :is="Component" />
+        <img v-else :src="PokeImage" style="width: 30%" />
+      </router-view>
     </div>
   </div>
 </template>
 
 <script setup lang="ts" name="PokemonPage">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 import { RouterLink, RouterView } from "vue-router";
 import { PokemonAPI } from "@/model/PokemonAPI";
 import { IPokemonAPIList } from "@/model/IPokemonAPIList";
 import { IPokemon } from "@/model/IPokemon";
+import PokemonListPagination from "@/components/PokemonListPagination.vue";
+import PokeImage from "@/assets/poke.png";
 
 const pokemons = ref<IPokemon[]>([]);
+const currentPage = ref(1);
+const itemsPerPage = 10;
 
 onMounted(async () => {
   try {
@@ -56,7 +69,7 @@ onMounted(async () => {
     const detailed: IPokemon[] = await Promise.all(
       results.map(async (pokemon): Promise<IPokemon> => {
         const detailRes = await axios.get(pokemon.url);
-        console.log(detailRes);
+        // console.log(detailRes);
         return {
           id: detailRes.data.id,
           name: pokemon.name,
@@ -71,6 +84,23 @@ onMounted(async () => {
     console.error("Get Pokémon fail：", error);
   }
 });
+
+const totalPages = computed(() =>
+  Math.ceil(pokemons.value.length / itemsPerPage)
+);
+const pokemonPaginated = computed(() =>
+  pokemons.value.slice(
+    (currentPage.value - 1) * itemsPerPage,
+    currentPage.value * itemsPerPage
+  )
+);
+
+function nextPage() {
+  if (currentPage.value < totalPages.value) currentPage.value++;
+}
+function prevPage() {
+  if (currentPage.value > 1) currentPage.value--;
+}
 </script>
 
 <style scoped>
@@ -83,14 +113,16 @@ onMounted(async () => {
 }
 
 .pokemon-list {
-  flex: 2;
+  flex: 3;
 }
 
 .pokemon-detail {
   flex: 5;
-  padding: 20px;
-  text-align: top;
-  height: 700px;
+  width: 80%; /* 子元素宽度占满父元素 */
+  /* 子元素内容居中方式 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pokemon-item {
@@ -102,10 +134,6 @@ onMounted(async () => {
   padding-bottom: 8px;
   gap: 10px;
 }
-
-/* .pokemon-item.active {
-  background-color: red;
-} */
 
 .pokemon-foto {
   width: 50px; /*设置图片大小*/

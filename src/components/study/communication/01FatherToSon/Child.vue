@@ -13,7 +13,10 @@ import { defineProps } from "vue";
 
 let toy = ref("Bus");
 
-defineProps(["getCar", "sendToy"]);
+defineProps<{
+  getCar: string;
+  sendToy: string;
+}>();
 </script>
 
 <style scoped>

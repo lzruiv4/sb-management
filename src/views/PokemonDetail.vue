@@ -1,5 +1,5 @@
 <template>
-  <img :src="imagePath" style="height: 90%; align-items: center" />
+  <img :src="imagePath" class="imgSize" />
 </template>
 
 <script setup lang="ts">
@@ -12,3 +12,11 @@ const imagePath = computed(() => {
   return typeof path === "string" ? path : "";
 });
 </script>
+
+<style scoped>
+.imgSize {
+  justify-items: center;
+  align-items: center;
+  width: 80%;
+}
+</style>

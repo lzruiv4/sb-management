@@ -39,11 +39,16 @@ defineProps<{
 .buttonInPage {
   font-size: medium;
   font-weight: bold;
-  width: 150px;
+  width: 120px;
   height: 50px;
   background-color: rgb(223, 0, 171);
   box-shadow: 0 0 15px black;
   border-radius: 15px;
   align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.buttonInPage:hover {
+  transform: scale(1.2);
 }
 </style>

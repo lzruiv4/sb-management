@@ -1,20 +1,20 @@
 <template>
   <div class="app">
-    <h2 style="color: #f0f2e6">VUE STUDY</h2>
-  </div>
-  <!-- Navi place -->
-  <div class="navigate">
-    <!--- 三种to网页的写法 -->
-    <!-- <RouterLink to="/home" active-class="showActive">Home</RouterLink> -->
-    <RouterLink :to="{ name: 'home' }" active-class="showActive"
-      >Home</RouterLink
-    >
-    <RouterLink :to="{ name: 'pokemons' }" active-class="showActive"
-      >Pokédex</RouterLink
-    >
-    <RouterLink :to="{ name: 'about' }" active-class="showActive"
-      >About</RouterLink
-    >
+    <h2 class="app_title">VUE STUDY</h2>
+    <!-- Navi place -->
+    <div class="navigate">
+      <!--- 三种to网页的写法 -->
+      <!-- <RouterLink to="/home" active-class="showActive">Home</RouterLink> -->
+      <RouterLink :to="{ name: 'home' }" active-class="showActive"
+        >Home</RouterLink
+      >
+      <RouterLink :to="{ name: 'pokemons' }" active-class="showActive"
+        >Pokédex</RouterLink
+      >
+      <RouterLink :to="{ name: 'about' }" active-class="showActive"
+        >About</RouterLink
+      >
+    </div>
   </div>
 
   <!--LoveTalk /> -->
@@ -39,38 +39,46 @@ body {
   font-family: "Microsoft YaHei", sans-serif;
   text-align: center;
   background-color: #fff;
-  margin: 0;
-  padding: 0;
 }
 
 .app {
+  display: flex;
   background: linear-gradient(to right, #fe73a2, #eee);
-  padding: 20px;
+  padding: 10px;
   font-size: 24px;
   font-weight: bold;
   box-shadow: 0 0 5px #999;
   margin-bottom: 20px;
 }
 
+.app_title {
+  flex: 1;
+  color: #f0f2e6;
+}
+
 /* 按钮区域 */
 .navigate {
-  margin-bottom: 20px;
+  flex: 6;
+  display: flex;
+  align-items: center;
+  justify-items: center;
 }
 
 .navigate a {
   background-color: #ed0000;
   color: #f0f2e6;
-  border: none;
+  /* border: none; */
   padding: 10px 20px;
   margin: 0 10px;
-  font-size: 16px;
+  font-size: 30px;
   font-weight: bold;
   border-radius: 10px;
   cursor: pointer;
+  width: 120px;
 }
 
 .navigate a.showActive {
-  background-color: #000;
+  background-color: #393838;
 }
 
 .content_container {

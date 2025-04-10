@@ -5,7 +5,7 @@
         <li
           v-for="pokemon in pokemonPaginated"
           :key="pokemon.id"
-          style="list-style: none"
+          class="select-poke"
         >
           <!--拼接写法-->
           <!-- <RouterLink :to="`/detail?name=${pokemon.name}`"> -->
@@ -41,7 +41,7 @@
     <div class="pokemon-detail">
       <router-view v-slot="{ Component }">
         <component v-if="Component" :is="Component" />
-        <img v-else :src="PokeImage" style="width: 30%" />
+        <PokemonIcon v-else />
       </router-view>
     </div>
   </div>
@@ -55,11 +55,11 @@ import { PokemonAPI } from "@/model/PokemonAPI";
 import { IPokemonAPIList } from "@/model/IPokemonAPIList";
 import { IPokemon } from "@/model/IPokemon";
 import PokemonListPagination from "@/components/PokemonListPagination.vue";
-import PokeImage from "@/assets/poke.png";
+import PokemonIcon from "@/components/PokemonIcon.vue";
 
 const pokemons = ref<IPokemon[]>([]);
 const currentPage = ref(1);
-const itemsPerPage = 10;
+const itemsPerPage = 9;
 
 onMounted(async () => {
   try {
@@ -98,6 +98,7 @@ const pokemonPaginated = computed(() =>
 function nextPage() {
   if (currentPage.value < totalPages.value) currentPage.value++;
 }
+
 function prevPage() {
   if (currentPage.value > 1) currentPage.value--;
 }
@@ -108,21 +109,21 @@ function prevPage() {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  /* width: 90%; */
   gap: 10px;
 }
 
 .pokemon-list {
-  flex: 3;
+  flex: 2;
 }
 
 .pokemon-detail {
   flex: 5;
-  width: 80%; /* 子元素宽度占满父元素 */
   /* 子元素内容居中方式 */
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
 
 .pokemon-item {
@@ -134,6 +135,16 @@ function prevPage() {
   border-bottom: 1px solid #000000; /* 添加分割线 */
   padding-bottom: 8px;
   gap: 10px;
+  transition: transform 0.5s ease;
+}
+
+.pokemon-item:hover {
+  transform: scale(1.2);
+  background-color: aquamarine;
+}
+
+.select-poke {
+  list-style: none;
 }
 
 .pokemon-foto {
@@ -143,10 +154,9 @@ function prevPage() {
 }
 
 .pname {
-  /* width: 50px; */
   font-size: 30px; /* 设置文字大小 */
   text-align: center;
   font-weight: bold;
-  /* padding-bottom: 10px; */
+  text-shadow: 0 0 2px rgb(61, 60, 60);
 }
 </style>

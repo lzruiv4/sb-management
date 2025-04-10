@@ -128,6 +128,7 @@ function prevPage() {
 .pokemon-item {
   display: flex;
   align-items: center;
+  justify-items: center;
   height: 70px;
   margin: 8px 0;
   border-bottom: 1px solid #000000; /* 添加分割线 */
@@ -143,7 +144,7 @@ function prevPage() {
 
 .pname {
   /* width: 50px; */
-  font-size: 100%; /* 设置文字大小 */
+  font-size: 30px; /* 设置文字大小 */
   text-align: center;
   font-weight: bold;
   /* padding-bottom: 10px; */

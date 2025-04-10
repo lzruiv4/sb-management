@@ -65,7 +65,7 @@ onMounted(async () => {
     );
     pokemons.value = detailed;
   } catch (error) {
-    console.error("获取 Pokémon 数据失败：", error);
+    console.error("Get Pokémon fail：", error);
   }
 });
 </script>

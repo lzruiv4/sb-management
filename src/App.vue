@@ -16,18 +16,22 @@
       >About</RouterLink
     >
   </div>
-  <!-- <div>
-    <Father />
-  </div> -->
+
   <!--LoveTalk /> -->
   <!--Content-->
-  <div class="main-content"><RouterView></RouterView></div>
+  <div class="content_container">
+    <div class="main-content">
+      <RouterView></RouterView>
+    </div>
+    <!-- <div class="studyTime">
+      <Father />
+    </div> -->
+  </div>
 </template>
 
 <script lang="ts" setup name="App">
 import { RouterView, RouterLink } from "vue-router";
-import Father from "./components/study/commication/01FatherToSon/Father.vue";
-// import LoveTalk from "./components/LoveTalk.vue";
+// import Father from "./components/study/communication/02Custom-event/Father.vue";
 </script>
 
 <style>
@@ -67,6 +71,17 @@ body {
 
 .navigate a.showActive {
   background-color: #000;
+}
+
+.content_container {
+  display: grid;
+}
+
+.studyTime {
+  margin: 50px;
+  position: relative;
+  justify-content: center;
+  /* align-items: center; */
 }
 
 /* 内容展示区域 */

@@ -2,7 +2,11 @@
   <div class="pokemon-content">
     <div class="pokemon-list">
       <ul>
-        <li v-for="pokemon in pokemons" :key="pokemon.id" class="pokemon-item">
+        <li
+          v-for="pokemon in pokemons"
+          :key="pokemon.id"
+          style="list-style: none"
+        >
           <!--拼接写法-->
           <!-- <RouterLink :to="`/detail?name=${pokemon.name}`"> -->
           <!--拼接写法-->
@@ -16,13 +20,14 @@
                 imagePath: pokemon.biggerImage,
               },
             }"
+            class="pokemon-item"
           >
             <img
               :src="pokemon.image"
               alt="pokemon image"
               class="pokemon-foto"
             />
-            <span>{{ pokemon.name }}</span>
+            <a class="pname">{{ pokemon.name.toUpperCase() }}</a>
           </RouterLink>
         </li>
       </ul>
@@ -51,10 +56,11 @@ onMounted(async () => {
     const detailed: IPokemon[] = await Promise.all(
       results.map(async (pokemon): Promise<IPokemon> => {
         const detailRes = await axios.get(pokemon.url);
+        console.log(detailRes);
         return {
           id: detailRes.data.id,
           name: pokemon.name,
-          image: detailRes.data.sprites.front_default || "",
+          image: detailRes.data.sprites.other.showdown.front_default || "",
           biggerImage:
             detailRes.data.sprites.other.dream_world.front_default || "",
         };
@@ -65,8 +71,6 @@ onMounted(async () => {
     console.error("Get Pokémon fail：", error);
   }
 });
-
-console.log(pokemons);
 </script>
 
 <style scoped>
@@ -85,15 +89,18 @@ console.log(pokemons);
 .pokemon-detail {
   flex: 5;
   padding: 20px;
-  text-align: center;
+  text-align: top;
+  height: 700px;
 }
 
 .pokemon-item {
   display: flex;
   align-items: center;
+  height: 70px;
   margin: 8px 0;
-  border-bottom: 1px solid #ccc; /* 添加分割线 */
+  border-bottom: 1px solid #000000; /* 添加分割线 */
   padding-bottom: 8px;
+  gap: 10px;
 }
 
 /* .pokemon-item.active {
@@ -101,12 +108,16 @@ console.log(pokemons);
 } */
 
 .pokemon-foto {
-  width: 30px; /* 设置图片大小 */
-  height: 30px;
-  margin-right: 10px; /* 图片与名字之间的间距 */
+  width: 50px; /*设置图片大小*/
+  height: auto;
+  padding-right: 10px; /* 图片与名字之间的间距 */
 }
 
-span {
-  font-size: 20px; /* 设置文字大小 */
+.pname {
+  /* width: 50px; */
+  font-size: 100%; /* 设置文字大小 */
+  text-align: center;
+  font-weight: bold;
+  /* padding-bottom: 10px; */
 }
 </style>

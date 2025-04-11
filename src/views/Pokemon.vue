@@ -107,9 +107,6 @@ function prevPage() {
 <style scoped>
 .pokemon-content {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  /* width: 90%; */
   gap: 10px;
 }
 
@@ -119,11 +116,9 @@ function prevPage() {
 
 .pokemon-detail {
   flex: 5;
-  /* 子元素内容居中方式 */
-  display: flex;
+  display: flex; /* 这里必须加上，不然下面的语句无效*/
   justify-content: center;
   align-items: center;
-  height: 100%;
 }
 
 .pokemon-item {
@@ -132,14 +127,16 @@ function prevPage() {
   justify-items: center;
   height: 70px;
   margin: 8px 0;
-  border-bottom: 1px solid #000000; /* 添加分割线 */
-  padding-bottom: 8px;
+  border: 1px solid #4e4e4e; /* 添加分割线 */
+  border-radius: 10px;
+  padding: 8px;
   gap: 10px;
   transition: transform 0.5s ease;
 }
 
 .pokemon-item:hover {
   transform: scale(1.2);
+  border-radius: 10px;
   background-color: aquamarine;
 }
 
@@ -150,7 +147,7 @@ function prevPage() {
 .pokemon-foto {
   width: 50px; /*设置图片大小*/
   height: auto;
-  padding-right: 10px; /* 图片与名字之间的间距 */
+  padding: 10px; /* 图片与名字之间的间距 */
 }
 
 .pname {

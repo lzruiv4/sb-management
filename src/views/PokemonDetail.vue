@@ -15,8 +15,9 @@ const imagePath = computed(() => {
 
 <style scoped>
 .imgSize {
-  justify-items: center;
-  align-items: center;
-  width: 70%;
+  width: auto;
+  height: 80%;
+  max-width: 100%;
+  max-height: 100%;
 }
 </style>

@@ -49,47 +49,31 @@
 
 <script setup lang="ts" name="PokemonPage">
 import { ref, onMounted, computed } from "vue";
-import axios from "axios";
 import { RouterLink, RouterView } from "vue-router";
-import { PokemonAPI } from "@/model/PokemonAPI";
-import { IPokemonAPIList } from "@/model/IPokemonAPIList";
-import { IPokemon } from "@/model/IPokemon";
 import PokemonListPagination from "@/components/PokemonListPagination.vue";
 import PokemonIcon from "@/components/PokemonIcon.vue";
+import { usePokemonStore } from "@/store/PokemonStore";
 
-const pokemons = ref<IPokemon[]>([]);
 const currentPage = ref(1);
 const itemsPerPage = 9;
 
+const service = usePokemonStore();
+const pokemons = computed(() => service.detailed);
+// const reading = computed(() => service.loading);
+
 onMounted(async () => {
   try {
-    const res = await axios.get(PokemonAPI);
-    const results: IPokemonAPIList[] = res.data.results;
-
-    const detailed: IPokemon[] = await Promise.all(
-      results.map(async (pokemon): Promise<IPokemon> => {
-        const detailRes = await axios.get(pokemon.url);
-        // console.log(detailRes);
-        return {
-          id: detailRes.data.id,
-          name: pokemon.name,
-          image: detailRes.data.sprites.other.showdown.front_default || "",
-          biggerImage:
-            detailRes.data.sprites.other.dream_world.front_default || "",
-        };
-      })
-    );
-    pokemons.value = detailed;
-  } catch (error) {
-    console.error("Get Pokémon fail：", error);
+    await service.getPokemon();
+  } catch (e) {
+    console.error("加载数据出错", e);
   }
 });
 
 const totalPages = computed(() =>
-  Math.ceil(pokemons.value.length / itemsPerPage)
+  Math.ceil(pokemons.value?.length ?? 0 / itemsPerPage)
 );
 const pokemonPaginated = computed(() =>
-  pokemons.value.slice(
+  pokemons.value?.slice(
     (currentPage.value - 1) * itemsPerPage,
     currentPage.value * itemsPerPage
   )

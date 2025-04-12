@@ -13,7 +13,7 @@
 
 <script lang="ts" setup name="Count">
 import { ref } from "vue";
-import { useCountStore } from "@/store/Count";
+import { useCountStore } from "@/components/study/communication/Count";
 
 const countStore = useCountStore();
 console.log(countStore);

@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": "user1",
+      "firstname": "Z",
+      "lastname": "L"
+    },
+    {
+      "id": "user2",
+      "firstname": "Z",
+      "lastname": "Chen"
+    },
+    {
+      "id": "8778",
+      "firstname": "Tom",
+      "lastname": "Schmidt"
+    },
+    {
+      "id": "df68",
+      "firstname": "Tom",
+      "lastname": "Schmidt"
+    }
+  ],
+  "pokemonRecords": [
+    {
+      "id": "jj33",
+      "poke_id": 1,
+      "catch_time": "Wed Oct 04 2023 13:15:12 GMT+0200 (GMT+02:00)",
+      "user_id": "user1"
+    }
+  ]
+}

@@ -5,12 +5,16 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRoute } from "vue-router";
+import { usePokemonStore } from "@/store/PokemonStore";
 
 const route = useRoute();
-const imagePath = computed(() => {
-  const path = route.query.imagePath;
-  return typeof path === "string" ? path : "";
-});
+const pokemonStore = usePokemonStore();
+
+const imagePath = computed(
+  () =>
+    pokemonStore.detailed?.find((pokemon) => pokemon.name === route.query.name)
+      ?.biggerImage
+);
 </script>
 
 <style scoped>

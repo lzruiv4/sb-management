@@ -17,7 +17,7 @@
               name: 'detail1',
               query: {
                 name: pokemon.name,
-                imagePath: pokemon.biggerImage,
+                // imagePath: pokemon.biggerImage,
               },
             }"
             class="pokemon-item"
@@ -69,9 +69,12 @@ onMounted(async () => {
   }
 });
 
+// console.log("dsds", pokemons.value.length);
+
 const totalPages = computed(() =>
-  Math.ceil(pokemons.value?.length ?? 0 / itemsPerPage)
+  pokemons.value ? Math.ceil(pokemons.value.length / itemsPerPage) : 0
 );
+
 const pokemonPaginated = computed(() =>
   pokemons.value?.slice(
     (currentPage.value - 1) * itemsPerPage,

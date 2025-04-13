@@ -4,16 +4,10 @@
     <div class="user_history">
       <el-table
         :data="tableData"
-        style="width: 100%"
         stripe
         :header-cell-style="{ background: '#f5f7fa', color: '#606266' }"
       >
-        <el-table-column
-          prop="date"
-          label="Date"
-          width="200"
-          sortable
-        ></el-table-column>
+        <el-table-column prop="date" label="Date" sortable></el-table-column>
         <el-table-column label="Pokemons">
           <template #default="scope">
             <div
@@ -121,11 +115,12 @@ function getPokemonUrl(id: string): string {
 }
 
 .poke_image {
-  width: 50px !important;
-  height: 50px !important;
+  width: 100px !important;
+  /* height: 70px !important; */
+  margin: 10px;
   border-radius: 4px;
   object-fit: cover;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   transition: transform 0.2s;
 }
 

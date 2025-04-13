@@ -27,7 +27,7 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", {
             user_id: item.user_id,
           };
         });
-        // console.log("2323", this.detailed);
+        console.log("2323", this.detailed);
       } catch (error) {
         console.error("Get Pokémon failed:", error);
         throw error; // 重新抛出错误以便组件可以处理

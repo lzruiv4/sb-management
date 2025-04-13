@@ -17,11 +17,13 @@
               name: 'detail1',
               query: {
                 name: pokemon.name,
-                // imagePath: pokemon.biggerImage,
               },
             }"
             class="pokemon-item"
           >
+            <!-- <div class="ballIcon">
+              <PokemonIcon v-if="pokemon.id in catchendPokemons" />
+            </div> -->
             <img
               :src="pokemon.image"
               alt="pokemon image"
@@ -53,21 +55,30 @@ import { RouterLink, RouterView } from "vue-router";
 import PokemonListPagination from "@/components/PokemonListPagination.vue";
 import PokemonIcon from "@/components/PokemonIcon.vue";
 import { usePokemonStore } from "@/store/PokemonStore";
+import { usePokemonRecordsStore } from "@/store/PokemonRecordsStore";
 
-const currentPage = ref(1);
-const itemsPerPage = 9;
+const pokemonStore = usePokemonStore();
+const recordsStore = usePokemonRecordsStore();
 
-const service = usePokemonStore();
-const pokemons = computed(() => service.detailed);
-// const reading = computed(() => service.loading);
+const pokemons = computed(() => pokemonStore.detailed);
+// const catchendPokemons = computed(() => [
+//   ...new Set(recordsStore.detailed.map((pokemon) => pokemon.poke_id)),
+// ]);
+// console.log("0", catchendPokemons);
 
 onMounted(async () => {
   try {
-    await service.getPokemon();
+    await recordsStore.getRecords();
+    if (!recordsStore.loading) {
+      await pokemonStore.getPokemon();
+    }
   } catch (e) {
     console.error("加载数据出错", e);
   }
 });
+
+const currentPage = ref(1);
+const itemsPerPage = 9;
 
 const totalPages = computed(() =>
   pokemons.value ? Math.ceil(pokemons.value.length / itemsPerPage) : 0
@@ -96,7 +107,7 @@ function prevPage() {
 }
 
 .pokemon-list {
-  flex: 2;
+  flex: 3;
 }
 
 .pokemon-detail {
@@ -129,15 +140,24 @@ function prevPage() {
   list-style: none;
 }
 
+/* .ballIcon {
+  flex: 1;
+  width: 5px;
+  height: 5px;
+  transform: rotate(20deg);
+} */
+
 .pokemon-foto {
+  flex: 1;
   width: 50px; /*设置图片大小*/
   height: auto;
-  padding: 10px; /* 图片与名字之间的间距 */
+  padding-right: 5px; /* 图片与名字之间的间距 */
 }
 
 .pname {
+  flex: 8;
   font-size: 30px; /* 设置文字大小 */
-  text-align: center;
+  text-align: left;
   font-weight: bold;
   text-shadow: 0 0 2px rgb(61, 60, 60);
 }

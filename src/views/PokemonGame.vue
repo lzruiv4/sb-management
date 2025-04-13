@@ -5,9 +5,20 @@
       <el-table
         :data="tableData"
         stripe
-        :header-cell-style="{ background: '#f5f7fa', color: '#606266' }"
+        :header-cell-style="{
+          background: '#f5f7fa',
+          color: '#606266',
+          fontSize: '30px',
+          fontWeight: 'bold',
+          margin: '15px',
+          textShadow: '0 0 2px rgb(61, 60, 60)',
+        }"
       >
-        <el-table-column prop="date" label="Date" sortable></el-table-column>
+        <el-table-column prop="date" label="Date" sortable>
+          <template #default="scope">
+            <span class="dateStyle">{{ scope.row.date }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="Pokemons">
           <template #default="scope">
             <div
@@ -44,11 +55,9 @@ import { computed, onMounted } from "vue";
 
 const pokemonStore = usePokemonStore();
 const pokemonRecordsStore = usePokemonRecordsStore();
-// const tableData = ref<TableItem[]>([]);
 const pokemons = computed(() => pokemonStore.detailed);
 const tableData = computed(() => groupByDate(pokemonRecordsStore.detailed));
-console.log("2323", tableData.value);
-// const error = ref<string | null>(null);
+// console.log("2323", tableData.value);
 
 interface TableItem {
   date: string;
@@ -58,7 +67,10 @@ interface TableItem {
 onMounted(async () => {
   try {
     await pokemonStore.getPokemon();
-    if (pokemonStore.detailed) {
+    // if (pokemonStore.detailed) {
+    //   await pokemonRecordsStore.getRecords();
+    // }
+    if (!pokemonStore.loading) {
       await pokemonRecordsStore.getRecords();
     }
   } catch (e) {
@@ -74,7 +86,7 @@ function groupByDate(
     if (!map.has(catch_time)) map.set(catch_time, []);
     map.get(catch_time)?.push(getPokemonUrl(poke_id));
   });
-  console.log("dsds", map);
+
   return Array.from(map.entries()).map(([date, pokemonUrls]) => ({
     date,
     pokemonUrls,
@@ -82,8 +94,7 @@ function groupByDate(
 }
 
 function getPokemonUrl(id: string): string {
-  console.log("@@@", pokemons.value?.length);
-  return pokemons.value?.at(parseInt(id) + 1)?.image ?? "";
+  return pokemons.value?.at(parseInt(id) - 1)?.image ?? "";
 }
 </script>
 
@@ -96,18 +107,36 @@ function getPokemonUrl(id: string): string {
 }
 
 .catch_ball {
-  flex: 1;
+  /* flex: 1; */
   display: flex;
   justify-content: center;
   align-items: center;
   transform: rotate(24deg);
 }
 
+/* .el_column {
+  font-size: 30px;
+  text-align: left;
+  font-weight: bold;
+  text-shadow: 0 0 2px rgb(61, 60, 60);
+} */
+
 .user_history {
-  flex: 2;
+  display: flex;
+}
+
+.dateStyle {
+  flex: 1;
+  font-size: 30px; /* 设置文字大小 */
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 0 0 2px rgb(61, 60, 60);
 }
 
 .element-table-container {
+  font-size: 30px; /* 设置文字大小 */
+  text-align: left;
+  font-weight: bold;
   padding: 20px;
   background: #fff;
   border-radius: 4px;
@@ -115,19 +144,19 @@ function getPokemonUrl(id: string): string {
 }
 
 .poke_image {
-  width: 100px !important;
+  width: 70px !important;
   /* height: 70px !important; */
   margin: 10px;
-  border-radius: 4px;
+  border-radius: 50%;
   object-fit: cover;
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   transition: transform 0.2s;
 }
 
-/* .person-image:hover {
-  transform: scale(1.05);
+.poke_image:hover {
+  transform: scale(1.2);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-} */
+}
 
 .el-table {
   margin-top: 15px;

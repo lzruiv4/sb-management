@@ -11,6 +11,9 @@
       <RouterLink :to="{ name: 'pokemons' }" active-class="showActive"
         >Pokédex</RouterLink
       >
+      <RouterLink :to="{ name: 'pokemon_game' }" active-class="showActive"
+        >Game</RouterLink
+      >
       <RouterLink :to="{ name: 'about' }" active-class="showActive"
         >About</RouterLink
       >

@@ -69,8 +69,6 @@ onMounted(async () => {
   }
 });
 
-// console.log("dsds", pokemons.value.length);
-
 const totalPages = computed(() =>
   pokemons.value ? Math.ceil(pokemons.value.length / itemsPerPage) : 0
 );

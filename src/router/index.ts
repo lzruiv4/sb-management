@@ -2,6 +2,7 @@
 
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
+import PokemonGame from "@/views/PokemonGame.vue";
 import Pokemon from "@/views/Pokemon.vue";
 import About from "@/views/About.vue";
 import PokemonDetail from "@/views/PokemonDetail.vue";
@@ -13,6 +14,11 @@ export default createRouter({
       name: "home",
       path: "/",
       component: Home,
+    },
+    {
+      name: "pokemon_game",
+      path: "/pokemon_game",
+      component: PokemonGame,
     },
     {
       name: "pokemons",

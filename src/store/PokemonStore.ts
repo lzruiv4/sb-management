@@ -6,7 +6,7 @@ import { defineStore } from "pinia";
 
 export const usePokemonStore = defineStore("pokemonStore", {
   state: () => ({
-    detailed: null as IPokemon[] | null,
+    detailed: [] as IPokemon[],
     loading: false,
   }),
   actions: {

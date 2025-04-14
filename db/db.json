@@ -4,7 +4,7 @@
       "id": "ad1",
       "firstname": "Z",
       "lastname": "L",
-      "poke_coin": 1
+      "poke_coin": 0
     },
     {
       "id": "user2",
@@ -72,6 +72,12 @@
       "id": "7703",
       "poke_id": "70",
       "catch_time": "Mon Apr 14 2025 16:25:43 GMT+0200 (中欧夏令时间)",
+      "user_id": "ad1"
+    },
+    {
+      "id": "fc1b",
+      "poke_id": "71",
+      "catch_time": "Mon Apr 14 2025 17:38:18 GMT+0200 (中欧夏令时间)",
       "user_id": "ad1"
     }
   ]

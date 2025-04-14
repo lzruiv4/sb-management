@@ -2,43 +2,38 @@ import { testUser, UserAPI } from "@/model/GameAPI";
 import { IUser } from "@/model/IUser";
 import axios from "axios";
 import { defineStore } from "pinia";
+import { ref, watch } from "vue";
 
-export const useUserStore = defineStore("userStore", {
-  state: () => ({
-    user: {
-      id: "",
-      firstname: "",
-      lastname: "",
-      poke_coin: 0,
-    } as IUser | IUser,
-    loading: false,
-  }),
-  actions: {
-    async getCurrentUser() {
-      try {
-        this.loading = true;
-        const res = await axios.get(UserAPI + "/" + testUser);
-        this.user = res.data;
-      } catch (error) {
-        console.error("Get user failed:", error);
-        throw error; // 重新抛出错误以便组件可以处理
-      } finally {
-        this.loading = false; // 无论成功失败都停止加载
-      }
-    },
+export const useUserStore = defineStore("userStore", () => {
+  const user = ref<IUser | null>(null);
+  const loading = ref(false);
 
-    async updateUser(user: {
-      id: string;
-      firstname: string;
-      lastname: string;
-      poke_coin: number;
-    }) {
-      try {
-        const res = await axios.put(UserAPI + "/" + testUser, user);
-        this.user = res.data;
-      } catch (error) {
-        console.error("User update failed", error);
-      }
-    },
-  },
+  // check for data has been loading
+  watch(user, (newUser) => {
+    if (newUser) console.log("User data has been loading.");
+  });
+
+  async function getCurrentUser() {
+    try {
+      loading.value = true;
+      const res = await axios.get(UserAPI + "/" + testUser);
+      user.value = res.data;
+    } catch (error) {
+      console.error("Get user failed:", error);
+      throw error;
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  async function updateUser(newUser: IUser) {
+    try {
+      const res = await axios.put(UserAPI + "/" + testUser, newUser);
+      user.value = res.data;
+    } catch (error) {
+      console.error("User update failed", error);
+    }
+  }
+
+  return { user, loading, getCurrentUser, updateUser };
 });

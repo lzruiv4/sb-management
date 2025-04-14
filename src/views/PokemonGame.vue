@@ -11,14 +11,14 @@
         v-model:callDialogInComponent="showCatchPokemonDialog"
       />
       <div class="userInfo">
-        <a>Firstname: {{ user.firstname }}</a>
-        <a>Lastname: {{ user.lastname }}</a>
-        <a>Coin: {{ user.poke_coin }}</a>
+        <a>Firstname: {{ userStore.user ? userStore.user.firstname : "" }}</a>
+        <a>Lastname: {{ userStore.user ? userStore.user.lastname : "" }}</a>
+        <a>Coin: {{ userStore.user ? userStore.user.poke_coin : "" }}</a>
       </div>
     </div>
     <div class="user_history">
       <el-table
-        :data="tableData"
+        :data="pokemonRecordsStore.tableData"
         stripe
         :header-cell-style="{
           background: '#f5f7fa',
@@ -57,61 +57,29 @@
 
 <script setup lang="ts">
 import PokemonIcon from "@/components/PokemonIcon.vue";
-import { usePokemonStore } from "@/store/PokemonStore";
 import { usePokemonRecordsStore } from "@/store/PokemonRecordsStore";
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useUserStore } from "@/store/UserStore";
 import CatchPokemonDialog from "@/components/CatchPokemonDialog.vue";
 
-const pokemonStore = usePokemonStore();
 const pokemonRecordsStore = usePokemonRecordsStore();
 const userStore = useUserStore();
-const pokemons = computed(() => pokemonStore.detailed);
-const tableData = ref<TableItem[]>([]);
-const user = computed(() => userStore.user);
 
-const shouldAnimate = computed(() => user.value.poke_coin > 0);
+// const user = computed(() => userStore.user);
+
+// const shouldAnimate = computed(() => userStore.user.poke_coin > 0);
+const shouldAnimate = ref(false);
 const showCatchPokemonDialog = ref(false);
 
-interface TableItem {
-  date: string;
-  pokemonUrls: string[];
-}
-
-onMounted(async () => {
-  try {
-    await pokemonStore.getPokemon();
-    if (!pokemonStore.loading) {
-      await pokemonRecordsStore.getRecords();
-      tableData.value = groupByDate(pokemonRecordsStore.records);
-    }
-    await userStore.getCurrentUser();
-  } catch (e) {
-    console.error(e);
+onMounted(() => {
+  pokemonRecordsStore.getRecords();
+  userStore.getCurrentUser();
+  if (userStore.user) {
+    shouldAnimate.value = userStore.user.poke_coin > 0;
   }
 });
 
-function groupByDate(
-  data: Array<{ catch_time: string; poke_id: string }>
-): TableItem[] {
-  const map = new Map<string, string[]>();
-  data.forEach(({ catch_time, poke_id }) => {
-    if (!map.has(catch_time)) map.set(catch_time, []);
-    map.get(catch_time)?.push(getPokemonUrl(poke_id));
-  });
-
-  return Array.from(map.entries()).map(([date, pokemonUrls]) => ({
-    date,
-    pokemonUrls,
-  }));
-}
-
-function getPokemonUrl(id: string): string {
-  return pokemons.value?.at(parseInt(id) - 1)?.image ?? "";
-}
-
 function callDialog() {
-  // tableData.value = groupByDate(pokemonRecordsStore.records);
   return (showCatchPokemonDialog.value = !showCatchPokemonDialog.value);
 }
 </script>

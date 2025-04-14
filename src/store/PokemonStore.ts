@@ -34,7 +34,6 @@ export const usePokemonStore = defineStore("pokemonStore", () => {
           };
         })
       );
-      // console.log(pokemons.value.length);
     } catch (error) {
       console.error("Get Pokémon failed:", error);
       throw error;

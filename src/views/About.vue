@@ -16,6 +16,6 @@
 span {
   color: black;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 50px;
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="pokemon-list">
       <ul>
         <li
-          v-for="pokemon in pokemonPaginated"
+          v-for="pokemon in pagination.pokemonPaginated"
           :key="pokemon.id"
           class="select-poke"
         >
@@ -33,10 +33,10 @@
           </RouterLink>
         </li>
         <PokemonListPagination
-          :current-page="currentPage"
-          :total-pages="totalPages"
-          @prev="prevPage"
-          @next="nextPage"
+          :current-page="pagination.currentPage"
+          :total-pages="pagination.totalPages"
+          @prev="pagination.prevPage"
+          @next="pagination.nextPage"
         />
       </ul>
     </div>
@@ -50,39 +50,17 @@
 </template>
 
 <script setup lang="ts" name="PokemonPage">
-import { ref, onMounted, computed } from "vue";
+import { onMounted } from "vue";
 import { RouterLink, RouterView } from "vue-router";
 import PokemonListPagination from "@/components/PokemonListPagination.vue";
 import PokemonIcon from "@/components/PokemonIcon.vue";
 import { usePokemonStore } from "@/store/PokemonStore";
+import { userPagination } from "@/store/Pagination";
 
 const pokemonStore = usePokemonStore();
+const pagination = userPagination();
 
 onMounted(() => pokemonStore.getPokemons());
-
-const currentPage = ref(1);
-const itemsPerPage = 9;
-
-const totalPages = computed(() =>
-  pokemonStore.pokemons
-    ? Math.ceil(pokemonStore.pokemons.length / itemsPerPage)
-    : 0
-);
-
-const pokemonPaginated = computed(() =>
-  pokemonStore.pokemons.slice(
-    (currentPage.value - 1) * itemsPerPage,
-    currentPage.value * itemsPerPage
-  )
-);
-
-function nextPage() {
-  if (currentPage.value < totalPages.value) currentPage.value++;
-}
-
-function prevPage() {
-  if (currentPage.value > 1) currentPage.value--;
-}
 </script>
 
 <style scoped>

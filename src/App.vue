@@ -19,22 +19,15 @@
       >
     </div>
   </div>
-
-  <!--LoveTalk /> -->
-  <!--Content-->
   <div class="content_container">
     <div class="main-content">
       <RouterView></RouterView>
     </div>
-    <!-- <div class="studyTime">
-      <Father />
-    </div> -->
   </div>
 </template>
 
 <script lang="ts" setup name="App">
 import { RouterView, RouterLink } from "vue-router";
-// import Father from "./components/study/communication/02Custom-event/Father.vue";
 </script>
 
 <style>
@@ -47,20 +40,17 @@ body {
 .app {
   display: flex;
   background: linear-gradient(to right, #fe73a2, #eee);
-  padding: 10px;
-  font-size: 60px;
+  /* padding: 10px; */
   font-weight: bold;
-  box-shadow: 0 0 5px #999;
-  margin-bottom: 20px;
+  box-shadow: 0 0 10px #999;
+  margin: 10px;
   gap: 60px;
-  /* height: 50px; */
 }
 
 .app_title {
   flex: 2;
   color: #3d3d3d;
-  height: 50px;
-  /* font-size: 100px; */
+  font-size: 60px;
 }
 
 /* 按钮区域 */
@@ -77,13 +67,21 @@ body {
   padding: 10px 20px;
   margin: 0 10px;
   font-size: 30px;
-  font-weight: bold;
+  /* font-weight: bold; */
   border-radius: 10px;
   cursor: pointer;
-  width: 120px;
+  width: 150px;
+  height: 50px;
+}
+
+.navigate a:hover {
+  transform: scale(1.2);
+  border-radius: 10px;
+  /* background-color: aquamarine; */
 }
 
 .navigate a.showActive {
+  transform: scale(1.1);
   background-color: #393838;
 }
 

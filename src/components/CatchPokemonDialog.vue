@@ -1,13 +1,11 @@
 <template>
-  <!-- <el-button @click="openDialog">打开弹窗</el-button> -->
-
   <el-dialog
     :model-value="callDialogInComponent"
     @close="emitClose"
     @update:modelValue="emitClose"
     title="Tipp"
   >
-    <span
+    <span class="spanDialog"
       >Are you sure you want to get a new Pokémon? It will cost you one pokemon
       coin?</span
     >
@@ -25,7 +23,6 @@ import { testUser } from "@/model/GameAPI";
 import { useUserStore } from "@/store/UserStore";
 import { usePokemonRecordsStore } from "@/store/PokemonRecordsStore";
 import { dateFormatter } from "@/utils/DateTools";
-// import { dateFormatter } from "@/store/PokemonRecordsStore";
 
 const userStore = useUserStore();
 const pokemonRecordsStore = usePokemonRecordsStore();
@@ -41,13 +38,11 @@ const emit = defineEmits<{
 
 const onConfirm = () => {
   emit("update:callDialogInComponent", false);
-  console.log("点击了确认");
   catchNewPokemon();
 };
 
 const onCancel = () => {
   emit("update:callDialogInComponent", false);
-  console.log("点击了取消");
 };
 
 const emitClose = () => {
@@ -72,3 +67,9 @@ function catchNewPokemon() {
   }
 }
 </script>
+
+<style scope>
+.spanDialog {
+  font-size: 30px;
+}
+</style>

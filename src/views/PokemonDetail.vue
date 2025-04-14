@@ -12,7 +12,7 @@ const pokemonStore = usePokemonStore();
 
 const imagePath = computed(
   () =>
-    pokemonStore.detailed?.find((pokemon) => pokemon.name === route.query.name)
+    pokemonStore.pokemons?.find((pokemon) => pokemon.name === route.query.name)
       ?.biggerImage
 );
 </script>

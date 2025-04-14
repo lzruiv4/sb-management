@@ -50,7 +50,7 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
   };
 
   const getPokemonUrl = (id: string): string =>
-    pokemonStore.detailed?.at(parseInt(id) - 1)?.image ?? "";
+    pokemonStore.pokemons?.at(parseInt(id) - 1)?.image ?? "";
 
   function dateFormatter(dateString: string): string {
     const date = new Date(dateString);
@@ -76,13 +76,11 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
         };
       });
       tableData.value = groupByRecords(records.value);
-      // console.log("2323", this.detailed);
     } catch (error) {
       console.error("Get Pokémon failed:", error);
-      throw error; // 重新抛出错误以便组件可以处理
+      throw error;
     } finally {
-      loading.value = false; // 无论成功失败都停止加载
-      // console.log(records);
+      loading.value = false;
     }
   }
 

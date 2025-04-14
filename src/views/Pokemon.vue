@@ -55,37 +55,22 @@ import { RouterLink, RouterView } from "vue-router";
 import PokemonListPagination from "@/components/PokemonListPagination.vue";
 import PokemonIcon from "@/components/PokemonIcon.vue";
 import { usePokemonStore } from "@/store/PokemonStore";
-import { usePokemonRecordsStore } from "@/store/PokemonRecordsStore";
 
 const pokemonStore = usePokemonStore();
-const recordsStore = usePokemonRecordsStore();
 
-const pokemons = computed(() => pokemonStore.detailed);
-// const catchendPokemons = computed(() => [
-//   ...new Set(recordsStore.detailed.map((pokemon) => pokemon.poke_id)),
-// ]);
-// console.log("0", catchendPokemons);
-
-onMounted(async () => {
-  try {
-    await recordsStore.getRecords();
-    if (!recordsStore.loading) {
-      await pokemonStore.getPokemon();
-    }
-  } catch (e) {
-    console.error("加载数据出错", e);
-  }
-});
+onMounted(() => pokemonStore.getPokemons());
 
 const currentPage = ref(1);
 const itemsPerPage = 9;
 
 const totalPages = computed(() =>
-  pokemons.value ? Math.ceil(pokemons.value.length / itemsPerPage) : 0
+  pokemonStore.pokemons
+    ? Math.ceil(pokemonStore.pokemons.length / itemsPerPage)
+    : 0
 );
 
 const pokemonPaginated = computed(() =>
-  pokemons.value?.slice(
+  pokemonStore.pokemons.slice(
     (currentPage.value - 1) * itemsPerPage,
     currentPage.value * itemsPerPage
   )

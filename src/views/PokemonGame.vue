@@ -65,9 +65,6 @@ import CatchPokemonDialog from "@/components/CatchPokemonDialog.vue";
 const pokemonRecordsStore = usePokemonRecordsStore();
 const userStore = useUserStore();
 
-// const user = computed(() => userStore.user);
-
-// const shouldAnimate = computed(() => userStore.user.poke_coin > 0);
 const shouldAnimate = ref(false);
 const showCatchPokemonDialog = ref(false);
 

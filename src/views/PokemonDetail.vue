@@ -21,7 +21,8 @@ const imagePath = computed(
 .imgSize {
   width: auto;
   height: 80%;
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 90%;
+  max-height: 90%;
+  padding: 10px;
 }
 </style>

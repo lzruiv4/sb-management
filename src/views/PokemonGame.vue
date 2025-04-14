@@ -1,6 +1,18 @@
 <template>
-  <div class="user_container">
-    <div class="catch_ball"><PokemonIcon style="width: 60%" /></div>
+  <div class="game_container">
+    <div class="user_container">
+      <div
+        class="catch_ball"
+        :style="{ animationPlayState: shouldAnimate ? 'running' : 'paused' }"
+      >
+        <PokemonIcon style="width: 60%" />
+      </div>
+      <div class="userInfo">
+        <a>Firstname: {{ user.firstname }}</a>
+        <a>Lastname: {{ user.lastname }}</a>
+        <a>Coin: {{ user.poke_coin }}</a>
+      </div>
+    </div>
     <div class="user_history">
       <el-table
         :data="tableData"
@@ -21,14 +33,7 @@
         </el-table-column>
         <el-table-column label="Pokemons">
           <template #default="scope">
-            <div
-              style="
-                /* height: 150px; */
-                /* width: 250px; */
-                display: flex;
-                /* flex-wrap: wrap; */
-              "
-            >
+            <div style="display: flex">
               <el-image
                 v-for="(pokemonUrl, index) in scope.row.pokemonUrls"
                 :key="index"
@@ -52,12 +57,16 @@ import PokemonIcon from "@/components/PokemonIcon.vue";
 import { usePokemonStore } from "@/store/PokemonStore";
 import { usePokemonRecordsStore } from "@/store/PokemonRecordsStore";
 import { computed, onMounted } from "vue";
+import { useUserStore } from "@/store/UserStore";
 
 const pokemonStore = usePokemonStore();
 const pokemonRecordsStore = usePokemonRecordsStore();
+const userStore = useUserStore();
 const pokemons = computed(() => pokemonStore.detailed);
 const tableData = computed(() => groupByDate(pokemonRecordsStore.detailed));
-// console.log("2323", tableData.value);
+const user = computed(() => userStore.user);
+
+const shouldAnimate = computed(() => user.value.poke_coin > 0);
 
 interface TableItem {
   date: string;
@@ -67,12 +76,11 @@ interface TableItem {
 onMounted(async () => {
   try {
     await pokemonStore.getPokemon();
-    // if (pokemonStore.detailed) {
-    //   await pokemonRecordsStore.getRecords();
-    // }
     if (!pokemonStore.loading) {
       await pokemonRecordsStore.getRecords();
     }
+    await userStore.getCurrentUser();
+    // user.value = userStore.user;
   } catch (e) {
     console.error(e);
   }
@@ -99,19 +107,53 @@ function getPokemonUrl(id: string): string {
 </script>
 
 <style scoped>
-.user_container {
+.game_container {
   display: flex;
   flex-direction: column;
   margin: 50px;
   gap: 50px;
 }
 
+.user_container {
+  display: flex;
+}
+
 .catch_ball {
-  /* flex: 1; */
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: rotate(24deg);
+  animation: zoomInOut 3s infinite;
+  animation-play-state: paused;
+}
+
+/* .catch_ball.catch_ball_animate {
+  animation: zoomInOut 1.5s;
+} */
+
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.userInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+  align-items: center;
+  justify-content: left;
+  font-size: 40px;
+  font-weight: bold;
+  gap: 10px;
+  text-shadow: 0 0 2px rgb(163, 71, 71);
 }
 
 /* .el_column {
@@ -144,12 +186,11 @@ function getPokemonUrl(id: string): string {
 }
 
 .poke_image {
-  width: 70px !important;
+  width: 60px !important;
   /* height: 70px !important; */
   margin: 10px;
   border-radius: 50%;
   object-fit: cover;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   transition: transform 0.2s;
 }
 

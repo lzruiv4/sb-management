@@ -4,7 +4,7 @@
       "id": "ad1",
       "firstname": "Z",
       "lastname": "L",
-      "poke_coin": 10
+      "poke_coin": 1
     },
     {
       "id": "user2",
@@ -27,39 +27,51 @@
   ],
   "pokemonRecords": [
     {
-      "id": "1",
+      "id": "994e",
       "poke_id": "1",
-      "catch_time": "Wed Oct 04 2023 13:15:12 GMT+0200 (GMT+02:00)",
+      "catch_time": "Mon Apr 14 2023 14:45:41 GMT+0200 (中欧夏令时间)",
       "user_id": "ad1"
     },
     {
-      "id": "2",
-      "poke_id": "4",
-      "catch_time": "Wed Oct 04 2023 14:15:12 GMT+0200 (GMT+02:00)",
+      "id": "2dcd",
+      "poke_id": "5",
+      "catch_time": "Mon Apr 14 2022 14:45:47 GMT+0200 (中欧夏令时间)",
       "user_id": "ad1"
     },
     {
-      "id": "3",
+      "id": "53fe",
+      "poke_id": "3",
+      "catch_time": "Mon Apr 14 2024 14:46:00 GMT+0200 (中欧夏令时间)",
+      "user_id": "ad1"
+    },
+    {
+      "id": "2da9",
       "poke_id": "7",
-      "catch_time": "Wed Oct 04 2023 16:15:12 GMT+0200 (GMT+02:00)",
+      "catch_time": "Mon Apr 14 2025 15:17:16 GMT+0200 (中欧夏令时间)",
       "user_id": "ad1"
     },
     {
-      "id": "1",
-      "poke_id": "1",
-      "catch_time": "Wed Oct 04 2024 13:15:12 GMT+0200 (GMT+02:00)",
+      "id": "c53b",
+      "poke_id": "34",
+      "catch_time": "Mon Apr 14 2025 15:31:55 GMT+0200 (中欧夏令时间)",
       "user_id": "ad1"
     },
     {
-      "id": "2",
-      "poke_id": "4",
-      "catch_time": "Wed Oct 04 2024 14:15:12 GMT+0200 (GMT+02:00)",
+      "id": "6e48",
+      "poke_id": "86",
+      "catch_time": "Mon Apr 14 2025 16:02:52 GMT+0200 (中欧夏令时间)",
       "user_id": "ad1"
     },
     {
-      "id": "3",
-      "poke_id": "7",
-      "catch_time": "Wed Oct 04 2025 16:15:12 GMT+0200 (GMT+02:00)",
+      "id": "5e1f",
+      "poke_id": "53",
+      "catch_time": "Mon Apr 14 2025 16:23:55 GMT+0200 (中欧夏令时间)",
+      "user_id": "ad1"
+    },
+    {
+      "id": "7703",
+      "poke_id": "70",
+      "catch_time": "Mon Apr 14 2025 16:25:43 GMT+0200 (中欧夏令时间)",
       "user_id": "ad1"
     }
   ]

@@ -5,8 +5,11 @@
         class="catch_ball"
         :style="{ animationPlayState: shouldAnimate ? 'running' : 'paused' }"
       >
-        <PokemonIcon style="width: 60%" />
+        <PokemonIcon style="width: 60%" @click="callDialog" />
       </div>
+      <CatchPokemonDialog
+        v-model:callDialogInComponent="showCatchPokemonDialog"
+      />
       <div class="userInfo">
         <a>Firstname: {{ user.firstname }}</a>
         <a>Lastname: {{ user.lastname }}</a>
@@ -56,17 +59,19 @@
 import PokemonIcon from "@/components/PokemonIcon.vue";
 import { usePokemonStore } from "@/store/PokemonStore";
 import { usePokemonRecordsStore } from "@/store/PokemonRecordsStore";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useUserStore } from "@/store/UserStore";
+import CatchPokemonDialog from "@/components/CatchPokemonDialog.vue";
 
 const pokemonStore = usePokemonStore();
 const pokemonRecordsStore = usePokemonRecordsStore();
 const userStore = useUserStore();
 const pokemons = computed(() => pokemonStore.detailed);
-const tableData = computed(() => groupByDate(pokemonRecordsStore.detailed));
+const tableData = ref<TableItem[]>([]);
 const user = computed(() => userStore.user);
 
 const shouldAnimate = computed(() => user.value.poke_coin > 0);
+const showCatchPokemonDialog = ref(false);
 
 interface TableItem {
   date: string;
@@ -78,9 +83,9 @@ onMounted(async () => {
     await pokemonStore.getPokemon();
     if (!pokemonStore.loading) {
       await pokemonRecordsStore.getRecords();
+      tableData.value = groupByDate(pokemonRecordsStore.records);
     }
     await userStore.getCurrentUser();
-    // user.value = userStore.user;
   } catch (e) {
     console.error(e);
   }
@@ -103,6 +108,11 @@ function groupByDate(
 
 function getPokemonUrl(id: string): string {
   return pokemons.value?.at(parseInt(id) - 1)?.image ?? "";
+}
+
+function callDialog() {
+  // tableData.value = groupByDate(pokemonRecordsStore.records);
+  return (showCatchPokemonDialog.value = !showCatchPokemonDialog.value);
 }
 </script>
 
@@ -169,7 +179,7 @@ function getPokemonUrl(id: string): string {
 
 .dateStyle {
   flex: 1;
-  font-size: 30px; /* 设置文字大小 */
+  font-size: 25px; /* 设置文字大小 */
   text-align: center;
   font-weight: bold;
   text-shadow: 0 0 2px rgb(61, 60, 60);

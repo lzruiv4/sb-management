@@ -11,7 +11,7 @@ export interface IPokemonInList {
 
 export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", {
   state: () => ({
-    detailed: [] as IPokemonInList[],
+    records: [] as IPokemonInList[],
     loading: false,
   }),
   actions: {
@@ -19,7 +19,7 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", {
       try {
         this.loading = true;
         const res = await axios.get(PokemonRecordsAPI);
-        this.detailed = res.data.map((item: IPokemonInList) => {
+        this.records = res.data.map((item: IPokemonInList) => {
           return {
             id: item.id,
             poke_id: item.poke_id,
@@ -33,6 +33,20 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", {
         throw error; // 重新抛出错误以便组件可以处理
       } finally {
         this.loading = false; // 无论成功失败都停止加载
+        console.log(this.records);
+      }
+    },
+
+    async catchANewPokemon(newPokemon: {
+      poke_id: string;
+      catch_time: string;
+      user_id: string;
+    }) {
+      try {
+        const res = await axios.post(PokemonRecordsAPI, newPokemon);
+        this.records.push(res.data);
+      } catch (error) {
+        console.error("Pokemon ran away");
       }
     },
   },

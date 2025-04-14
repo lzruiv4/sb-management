@@ -1,8 +1,9 @@
 import { PokemonRecordsAPI, testUser } from "@/model/GameAPI";
 import axios from "axios";
 import { defineStore } from "pinia";
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { usePokemonStore } from "./PokemonStore";
+import { dateFormatterDMY } from "@/utils/DateTools";
 
 export interface IPokemonInList {
   id: string;
@@ -48,7 +49,6 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
     data.forEach(({ catch_time, poke_id }) => {
       if (!map.has(catch_time)) map.set(catch_time, []);
       map.get(catch_time)?.push(getPokemonUrl(poke_id));
-      console.log(getPokemonUrl(poke_id));
     });
 
     return Array.from(map.entries()).map(([date, pokemonUrls]) => ({
@@ -60,17 +60,6 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
   const getPokemonUrl = (id: string): string =>
     pokemonStore.pokemons?.at(parseInt(id) - 1)?.image ?? "";
 
-  function dateFormatter(dateString: string): string {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    // const hours = String(date.getHours()).padStart(2, "0");
-    // const minutes = String(date.getMinutes()).padStart(2, "0");
-    // return `${day}-${month}-${year} ${hours}:${minutes}`;
-    return `${day}-${month}-${year}`;
-  }
-
   async function getRecords() {
     try {
       // this.loading = true;
@@ -81,11 +70,10 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
           return {
             id: item.id,
             poke_id: item.poke_id,
-            catch_time: dateFormatter(item.catch_time),
+            catch_time: dateFormatterDMY(item.catch_time),
             user_id: item.user_id,
           };
         });
-      // tableData = groupByRecords(records.value);
     } catch (error) {
       console.error("Get Pokémon failed:", error);
       throw error;
@@ -104,7 +92,8 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
         PokemonRecordsAPI,
         newPokemon
       );
-      records.value.push(res.data);
+      res.data.catch_time = dateFormatterDMY(res.data.catch_time);
+      records.value = [...records.value, res.data];
     } catch (error) {
       console.error("Pokemon ran away");
     }
@@ -116,7 +105,6 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
     tableData,
     groupByRecords,
     getPokemonUrl,
-    dateFormatter,
     getRecords,
     catchANewPokemon,
   };

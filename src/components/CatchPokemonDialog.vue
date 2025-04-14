@@ -24,6 +24,8 @@ import { PokemonMenge } from "@/model/PokemonAPI";
 import { testUser } from "@/model/GameAPI";
 import { useUserStore } from "@/store/UserStore";
 import { usePokemonRecordsStore } from "@/store/PokemonRecordsStore";
+import { dateFormatter } from "@/utils/DateTools";
+// import { dateFormatter } from "@/store/PokemonRecordsStore";
 
 const userStore = useUserStore();
 const pokemonRecordsStore = usePokemonRecordsStore();
@@ -53,10 +55,11 @@ const emitClose = () => {
 };
 
 function catchNewPokemon() {
-  if (user.value.poke_coin > 0) {
+  console.log(dateFormatter(new Date().toString()));
+  if (user.value !== null && user.value.poke_coin > 0) {
     pokemonRecordsStore.catchANewPokemon({
       poke_id: (Math.floor(Math.random() * PokemonMenge) + 1).toString(),
-      catch_time: new Date().toString(),
+      catch_time: dateFormatter(new Date().toString()),
       // TODO: After login feature should changed
       user_id: testUser,
     });

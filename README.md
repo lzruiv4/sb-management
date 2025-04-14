@@ -2,8 +2,9 @@
 
 ##### Done
 
-1.Display of Pokémon encyclopedia, the number to be displayed can be defined in `PokemonMenge` in the `/src/model/PokemonAPI.ts` 
-2. Pokémon can be captured randomly, which requires a pokemon coin 
+1. Display of Pokémon encyclopedia, the number to be displayed can be defined in `PokemonMenge` in the `/src/model/PokemonAPI.ts`
+
+2. Pokémon can be captured randomly, which requires a pokemon coin
 3. Pokemon coin recharge is realized
 
 ### Compiles and minifies for production

@@ -1,7 +1,7 @@
-import { PokemonRecordsAPI } from "@/model/GameAPI";
+import { PokemonRecordsAPI, testUser } from "@/model/GameAPI";
 import axios from "axios";
 import { defineStore } from "pinia";
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { usePokemonStore } from "./PokemonStore";
 
 export interface IPokemonInList {
@@ -18,20 +18,28 @@ export interface TableItem {
 
 export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
   const pokemonStore = usePokemonStore();
+  pokemonStore.getPokemons();
 
   const records = ref<IPokemonInList[]>([]);
   const loading = ref(false);
 
-  const tableData = ref<TableItem[]>([]);
+  // const tableData = ref<TableItem[]>([]);
+  const tableData = computed<TableItem[]>(() => groupByRecords(records.value));
 
-  watch(
-    [records, tableData],
-    ([newRecords, newTableData], [oldRecords, oldTableData]) => {
-      if (newRecords !== oldRecords || newTableData !== oldTableData) {
-        console.log("Something changed in PokemonRecordStore.");
-      }
-    }
-  );
+  // watch(
+  //   [records, tableData],
+  //   ([newRecords, newTableData], [oldRecords, oldTableData]) => {
+  //     if (newRecords !== oldRecords || newTableData !== oldTableData) {
+  //       console.log("Something changed in PokemonRecordStore.");
+  //     }
+  //   }
+  // );
+
+  // watch(tableData, (newTableData) => {
+  //   if (newTableData) {
+  //     console.log("Something changed in PokemonRecordStore.");
+  //   }
+  // });
 
   const groupByRecords = (
     data: Array<{ catch_time: string; poke_id: string }>
@@ -67,15 +75,17 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
     try {
       // this.loading = true;
       const res = await axios.get(PokemonRecordsAPI);
-      records.value = res.data.map((item: IPokemonInList) => {
-        return {
-          id: item.id,
-          poke_id: item.poke_id,
-          catch_time: dateFormatter(item.catch_time),
-          user_id: item.user_id,
-        };
-      });
-      tableData.value = groupByRecords(records.value);
+      records.value = res.data
+        .filter((record: IPokemonInList) => record.user_id === testUser)
+        .map((item: IPokemonInList) => {
+          return {
+            id: item.id,
+            poke_id: item.poke_id,
+            catch_time: dateFormatter(item.catch_time),
+            user_id: item.user_id,
+          };
+        });
+      // tableData = groupByRecords(records.value);
     } catch (error) {
       console.error("Get Pokémon failed:", error);
       throw error;
@@ -90,9 +100,11 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
     user_id: string;
   }) {
     try {
-      const res = await axios.post(PokemonRecordsAPI, newPokemon);
+      const res = await axios.post<IPokemonInList>(
+        PokemonRecordsAPI,
+        newPokemon
+      );
       records.value.push(res.data);
-      tableData.value = groupByRecords(records.value);
     } catch (error) {
       console.error("Pokemon ran away");
     }

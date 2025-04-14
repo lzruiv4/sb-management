@@ -41,7 +41,7 @@
                 v-for="(pokemonUrl, index) in scope.row.pokemonUrls"
                 :key="index"
                 :src="pokemonUrl"
-                :preview-src-list="scope.row.images"
+                :preview-src-list="scope.row.pokemonUrls"
                 fit="cover"
                 :initial-index="index"
                 class="poke_image"

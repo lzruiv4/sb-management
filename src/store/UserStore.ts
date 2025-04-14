@@ -5,7 +5,12 @@ import { defineStore } from "pinia";
 import { ref, watch } from "vue";
 
 export const useUserStore = defineStore("userStore", () => {
-  const user = ref<IUser | null>(null);
+  const user = ref<IUser>({
+    id: "",
+    firstname: "",
+    lastname: "",
+    poke_coin: 0,
+  });
   const loading = ref(false);
 
   // check for data has been loading
@@ -28,6 +33,7 @@ export const useUserStore = defineStore("userStore", () => {
 
   async function updateUser(newUser: IUser) {
     try {
+      console.log(newUser);
       const res = await axios.put(UserAPI + "/" + testUser, newUser);
       user.value = res.data;
     } catch (error) {

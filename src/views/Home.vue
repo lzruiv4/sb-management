@@ -18,8 +18,8 @@
   align-items: center;
   height: 100%;
   font-size: 200px;
-  color: rgb(255, 162, 162);
+  /* color: rgb(255, 162, 162); */
   font-weight: bold;
-  text-shadow: 0 0 4cqh rgb(61, 60, 60);
+  text-shadow: 0 0 5px rgb(61, 60, 60);
 }
 </style>

@@ -4,29 +4,65 @@
     @close="emitClose"
     @update:modelValue="emitClose"
     title="Tipp"
+    class="dialog_css"
   >
-    <span class="spanDialog"
-      >Are you sure you want to get a new Pokémon? It will cost you one pokemon
-      coin?</span
-    >
-    <template #footer>
-      <el-button @click="onCancel">Cancel</el-button>
-      <el-button type="primary" @click="onConfirm">Confirm</el-button>
-    </template>
+    <div>
+      <span class="span_css">{{ message }}</span>
+    </div>
+    <div>
+      <el-select
+        v-if="userStore.user.poke_coin === 0"
+        v-model="selectedValue"
+        placeholder="Select"
+        class="select_css"
+      >
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </div>
+    <div class="button_css">
+      <el-button
+        style="width: 30%; height: 50px; font-size: 25px"
+        @click="onCancel"
+        >Cancel</el-button
+      >
+      <el-button
+        style="width: 30%; height: 50px; font-size: 25px"
+        type="primary"
+        @click="onConfirm"
+        >Confirm</el-button
+      >
+    </div>
   </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, computed } from "vue";
+import { defineProps, defineEmits, computed, ref } from "vue";
 import { PokemonMenge } from "@/model/PokemonAPI";
 import { testUser } from "@/model/GameAPI";
 import { useUserStore } from "@/store/UserStore";
 import { usePokemonRecordsStore } from "@/store/PokemonRecordsStore";
 import { dateFormatter } from "@/utils/DateTools";
+import { getMessage, getSomeCoin } from "@/model/GameMessage";
 
 const userStore = useUserStore();
 const pokemonRecordsStore = usePokemonRecordsStore();
-const user = computed(() => userStore.user);
+
+const selectedValue = ref("0");
+
+const options = [
+  { label: "1 Pokemon coin", value: 1 },
+  { label: "5 Pokemon coin", value: 5 },
+  { label: "10 Pokemon coin", value: 10 },
+];
+
+const message = computed(() => {
+  return userStore.user.poke_coin > 0 ? getMessage : getSomeCoin;
+});
 
 defineProps<{
   callDialogInComponent: boolean;
@@ -38,7 +74,7 @@ const emit = defineEmits<{
 
 const onConfirm = () => {
   emit("update:callDialogInComponent", false);
-  catchNewPokemon();
+  userStore.user.poke_coin > 0 ? catchNewPokemon() : balanceTopUp();
 };
 
 const onCancel = () => {
@@ -50,8 +86,7 @@ const emitClose = () => {
 };
 
 function catchNewPokemon() {
-  console.log(dateFormatter(new Date().toString()));
-  if (user.value !== null && user.value.poke_coin > 0) {
+  if (userStore.user.poke_coin > 0) {
     pokemonRecordsStore.catchANewPokemon({
       poke_id: (Math.floor(Math.random() * PokemonMenge) + 1).toString(),
       catch_time: dateFormatter(new Date().toString()),
@@ -59,17 +94,45 @@ function catchNewPokemon() {
       user_id: testUser,
     });
     userStore.updateUser({
-      id: user.value.id,
-      firstname: user.value.firstname,
-      lastname: user.value.lastname,
-      poke_coin: user.value.poke_coin - 1,
+      id: userStore.user.id,
+      firstname: userStore.user.firstname,
+      lastname: userStore.user.lastname,
+      poke_coin: userStore.user.poke_coin - 1,
     });
   }
+}
+
+function balanceTopUp() {
+  // TODO
+  userStore.updateUser({
+    id: userStore.user.id,
+    firstname: userStore.user.firstname,
+    lastname: userStore.user.lastname,
+    poke_coin: userStore.user.poke_coin + parseInt(selectedValue.value),
+  });
 }
 </script>
 
 <style scope>
-.spanDialog {
+.span_css {
+  display: flex;
   font-size: 30px;
+  margin: 20px;
+}
+
+.dialog_css {
+  gap: 10px;
+}
+
+.select_css {
+  max-width: 90%;
+  margin: 20px;
+}
+
+.button_css {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 </style>

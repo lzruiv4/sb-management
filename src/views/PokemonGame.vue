@@ -1,25 +1,28 @@
 <template>
   <div class="game_container">
     <div class="user_container">
-      <div
-        class="catch_ball"
-        :style="{ animationPlayState: shouldAnimate ? 'running' : 'paused' }"
-      >
-        <PokemonIcon style="width: 60%" @click="callDialog" />
+      <div class="div_ball">
+        <PokemonIcon
+          :class="
+            userStore.user.poke_coin > 0 ? 'catch_ball' : 'no_ball_animation'
+          "
+          @click="callDialog"
+        />
       </div>
       <CatchPokemonDialog
         v-model:callDialogInComponent="showCatchPokemonDialog"
       />
       <div class="userInfo">
-        <a>Firstname: {{ userStore.user ? userStore.user.firstname : "" }}</a>
-        <a>Lastname: {{ userStore.user ? userStore.user.lastname : "" }}</a>
-        <a>Coin: {{ userStore.user ? userStore.user.poke_coin : "" }}</a>
+        <a>Firstname: {{ userStore.user.firstname }}</a>
+        <a>Lastname: {{ userStore.user.lastname }}</a>
+        <a>Coin: {{ userStore.user.poke_coin }}</a>
       </div>
     </div>
     <div class="user_history">
       <el-table
         :data="pokemonRecordsStore.tableData"
         stripe
+        :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{
           background: '#f5f7fa',
           color: '#606266',
@@ -93,18 +96,24 @@ function callDialog() {
   display: flex;
 }
 
-.catch_ball {
+.div_ball {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: zoomInOut 3s infinite;
-  animation-play-state: paused;
 }
 
-/* .catch_ball.catch_ball_animate {
-  animation: zoomInOut 1.5s;
-} */
+.catch_ball {
+  animation: zoomInOut 3s infinite;
+}
+
+.no_ball_animation {
+  animation: none;
+}
+
+.catch_ball:hover {
+  animation-play-state: paused;
+}
 
 @keyframes zoomInOut {
   0% {
@@ -123,11 +132,10 @@ function callDialog() {
   display: flex;
   flex-direction: column;
   margin: 50px;
-  align-items: center;
-  justify-content: left;
+  align-items: left;
+  justify-content: center;
   font-size: 40px;
   font-weight: bold;
-  gap: 10px;
   text-shadow: 0 0 2px rgb(163, 71, 71);
 }
 

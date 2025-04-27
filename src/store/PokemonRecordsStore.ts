@@ -1,4 +1,4 @@
-import { PokemonRecordsAPI, testUser } from "@/model/GameAPI";
+import { POKEMON_RECORDS_API, testUser } from "@/api/GameAPI";
 import axios from "axios";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
@@ -63,7 +63,7 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
   async function getRecords() {
     try {
       // this.loading = true;
-      const res = await axios.get(PokemonRecordsAPI);
+      const res = await axios.get(POKEMON_RECORDS_API);
       records.value = res.data
         .filter((record: IPokemonInList) => record.user_id === testUser)
         .map((item: IPokemonInList) => {
@@ -89,7 +89,7 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
   }) {
     try {
       const res = await axios.post<IPokemonInList>(
-        PokemonRecordsAPI,
+        POKEMON_RECORDS_API,
         newPokemon
       );
       res.data.catch_time = dateFormatterDMY(res.data.catch_time);

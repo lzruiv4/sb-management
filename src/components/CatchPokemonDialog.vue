@@ -42,12 +42,15 @@
 
 <script setup lang="ts">
 import { defineProps, defineEmits, computed, ref } from "vue";
-import { PokemonMenge } from "@/model/PokemonAPI";
-import { testUser } from "@/model/GameAPI";
+import { POKEMON_AMOUNT } from "@/api/PokemonAPI";
+import { testUser } from "@/api/GameAPI";
 import { useUserStore } from "@/store/UserStore";
 import { usePokemonRecordsStore } from "@/store/PokemonRecordsStore";
 import { dateFormatter } from "@/utils/DateTools";
-import { getMessage, getSomeCoin } from "@/model/GameMessage";
+import {
+  SET_CAPTURE_A_NEW_POKEMON_MESSAGE,
+  SET_RECHARGE_POKEMON_COIN_MESSAGE,
+} from "@/model/GameMessage";
 
 const userStore = useUserStore();
 const pokemonRecordsStore = usePokemonRecordsStore();
@@ -61,7 +64,9 @@ const options = [
 ];
 
 const message = computed(() => {
-  return userStore.user.poke_coin > 0 ? getMessage : getSomeCoin;
+  return userStore.user.poke_coin > 0
+    ? SET_CAPTURE_A_NEW_POKEMON_MESSAGE
+    : SET_RECHARGE_POKEMON_COIN_MESSAGE;
 });
 
 defineProps<{
@@ -88,7 +93,7 @@ const emitClose = () => {
 function catchNewPokemon() {
   if (userStore.user.poke_coin > 0) {
     pokemonRecordsStore.catchANewPokemon({
-      poke_id: (Math.floor(Math.random() * PokemonMenge) + 1).toString(),
+      poke_id: (Math.floor(Math.random() * POKEMON_AMOUNT) + 1).toString(),
       catch_time: dateFormatter(new Date().toString()),
       // TODO: After login feature should changed
       user_id: testUser,

@@ -1,4 +1,4 @@
-import { testUser, UserAPI } from "@/model/GameAPI";
+import { testUser, USER_API } from "@/api/GameAPI";
 import { IUser } from "@/model/IUser";
 import axios from "axios";
 import { defineStore } from "pinia";
@@ -21,7 +21,7 @@ export const useUserStore = defineStore("userStore", () => {
   async function getCurrentUser() {
     try {
       loading.value = true;
-      const res = await axios.get(UserAPI + "/" + testUser);
+      const res = await axios.get(USER_API + "/" + testUser);
       user.value = res.data;
     } catch (error) {
       console.error("Get user failed:", error);
@@ -34,7 +34,7 @@ export const useUserStore = defineStore("userStore", () => {
   async function updateUser(newUser: IUser) {
     try {
       console.log(newUser);
-      const res = await axios.put(UserAPI + "/" + testUser, newUser);
+      const res = await axios.put(USER_API + "/" + testUser, newUser);
       user.value = res.data;
     } catch (error) {
       console.error("User update failed", error);

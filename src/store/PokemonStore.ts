@@ -1,6 +1,6 @@
 import { IPokemon } from "@/model/IPokemon";
 import { IPokemonAPIList } from "@/model/IPokemonAPIList";
-import { PokemonAPI } from "@/model/PokemonAPI";
+import { POKEMON_API } from "@/api/PokemonAPI";
 import axios from "axios";
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
@@ -17,7 +17,7 @@ export const usePokemonStore = defineStore("pokemonStore", () => {
   async function getPokemons() {
     try {
       loading.value = true;
-      const res = await axios.get(PokemonAPI);
+      const res = await axios.get(POKEMON_API);
       const results: IPokemonAPIList[] = res.data.results;
 
       pokemons.value = await Promise.all(

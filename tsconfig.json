@@ -12,7 +12,7 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": ["vite/client", "element-plus/global"],
+    "types": ["vite/client", "element-plus/global", "vitest/globals"],
     "lib": ["ESNext", "DOM", "DOM.Iterable"]
   },
   "include": [

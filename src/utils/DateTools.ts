@@ -1,15 +1,40 @@
-// Input : 14-04-2025 22:20:37 Output : 14-04-2025
+/**
+ * 从日期时间字符串提取日期部分 (DD-MM-YYYY)
+ * @param dateString 格式应为 "DD-MM-YYYY HH:mm:ss"
+ */
 export function dateFormatterDMY(dateString: string): string {
-  return dateString.split(" ")[0];
+  if (typeof dateString !== "string") return "";
+  const trimmed = dateString.trim();
+  return trimmed.split(/\s+/)[0] || trimmed;
 }
 
-export function dateFormatter(dateString: string): string {
-  const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = date.getFullYear();
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  const seconds = String(date.getSeconds()).padStart(2, "0");
-  return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+/**
+ * 标准化日期格式 (UTC时间，DD-MM-YYYY HH:mm:ss)
+ * @param input 可接受: Date对象/ISO字符串/时间戳/本地日期字符串
+ */
+export function dateFormatter(input: string | number | Date): string {
+  const date = new Date(input);
+
+  if (isNaN(date.getTime())) {
+    throw new Error(`Invalid date input: ${input}`);
+  }
+
+  // UTC时间组件
+  const components = {
+    day: date.getUTCDate(),
+    month: date.getUTCMonth() + 1,
+    year: date.getUTCFullYear(),
+    hours: date.getUTCHours(),
+    minutes: date.getUTCMinutes(),
+    seconds: date.getUTCSeconds(),
+  };
+
+  // 两位数填充
+  const pad = (num: number) => num.toString().padStart(2, "0");
+
+  return `${pad(components.day)}-${pad(components.month)}-${
+    components.year
+  } ${pad(components.hours)}:${pad(components.minutes)}:${pad(
+    components.seconds
+  )}`;
 }

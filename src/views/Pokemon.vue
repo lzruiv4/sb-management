@@ -1,12 +1,8 @@
 <template>
   <div class="pokemon-content">
-    <div class="pokemon-list">
-      <ul>
-        <li
-          v-for="pokemon in pagination.pokemonPaginated"
-          :key="pokemon.id"
-          class="select-poke"
-        >
+    <div class="pokemon-box pokemon-list">
+      <ul class="select-poke">
+        <li v-for="pokemon in pagination.pokemonPaginated" :key="pokemon.id">
           <!--拼接写法-->
           <!-- <RouterLink :to="`/detail?name=${pokemon.name}`"> -->
           <!--拼接写法-->
@@ -24,23 +20,26 @@
             <!-- <div class="ballIcon">
               <PokemonIcon v-if="pokemon.id in catchendPokemons" />
             </div> -->
-            <img
-              :src="pokemon.image"
-              alt="pokemon image"
-              class="pokemon-foto"
-            />
+            <div class="foto-div">
+              <img
+                :src="pokemon.image"
+                alt="pokemon image"
+                class="pokemon-foto"
+              />
+            </div>
             <a class="pname">{{ pokemon.name.toUpperCase() }}</a>
           </RouterLink>
         </li>
-        <PokemonListPagination
-          :current-page="pagination.currentPage"
-          :total-pages="pagination.totalPages"
-          @prev="pagination.prevPage"
-          @next="pagination.nextPage"
-        />
       </ul>
+
+      <PokemonListPagination
+        :current-page="pagination.currentPage"
+        :total-pages="pagination.totalPages"
+        @prev="pagination.prevPage"
+        @next="pagination.nextPage"
+      />
     </div>
-    <div class="pokemon-detail">
+    <div class="pokemon-box pokemon-detail">
       <router-view v-slot="{ Component }">
         <component v-if="Component" :is="Component" />
         <PokemonIcon v-else />
@@ -66,15 +65,27 @@ onMounted(() => pokemonStore.getPokemons());
 <style scoped>
 .pokemon-content {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+}
+
+.pokemon-box {
+  min-width: 400px;
 }
 
 .pokemon-list {
-  flex: 3;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
 }
 
 .pokemon-detail {
-  flex: 5;
+  flex: 3;
+  max-width: 1000px;
   display: flex; /* 这里必须加上，不然下面的语句无效*/
   justify-content: center;
   align-items: center;
@@ -84,11 +95,11 @@ onMounted(() => pokemonStore.getPokemons());
   display: flex;
   align-items: center;
   justify-items: center;
-  height: 70px;
-  margin: 8px 0;
+  height: 80px;
+  margin: 10px 0;
   border: 1px solid #4e4e4e; /* 添加分割线 */
   border-radius: 10px;
-  padding: 8px;
+  padding: 10px;
   gap: 10px;
   transition: transform 0.5s ease;
 }
@@ -103,22 +114,20 @@ onMounted(() => pokemonStore.getPokemons());
   list-style: none;
 }
 
-/* .ballIcon {
-  flex: 1;
-  width: 5px;
-  height: 5px;
-  transform: rotate(20deg);
-} */
+.foto-div {
+  width: 70px; /*设置图片大小*/
+  height: 80px;
+}
 
 .pokemon-foto {
   flex: 1;
-  width: 50px; /*设置图片大小*/
-  height: auto;
-  padding-right: 5px; /* 图片与名字之间的间距 */
+  width: 90%;
+  height: 90%;
+  padding-right: 10px; /* 图片与名字之间的间距 */
 }
 
 .pname {
-  flex: 8;
+  flex: 6;
   font-size: 30px; /* 设置文字大小 */
   text-align: left;
   font-weight: bold;

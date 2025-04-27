@@ -7,7 +7,7 @@
     >
       Previous
     </button>
-    <span>{{ currentPage }} / {{ totalPages }}</span>
+    <span>{{ currentPage }}/{{ totalPages }}</span>
     <button
       @click="$emit('next')"
       :disabled="currentPage === totalPages"
@@ -31,24 +31,23 @@ defineProps<{
   display: flex;
   justify-items: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   padding: 5px;
-  /* border: 0px solid #ccc; */
 }
 
 .buttonInPage {
   font-size: medium;
   font-weight: bold;
-  width: 120px;
+  width: 100px;
   height: 50px;
-  background-color: rgb(223, 0, 171);
+  background-color: #ff9a9a;
   box-shadow: 0 0 15px black;
   border-radius: 15px;
-  align-items: center;
+  /* align-items: center; */
   transition: transform 0.2s ease;
 }
 
 .buttonInPage:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 </style>

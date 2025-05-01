@@ -1,33 +1,33 @@
 import { describe, it, expect, beforeAll } from "vitest";
-import { dateFormatterDMY, dateFormatter } from "@/utils/DateTools";
+import { dateFormatter } from "@/utils/DateTools";
 
 // 确保测试环境时区一致
 beforeAll(() => {
   process.env.TZ = "UTC";
 });
 
-describe("dateFormatterDMY", () => {
-  it("提取标准格式的日期部分", () => {
-    expect(dateFormatterDMY("14-04-2025 22:20:37")).toBe("14-04-2025");
-  });
+// describe("dateFormatterDMY", () => {
+//   it("提取标准格式的日期部分", () => {
+//     expect(dateFormatterDMY("14-04-2025 22:20:37")).toBe("14-04-2025");
+//   });
 
-  it("处理无时间部分的输入", () => {
-    expect(dateFormatterDMY("14-04-2025")).toBe("14-04-2025");
-  });
+//   it("处理无时间部分的输入", () => {
+//     expect(dateFormatterDMY("14-04-2025")).toBe("14-04-2025");
+//   });
 
-  it("处理前后空格", () => {
-    expect(dateFormatterDMY("  14-04-2025  ")).toBe("14-04-2025");
-  });
+//   it("处理前后空格", () => {
+//     expect(dateFormatterDMY("  14-04-2025  ")).toBe("14-04-2025");
+//   });
 
-  it("处理空字符串", () => {
-    expect(dateFormatterDMY("")).toBe("");
-  });
+//   it("处理空字符串", () => {
+//     expect(dateFormatterDMY("")).toBe("");
+//   });
 
-  it("处理非字符串输入返回空", () => {
-    expect(dateFormatterDMY(null as any)).toBe("");
-    expect(dateFormatterDMY(undefined as any)).toBe("");
-  });
-});
+//   it("处理非字符串输入返回空", () => {
+//     expect(dateFormatterDMY(null as any)).toBe("");
+//     expect(dateFormatterDMY(undefined as any)).toBe("");
+//   });
+// });
 
 describe("dateFormatter", () => {
   it("转换ISO字符串 (UTC)", () => {

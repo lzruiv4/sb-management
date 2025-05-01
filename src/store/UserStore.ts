@@ -1,15 +1,17 @@
 import { testUser, USER_API } from "@/api/GameAPI";
-import { IUser } from "@/model/IUser";
+import { IUser, IUserDTO } from "@/model/IUser";
 import axios from "axios";
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
 
 export const useUserStore = defineStore("userStore", () => {
   const user = ref<IUser>({
-    id: "",
+    userId: "",
+    username: "",
+    createdAt: undefined,
     firstname: "",
     lastname: "",
-    poke_coin: 0,
+    pokemonCoin: 0,
   });
   const loading = ref(false);
 
@@ -31,10 +33,12 @@ export const useUserStore = defineStore("userStore", () => {
     }
   }
 
-  async function updateUser(newUser: IUser) {
+  async function updateUser(newUserDTO: IUserDTO) {
     try {
-      console.log(newUser);
-      const res = await axios.put(USER_API + "/" + testUser, newUser);
+      console.log("Before update ", newUserDTO);
+      newUserDTO.id = testUser;
+      const res = await axios.put(USER_API + "/" + testUser, newUserDTO);
+      console.log(res.data);
       user.value = res.data;
     } catch (error) {
       console.error("User update failed", error);

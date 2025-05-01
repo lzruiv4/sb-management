@@ -2,51 +2,20 @@
   "users": [
     {
       "id": "ad1",
+      "username": "ad1-username",
+      "createdAt": "2024-04-29 19:22:20.134051",
       "firstname": "Jack",
       "lastname": "Chen",
-      "poke_coin": 0
+      "pokemonCoin": 0
     },
     {
       "id": "user2",
-      "firstname": "Tommy",
-      "lastname": "Wang",
-      "poke_coin": 1
+      "username": "user2-username",
+      "firstname": "Melanie1",
+      "lastname": "Chen",
+      "pokemonCoin": 1
     }
   ],
-  "pokemonRecords": [
-    {
-      "id": "07c5",
-      "poke_id": "103",
-      "catch_time": "24-04-2025 20:27:38",
-      "user_id": "ad1",
-      "isRelease": false
-    },
-    {
-      "id": "3126",
-      "poke_id": "24",
-      "catch_time": "24-04-2025 20:28:04",
-      "user_id": "ad1",
-      "isRelease": false
-    },
-    {
-      "id": "8702",
-      "poke_id": "64",
-      "catch_time": "24-04-2025 20:28:06",
-      "user_id": "ad1",
-      "isRelease": false
-    },
-    {
-      "id": "692c",
-      "poke_id": "12",
-      "catch_time": "27-04-2025 22:11:51",
-      "user_id": "ad1"
-    },
-    {
-      "id": "b437",
-      "poke_id": "191",
-      "catch_time": "27-04-2025 22:21:48",
-      "user_id": "ad1"
-    }
-  ],
+  "pokemonRecords": [],
   "rechargeRecords": []
 }

@@ -11,7 +11,7 @@
     </div>
     <div>
       <el-select
-        v-if="userStore.user.poke_coin === 0"
+        v-if="userStore.user.pokemonCoin === 0"
         v-model="selectedValue"
         placeholder="Select"
         class="select_css"
@@ -46,7 +46,6 @@ import { POKEMON_AMOUNT } from "@/api/PokemonAPI";
 import { testUser } from "@/api/GameAPI";
 import { useUserStore } from "@/store/UserStore";
 import { usePokemonRecordsStore } from "@/store/PokemonRecordsStore";
-import { dateFormatter } from "@/utils/DateTools";
 import {
   SET_CAPTURE_A_NEW_POKEMON_MESSAGE,
   SET_RECHARGE_POKEMON_COIN_MESSAGE,
@@ -64,7 +63,7 @@ const options = [
 ];
 
 const message = computed(() => {
-  return userStore.user.poke_coin > 0
+  return userStore.user.pokemonCoin > 0
     ? SET_CAPTURE_A_NEW_POKEMON_MESSAGE
     : SET_RECHARGE_POKEMON_COIN_MESSAGE;
 });
@@ -79,7 +78,7 @@ const emit = defineEmits<{
 
 const onConfirm = () => {
   emit("update:callDialogInComponent", false);
-  userStore.user.poke_coin > 0 ? catchNewPokemon() : balanceTopUp();
+  userStore.user.pokemonCoin > 0 ? catchNewPokemon() : balanceTopUp();
 };
 
 const onCancel = () => {
@@ -91,18 +90,18 @@ const emitClose = () => {
 };
 
 function catchNewPokemon() {
-  if (userStore.user.poke_coin > 0) {
+  if (userStore.user.pokemonCoin > 0) {
     pokemonRecordsStore.catchANewPokemon({
-      poke_id: (Math.floor(Math.random() * POKEMON_AMOUNT) + 1).toString(),
-      catch_time: dateFormatter(new Date().toString()),
+      pokemonId: (Math.floor(Math.random() * POKEMON_AMOUNT) + 1).toString(),
       // TODO: After login feature should changed
-      user_id: testUser,
+      userId: testUser,
     });
     userStore.updateUser({
-      id: userStore.user.id,
+      id: testUser,
+      username: userStore.user.username,
       firstname: userStore.user.firstname,
       lastname: userStore.user.lastname,
-      poke_coin: userStore.user.poke_coin - 1,
+      pokemonCoin: userStore.user.pokemonCoin - 1,
     });
   }
 }
@@ -110,10 +109,11 @@ function catchNewPokemon() {
 function balanceTopUp() {
   // TODO
   userStore.updateUser({
-    id: userStore.user.id,
+    id: userStore.user.userId,
+    username: userStore.user.username,
     firstname: userStore.user.firstname,
     lastname: userStore.user.lastname,
-    poke_coin: userStore.user.poke_coin + parseInt(selectedValue.value),
+    pokemonCoin: userStore.user.pokemonCoin + parseInt(selectedValue.value),
   });
 }
 </script>

@@ -1,5 +1,5 @@
 import { IPokemon } from "@/model/IPokemon";
-import { IPokemonAPIList } from "@/model/IPokemonAPIList";
+import { IPokemonAPIList } from "@/model/IPokemon";
 import { POKEMON_API } from "@/api/PokemonAPI";
 import axios from "axios";
 import { defineStore } from "pinia";

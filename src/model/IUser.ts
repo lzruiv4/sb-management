@@ -1,6 +1,17 @@
 export interface IUser {
-  id: string;
+  userId?: string;
+  username: string;
+  createdAt?: Date;
   firstname: string;
   lastname: string;
-  poke_coin: number;
+  pokemonCoin: number;
+}
+
+export interface IUserDTO {
+  id?: string;
+  username: string;
+  createdAt?: Date;
+  firstname: string;
+  lastname: string;
+  pokemonCoin: number;
 }

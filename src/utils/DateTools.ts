@@ -2,10 +2,30 @@
  * 从日期时间字符串提取日期部分 (DD-MM-YYYY)
  * @param dateString 格式应为 "DD-MM-YYYY HH:mm:ss"
  */
-export function dateFormatterDMY(dateString: string): string {
-  if (typeof dateString !== "string") return "";
-  const trimmed = dateString.trim();
-  return trimmed.split(/\s+/)[0] || trimmed;
+// export function dateFormatterDMY(dateString: string): string {
+//   if (typeof dateString !== "string") return "";
+//   const trimmed = dateString.trim();
+//   return trimmed.split(/\s+/)[0] || trimmed;
+// }
+
+export function dateFormatterDMY(input: string): string {
+  const date = new Date(input);
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false, // 强制24小时制
+  });
+
+  // 格式化为 "05/01/2025, 15:55:50"
+  const formatted = formatter.format(date);
+  const [datePart, timePart] = formatted.split(", ");
+  const [month, day, year] = datePart.split("/");
+
+  return `${year}-${month}-${day} ${timePart}`;
 }
 
 /**

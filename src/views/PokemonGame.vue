@@ -4,7 +4,7 @@
       <div class="div_ball">
         <PokemonIcon
           :class="
-            userStore.user.poke_coin > 0 ? 'catch_ball' : 'no_ball_animation'
+            userStore.user.pokemonCoin > 0 ? 'catch_ball' : 'no_ball_animation'
           "
           @click="callDialog"
         />
@@ -15,7 +15,7 @@
       <div class="userInfo">
         <a>Firstname: {{ userStore.user.firstname }}</a>
         <a>Lastname: {{ userStore.user.lastname }}</a>
-        <a>Coin: {{ userStore.user.poke_coin }}</a>
+        <a>Coin: {{ userStore.user.pokemonCoin }}</a>
       </div>
     </div>
     <div class="user_history">
@@ -75,7 +75,7 @@ onMounted(() => {
   pokemonRecordsStore.getRecords();
   userStore.getCurrentUser();
   if (userStore.user) {
-    shouldAnimate.value = userStore.user.poke_coin > 0;
+    shouldAnimate.value = userStore.user.pokemonCoin > 0;
   }
 });
 

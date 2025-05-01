@@ -3,14 +3,7 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { usePokemonStore } from "./PokemonStore";
-import { dateFormatterDMY } from "@/utils/DateTools";
-
-export interface IPokemonInList {
-  id: string;
-  poke_id: string;
-  catch_time: string;
-  user_id: string;
-}
+import { IPokemonRecord, IPokemonRecordDTO } from "@/model/IPokemon";
 
 export interface TableItem {
   date: string;
@@ -21,34 +14,19 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
   const pokemonStore = usePokemonStore();
   pokemonStore.getPokemons();
 
-  const records = ref<IPokemonInList[]>([]);
+  const records = ref<IPokemonRecord[]>([]);
   const loading = ref(false);
 
-  // const tableData = ref<TableItem[]>([]);
   const tableData = computed<TableItem[]>(() => groupByRecords(records.value));
 
-  // watch(
-  //   [records, tableData],
-  //   ([newRecords, newTableData], [oldRecords, oldTableData]) => {
-  //     if (newRecords !== oldRecords || newTableData !== oldTableData) {
-  //       console.log("Something changed in PokemonRecordStore.");
-  //     }
-  //   }
-  // );
-
-  // watch(tableData, (newTableData) => {
-  //   if (newTableData) {
-  //     console.log("Something changed in PokemonRecordStore.");
-  //   }
-  // });
-
-  const groupByRecords = (
-    data: Array<{ catch_time: string; poke_id: string }>
-  ): TableItem[] => {
+  const groupByRecords = (data: IPokemonRecord[]): TableItem[] => {
     const map = new Map<string, string[]>();
-    data.forEach(({ catch_time, poke_id }) => {
-      if (!map.has(catch_time)) map.set(catch_time, []);
-      map.get(catch_time)?.push(getPokemonUrl(poke_id));
+    data.forEach((pokemonRecord) => {
+      if (!map.has(pokemonRecord.captureTime ?? ""))
+        map.set(pokemonRecord.captureTime ?? "", []);
+      map
+        .get(pokemonRecord.captureTime ?? "")
+        ?.push(getPokemonUrl(pokemonRecord.pokemonId));
     });
 
     return Array.from(map.entries()).map(([date, pokemonUrls]) => ({
@@ -63,15 +41,18 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
   async function getRecords() {
     try {
       // this.loading = true;
-      const res = await axios.get(POKEMON_RECORDS_API);
+      const res = await axios.get(POKEMON_RECORDS_API + "?userId=" + testUser);
+      console.log(res.data);
       records.value = res.data
-        .filter((record: IPokemonInList) => record.user_id === testUser)
-        .map((item: IPokemonInList) => {
+        .filter((record: IPokemonRecord) => record.userId === testUser)
+        .map((item: IPokemonRecord) => {
           return {
-            id: item.id,
-            poke_id: item.poke_id,
-            catch_time: dateFormatterDMY(item.catch_time),
-            user_id: item.user_id,
+            id: item.pokemonRecordId,
+            pokemonId: item.pokemonId,
+            captureTime: item.captureTime?.split("T")[0],
+            // captureTime: item.captureTime,
+            userId: item.userId,
+            isRelease: item.isRelease,
           };
         });
     } catch (error) {
@@ -82,17 +63,15 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
     }
   }
 
-  async function catchANewPokemon(newPokemon: {
-    poke_id: string;
-    catch_time: string;
-    user_id: string;
-  }) {
+  async function catchANewPokemon(newPokemonDTO: IPokemonRecordDTO) {
     try {
-      const res = await axios.post<IPokemonInList>(
+      newPokemonDTO.captureTime = new Date().toISOString();
+      const res = await axios.post<IPokemonRecord>(
         POKEMON_RECORDS_API,
-        newPokemon
+        newPokemonDTO
       );
-      res.data.catch_time = dateFormatterDMY(res.data.catch_time);
+      console.log("asdf ", res.data);
+      res.data.captureTime = res.data.captureTime?.split("T")[0];
       records.value = [...records.value, res.data];
     } catch (error) {
       console.error("Pokemon ran away");

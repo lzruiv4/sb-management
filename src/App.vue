@@ -20,8 +20,19 @@
         >
       </div>
     </el-header>
-    <el-main> <RouterView></RouterView> </el-main
-  ></el-container>
+    <a-layout-content style="padding: 10px">
+      <div
+        :style="{
+          background: '#f9f2e0',
+          padding: '20px',
+          minHeight: '280px',
+          borderRadius: '30px',
+        }"
+      >
+        <el-main> <RouterView></RouterView> </el-main>
+      </div>
+    </a-layout-content>
+  </el-container>
 </template>
 
 <script lang="ts" setup name="App">
@@ -30,7 +41,7 @@ import { RouterView, RouterLink } from "vue-router";
 
 <style scoped>
 .el-header {
-  background-color: #0000ff;
+  background-color: #002fa7;
   color: #333;
   text-align: center;
   line-height: 100px;
@@ -43,7 +54,6 @@ import { RouterView, RouterLink } from "vue-router";
   height: 120px !important;
   border-radius: 10px;
 }
-
 /* buttons */
 .navigate {
   text-align: center;

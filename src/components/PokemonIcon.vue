@@ -1,3 +1,3 @@
 <template>
-  <img src="@/assets/poke.png" style="width: 60%" />
+  <img src="@/assets/poke.png" style="width: 70%" />
 </template>

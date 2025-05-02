@@ -26,7 +26,7 @@ export default createRouter({
       component: Pokemon,
       children: [
         {
-          name: "detail1",
+          name: "detail",
           path: "detail",
           component: PokemonDetail,
           props: true,

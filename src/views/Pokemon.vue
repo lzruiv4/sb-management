@@ -28,12 +28,6 @@
           </RouterLink>
         </template>
       </a-list>
-      <PokemonListPagination
-        :current-page="pagination.currentPage"
-        :total-pages="pagination.totalPages"
-        @prev="pagination.prevPage"
-        @next="pagination.nextPage"
-      />
     </div>
     <div class="pokemon-box pokemon-detail">
       <router-view v-slot="{ Component }">
@@ -137,5 +131,7 @@ onMounted(() => pokemonStore.getPokemons());
   font-size: 27px; /* 设置文字大小 */
   text-align: left;
   font-weight: 500;
+  text-shadow: 0 0 5px rgb(61, 60, 60);
+  color: rgb(58, 58, 58);
 }
 </style>

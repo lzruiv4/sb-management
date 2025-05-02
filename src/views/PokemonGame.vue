@@ -64,6 +64,7 @@ import { usePokemonRecordsStore } from "@/store/PokemonRecordsStore";
 import { onMounted, ref } from "vue";
 import { useUserStore } from "@/store/UserStore";
 import CatchPokemonDialog from "@/components/CatchPokemonDialog.vue";
+import RechargeRecordHistory from "@/components/RechargeRecordHistory.vue";
 
 const pokemonRecordsStore = usePokemonRecordsStore();
 const userStore = useUserStore();
@@ -138,13 +139,6 @@ function callDialog() {
   font-weight: bold;
   text-shadow: 0 0 2px rgb(163, 71, 71);
 }
-
-/* .el_column {
-  font-size: 30px;
-  text-align: left;
-  font-weight: bold;
-  text-shadow: 0 0 2px rgb(61, 60, 60);
-} */
 
 .user_history {
   display: flex;

@@ -1,6 +1,8 @@
 const { defineConfig } = require("@vue/cli-service");
 const webpack = require("webpack");
 const path = require("path");
+// const BundleAnalyzerPlugin =
+//   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -11,10 +13,16 @@ module.exports = defineConfig({
         __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
         __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false),
       }),
+      // new BundleAnalyzerPlugin(), // 🔍 添加到 plugins 数组中
     ],
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "src"), // 确保别名一致
+        "@": path.resolve(__dirname, "src"),
+      },
+    },
+    optimization: {
+      splitChunks: {
+        chunks: "all",
       },
     },
   },

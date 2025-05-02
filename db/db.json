@@ -11,9 +11,10 @@
     {
       "id": "user2",
       "username": "user2-username",
-      "firstname": "Melanie1",
+      "firstname": "Melanie",
+      "createdAt": "2024-04-30 19:22:20.134051",
       "lastname": "Chen",
-      "pokemonCoin": 1
+      "pokemonCoin": 3
     }
   ],
   "pokemonRecords": [],

@@ -43,16 +43,18 @@
 <script setup lang="ts">
 import { defineProps, defineEmits, computed, ref } from "vue";
 import { POKEMON_AMOUNT } from "@/api/PokemonAPI";
-import { testUser } from "@/api/GameAPI";
+import { CURRENT_USER_ID } from "@/api/GameAPI";
 import { useUserStore } from "@/store/UserStore";
 import { usePokemonRecordsStore } from "@/store/PokemonRecordsStore";
 import {
   SET_CAPTURE_A_NEW_POKEMON_MESSAGE,
   SET_RECHARGE_POKEMON_COIN_MESSAGE,
 } from "@/model/GameMessage";
+import { userRechargeRecordStore } from "@/store/RechargeRecordStore";
 
 const userStore = useUserStore();
 const pokemonRecordsStore = usePokemonRecordsStore();
+const rechargeRecordStore = userRechargeRecordStore();
 
 const selectedValue = ref("0");
 
@@ -94,10 +96,10 @@ function catchNewPokemon() {
     pokemonRecordsStore.catchANewPokemon({
       pokemonId: (Math.floor(Math.random() * POKEMON_AMOUNT) + 1).toString(),
       // TODO: After login feature should changed
-      userId: testUser,
+      userId: CURRENT_USER_ID,
     });
     userStore.updateUser({
-      id: testUser,
+      id: CURRENT_USER_ID,
       username: userStore.user.username,
       firstname: userStore.user.firstname,
       lastname: userStore.user.lastname,
@@ -115,6 +117,8 @@ function balanceTopUp() {
     lastname: userStore.user.lastname,
     pokemonCoin: userStore.user.pokemonCoin + parseInt(selectedValue.value),
   });
+
+  rechargeRecordStore.createNewRechargeRecord(parseInt(selectedValue.value));
 }
 </script>
 

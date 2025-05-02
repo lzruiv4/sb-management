@@ -1,4 +1,4 @@
-import { POKEMON_RECORDS_API, testUser } from "@/api/GameAPI";
+import { POKEMON_RECORDS_API, CURRENT_USER_ID } from "@/api/GameAPI";
 import axios from "axios";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
@@ -41,10 +41,12 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
   async function getRecords() {
     try {
       // this.loading = true;
-      const res = await axios.get(POKEMON_RECORDS_API + "?userId=" + testUser);
-      console.log(res.data);
+      const res = await axios.get(
+        POKEMON_RECORDS_API + "?userId=" + CURRENT_USER_ID
+      );
+      // console.log(res.data);
       records.value = res.data
-        .filter((record: IPokemonRecord) => record.userId === testUser)
+        .filter((record: IPokemonRecord) => record.userId === CURRENT_USER_ID)
         .map((item: IPokemonRecord) => {
           return {
             id: item.pokemonRecordId,
@@ -70,7 +72,7 @@ export const usePokemonRecordsStore = defineStore("pokemonRecordsStore", () => {
         POKEMON_RECORDS_API,
         newPokemonDTO
       );
-      console.log("asdf ", res.data);
+      // console.log("asdf ", res.data);
       res.data.captureTime = res.data.captureTime?.split("T")[0];
       records.value = [...records.value, res.data];
     } catch (error) {

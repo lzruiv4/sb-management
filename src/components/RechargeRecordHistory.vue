@@ -1,5 +1,5 @@
 <template>
-  <a-timeline>
+  <a-timeline reverse="true">
     <a-timeline-item
       v-for="record in rechargeRecordStore.rechargeRecords"
       :key="record.id"

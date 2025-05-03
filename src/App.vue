@@ -85,7 +85,7 @@ import { RouterView, RouterLink } from "vue-router";
 
 /* 内容展示区域 */
 .el-main {
-  width: 80%;
+  width: 95%;
   margin: 0 auto;
   /* padding: 20px; */
   border-radius: 10px;

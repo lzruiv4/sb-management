@@ -70,7 +70,7 @@ onMounted(() => pokemonStore.getPokemons());
 }
 
 .pokemon-list {
-  flex: 1;
+  /* flex: 1; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -83,7 +83,6 @@ onMounted(() => pokemonStore.getPokemons());
   height: 80px;
   overflow: hidden;
   padding: 2px;
-  /* border: 1px solid #656565; */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
   border-radius: 10px;
   margin: 10px 0;
@@ -112,9 +111,9 @@ onMounted(() => pokemonStore.getPokemons());
 }
 
 .pokemon-detail {
-  flex: 2;
+  /* flex: 2; */
   min-width: 500px;
-  max-width: 1000px;
+  /* max-width: 1000px; */
   display: flex; /* 这里必须加上，不然下面的语句无效*/
   justify-content: center;
   align-items: center;

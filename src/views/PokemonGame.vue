@@ -132,7 +132,6 @@ function callDialog() {
   flex: 3;
   max-height: 400px;
   width: 95%;
-  overflow-y: auto;
   padding: 10px;
 }
 

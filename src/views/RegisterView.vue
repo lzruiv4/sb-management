@@ -32,7 +32,7 @@
       />
       <button type="submit">REGISTER</button>
     </form>
-    <p>already registered？<router-link to="/login">LOGIN</router-link></p>
+    <p>already registered?<router-link to="/login">LOGIN</router-link></p>
   </div>
 </template>
 
@@ -40,6 +40,7 @@
 import { reactive } from 'vue'
 import { register } from '@/api/auth-api'
 import { useRouter } from 'vue-router'
+import { RoleType } from '@/domain/enums/role.enum'
 
 const router = useRouter()
 
@@ -48,6 +49,7 @@ const form = reactive({
   firstname: '',
   lastname: '',
   password: '',
+  roles: [RoleType.ROLE_ADMIN],
 })
 
 const handleRegister = async () => {

@@ -1,4 +1,4 @@
-// import type { RoleType } from '../enums/role.enum'
+import type { RoleType } from '../enums/role.enum'
 
 export interface ITokenDTO {
   userId: string
@@ -15,7 +15,7 @@ export interface IRegisterRequestDTO {
   firstname: string
   lastname: string
   password: string
-  // roles: RoleType[]
+  roles: RoleType[]
 }
 
 export interface IRegisterResponseDTO {

@@ -11,12 +11,20 @@
     </nav>
     <div class="user-logo">
       <img src="/src/assets/icons/user-icon.svg" class="user-image" alt="user" />
+      <LogOut @click="handleLogout" />
     </div>
   </header>
 </template>
 
 <script lang="ts" setup name="HeaderLayout">
-// export default {}
+import { useAuthStore } from '@/stores/auth-store'
+import { LogOut } from '@vicons/ionicons5'
+
+const authStore = useAuthStore()
+
+const handleLogout = () => {
+  authStore.logout()
+}
 </script>
 
 <style lang="scss" scoped>
@@ -79,6 +87,7 @@
   .user-logo {
     width: 90px;
     height: 90px;
+    // display: grid;
 
     .user-image {
       width: 80px;

@@ -1,38 +1,23 @@
 import HomeView from '@/views/HomeView.vue'
+import LoginView from '@/views/LoginView.vue'
+import RegisterView from '@/views/RegisterView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { setupAuthGuard } from './guards/auth.guards'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    { path: '/login', component: LoginView },
+    { path: '/register', component: RegisterView },
     {
-      name: 'home',
-      path: '/',
+      path: '/home',
       component: HomeView,
+      children: [],
     },
-    // {
-    //   name: 'pokemon_game',
-    //   path: '/pokemon_game',
-    //   component: PokemonGame,
-    // },
-    // {
-    //   name: 'pokemons',
-    //   path: '/pokemons',
-    //   component: Pokemon,
-    //   children: [
-    //     {
-    //       name: 'detail',
-    //       path: 'detail',
-    //       component: PokemonDetail,
-    //       props: true,
-    //     },
-    //   ],
-    // },
-    // {
-    //   name: 'about',
-    //   path: '/about',
-    //   component: About,
-    // },
+    { path: '/:pathMatch(.*)', redirect: '/login' },
   ],
 })
+
+setupAuthGuard(router)
 
 export default router

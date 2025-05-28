@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <header class="header">
     <div class="logo"><img src="/src/assets/images/logo.png" class="logo-image" /></div>
@@ -16,7 +15,7 @@
   </header>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="HeaderLayout">
 // export default {}
 </script>
 

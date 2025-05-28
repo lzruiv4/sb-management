@@ -1,10 +1,11 @@
-<script lang="ts" setup>
-import Header from '@/layouts/Header.vue'
+<!-- eslint-disable vue/multi-word-component-names -->
+<script lang="ts" setup name="HomeView">
+import HeaderLayout from '@/layouts/HeaderLayout.vue'
 // export default {}
 </script>
 
 <template>
-  <Header />
+  <HeaderLayout />
 </template>
 
 <style lang="scss"></style>

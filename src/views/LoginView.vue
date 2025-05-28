@@ -76,14 +76,6 @@ const handleLogin = async () => {
 </script>
 
 <style scoped lang="scss">
-/* .auth-form {
-  max-width: 400px;
-  margin: 100px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-} */
-
 .login-wrapper {
   display: flex;
   justify-content: center;

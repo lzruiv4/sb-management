@@ -1,38 +1,62 @@
 <template>
-  <div class="auth-form">
-    <h2>REGISTER</h2>
-    <form @submit.prevent="handleRegister">
-      <input
-        v-model="form.username"
-        type="text"
-        placeholder="username"
-        autocomplete="username"
-        required
-      />
-      <input
-        v-model="form.firstname"
-        type="text"
-        placeholder="firstname"
-        autocomplete="firstname"
-        required
-      />
-      <input
-        v-model="form.lastname"
-        type="text"
-        placeholder="lastname"
-        autocomplete="lastname"
-        required
-      />
-      <input
-        v-model="form.password"
-        type="password"
-        autocomplete="new-password"
-        placeholder="password"
-        required
-      />
-      <button type="submit">REGISTER</button>
-    </form>
-    <p>already registered?<router-link to="/login">LOGIN</router-link></p>
+  <div class="register-container">
+    <n-card title="Register" class="register-card" :bordered="false" size="huge">
+      <n-form ref="formRef" :model="form" :rules="rules" label-placement="top">
+        <n-form-item label="Username" path="username">
+          <n-input
+            v-model:value="form.username"
+            placeholder="Please enter your username"
+            clearable
+            :input-props="{ autocomplete: 'username' }"
+          />
+        </n-form-item>
+
+        <n-form-item label="Firstname" path="firstname">
+          <n-input
+            v-model:value="form.firstname"
+            placeholder="Please enter your firstname"
+            clearable
+            :input-props="{ autocomplete: 'firstname' }"
+          />
+        </n-form-item>
+
+        <n-form-item label="Lastname" path="lastname">
+          <n-input
+            v-model:value="form.lastname"
+            placeholder="Please enter your lastname"
+            clearable
+            :input-props="{ autocomplete: 'lastname' }"
+          />
+        </n-form-item>
+
+        <n-form-item label="Password" path="password">
+          <n-input
+            type="password"
+            v-model:value="form.password"
+            placeholder="Please enter your password"
+            show-password-on="mousedown"
+            :input-props="{ autocomplete: 'new-password' }"
+          />
+        </n-form-item>
+
+        <n-form-item label="Confirm password" path="confirmPassword">
+          <n-input
+            type="password"
+            v-model:value="form.confirmPassword"
+            placeholder="Please enter your password again"
+            show-password-on="mousedown"
+            :input-props="{ autocomplete: 'new-password' }"
+          />
+        </n-form-item>
+
+        <n-space justify="space-between">
+          <n-button color="dunkelGreen" size="large" @click="handleRegister">REGISTER</n-button>
+          <router-link to="/login">
+            <n-button color="green" size="large">LOGIN</n-button>
+          </router-link>
+        </n-space>
+      </n-form>
+    </n-card>
   </div>
 </template>
 
@@ -41,6 +65,8 @@ import { reactive } from 'vue'
 import { register } from '@/api/auth-api'
 import { useRouter } from 'vue-router'
 import { RoleType } from '@/domain/enums/role.enum'
+import { NCard, NForm, NFormItem, NInput, NSpace, NButton } from 'naive-ui'
+import type { FormRules } from 'naive-ui'
 
 const router = useRouter()
 
@@ -49,27 +75,74 @@ const form = reactive({
   firstname: '',
   lastname: '',
   password: '',
+  confirmPassword: '',
   roles: [RoleType.ROLE_ADMIN],
 })
+
+const rules: FormRules = {
+  username: [{ required: true, message: 'Please check you input', trigger: 'blur' }],
+  password: [{ required: true, message: 'Please check you input', trigger: 'blur' }],
+  confirmPassword: [
+    { required: true, message: 'Please check you input', trigger: 'blur' },
+    {
+      validator(_: unknown, value: string) {
+        if (value !== form.password) {
+          return new Error('The two passwords do not match')
+        }
+        return true
+      },
+      trigger: 'input',
+    },
+  ],
+}
 
 const handleRegister = async () => {
   try {
     await register(form)
-    alert('注册成功，请登录')
+    alert('Register successful, please login')
     router.push('/login')
   } catch (err) {
     console.log(err)
-    alert('注册失败，请重试')
+    alert('Register failed, please check your input')
   }
 }
 </script>
 
-<style scoped>
-.auth-form {
-  max-width: 400px;
-  margin: 100px auto;
+<style scoped lang="scss">
+.register-container {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #fdfbfb, #ebedee);
+
+  .register-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    background-color: #fff;
+
+    .n-button {
+      width: 100%;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 10px rgba(182, 195, 254, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
 }
 </style>

@@ -1,7 +1,7 @@
 import type { RoleType } from '../enums/role.enum'
 
 export interface IUserDTO {
-  userId?: string
+  id?: string
   username: string
   firstname: string
   lastname: string

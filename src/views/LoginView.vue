@@ -1,7 +1,13 @@
 <template>
   <div class="login-wrapper">
     <n-card title="Welcome" class="login-card" :bordered="false" size="huge">
-      <n-form :model="form" :rules="rules" ref="formRef" label-placement="top">
+      <n-form
+        :model="form"
+        :rules="rules"
+        ref="formRef"
+        label-placement="top"
+        @keyup.enter="handleLogin"
+      >
         <n-form-item label="Username" path="username">
           <n-input
             type="text"
@@ -62,7 +68,6 @@ const handleLogin = async () => {
     console.log(res.data)
 
     if (res.data.token) {
-      // localStorage.setItem('authToken', res.data.token)
       authStore.setAuth(res.data.token, res.data.userId)
       router.push('/home')
     } else {

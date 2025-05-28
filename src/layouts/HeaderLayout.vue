@@ -44,7 +44,7 @@ const handleLogout = () => {
   .logo {
     // font-weight: bold;
     // font-size: 24px;
-    margin: 5px;
+    // margin: 5px;
     width: 90px;
     height: 90px;
 

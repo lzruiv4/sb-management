@@ -1,15 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
-<script lang="ts" setup name="HomeView">
-import HeaderLayout from '@/layouts/HeaderLayout.vue'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-
-const toUser = () => {
-  router.push('/users')
-}
-</script>
-
 <template>
   <HeaderLayout />
 
@@ -17,5 +5,16 @@ const toUser = () => {
     TO User
   </button>
 </template>
+
+<script lang="ts" setup name="HomeView">
+import HeaderLayout from '@/layouts/HeaderLayout.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const toUser = () => {
+  router.push('/lotto')
+}
+</script>
 
 <style lang="scss"></style>

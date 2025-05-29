@@ -1,15 +1,12 @@
 <template>
-  <HeaderLayout />
   <n-layout has-sider class="layout">
-    <n-layout-sider bordered collapse-mode="width" :collapsed-width="60" :width="180" show-trigger>
-      <n-menu :collapsed-width="64" :collapsed-icon-size="22" :options="menuOptions" />
-    </n-layout-sider>
     <n-layout-content class="content">
       <n-card class="card" bordered>
         <div class="toolbar">
           <h2>Users</h2>
           <n-button type="success" size="medium" strong @click="onAdd"> Add User </n-button>
         </div>
+
         <n-data-table
           :columns="columns"
           :data="paginatedData"
@@ -53,26 +50,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, h, onMounted, ref, type Component } from 'vue'
+import { computed, h, onMounted, ref } from 'vue'
 import {
   NLayout,
-  NLayoutSider,
   NLayoutContent,
-  NMenu,
   NCard,
   NButton,
   NDataTable,
   NModal,
-  NIcon,
   NForm,
   NFormItem,
   NInput,
   NInputNumber,
   NPagination,
 } from 'naive-ui'
-import type { MenuOption } from 'naive-ui'
-import HeaderLayout from '@/layouts/HeaderLayout.vue'
-import { BarChart, Person, WalletSharp, Speedometer, Pencil } from '@vicons/ionicons5'
+import { Pencil } from '@vicons/ionicons5'
 import type { IUser } from '@/domain/models/user.model'
 import { useUserStore } from '@/stores/user-store'
 import type { IUserDTO } from '@/domain/dtos/user.dto'
@@ -126,10 +118,6 @@ const handleSave = async () => {
   showModal.value = false
 }
 
-function renderIcon(icon: Component) {
-  return () => h(NIcon, null, { default: () => h(icon) })
-}
-
 // 表格列
 const columns = [
   { title: 'User ID', key: 'userId' },
@@ -154,7 +142,7 @@ const columns = [
   //   },
   // },
   {
-    title: '操作',
+    title: 'Edit',
     key: 'actions',
     render(row: IUser) {
       return h(
@@ -170,30 +158,6 @@ const columns = [
         },
       )
     },
-  },
-]
-
-// 左侧导航选项
-const menuOptions: MenuOption[] = [
-  {
-    label: 'Dashboard',
-    key: 'recharges',
-    icon: renderIcon(Speedometer),
-  },
-  {
-    label: 'USERS',
-    key: 'recharges',
-    icon: renderIcon(Person),
-  },
-  {
-    label: 'RECHARGES',
-    key: 'recharges',
-    icon: renderIcon(WalletSharp),
-  },
-  {
-    label: 'POKEMONS',
-    key: 'recharges',
-    icon: renderIcon(BarChart),
   },
 ]
 

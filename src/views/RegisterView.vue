@@ -50,7 +50,7 @@
         </n-form-item>
 
         <n-space justify="space-between">
-          <n-button color="dunkelGreen" size="large" @click="handleRegister">REGISTER</n-button>
+          <n-button color="green" size="large" @click="handleRegister">REGISTER</n-button>
           <router-link to="/login">
             <n-button color="green" size="large">LOGIN</n-button>
           </router-link>

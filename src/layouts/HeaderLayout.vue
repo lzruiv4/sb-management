@@ -1,29 +1,35 @@
 <template>
   <header class="header">
-    <div class="logo"><img src="/src/assets/images/logo.png" class="logo-image" /></div>
-    <nav class="nav">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Product</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact us</a></li>
-      </ul>
-    </nav>
+    <div class="logo">
+      <img src="/src/assets/images/logo.png" class="logo-image" @click="goHome" />
+    </div>
+    <div class="nav">
+      <router-link to="/home">Home</router-link>
+      <router-link to="/lotto">Lotto</router-link>
+    </div>
     <div class="user-logo">
       <img src="/src/assets/icons/user-icon.svg" class="user-image" alt="user" />
       <LogOut @click="handleLogout" />
     </div>
   </header>
+  <!-- <div>
+    <router-view />
+  </div> -->
 </template>
 
 <script lang="ts" setup name="HeaderLayout">
 import { useAuthStore } from '@/stores/auth-store'
 import { LogOut } from '@vicons/ionicons5'
+import router from '@/router'
 
 const authStore = useAuthStore()
 
 const handleLogout = () => {
   authStore.logout()
+}
+
+const goHome = () => {
+  router.push('/home')
 }
 </script>
 

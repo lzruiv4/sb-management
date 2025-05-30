@@ -19,16 +19,15 @@ const router = createRouter({
         {
           path: 'users',
           component: () => import('@/components/lotto/UserComponent.vue'),
-          // meta: { requiresAuth: true },
         },
-        // {
-        //   path: '/pokemonRecords',
-        //   component: () => import('@/components/lotto/PokemonRecordComponent.vue'),
-        // },
-        // {
-        //   path: '/rechargeRecords',
-        //   component: () => import('@/components/lotto/RechargeRecordComponent.vue'),
-        // },
+        {
+          path: 'pokemonRecords',
+          component: () => import('@/components/lotto/PokemonRecordComponent.vue'),
+        },
+        {
+          path: 'rechargeRecords',
+          component: () => import('@/components/lotto/RechargeRecordComponent.vue'),
+        },
       ],
     },
 

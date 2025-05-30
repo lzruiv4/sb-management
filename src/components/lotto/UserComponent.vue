@@ -24,7 +24,7 @@
           class="mt-4"
         />
 
-        <n-modal v-model:show="showModal" title="编辑信息" preset="dialog">
+        <n-modal v-model:show="showModal" title="Edit user info" preset="dialog">
           <n-form :model="editForm" label-placement="left" label-width="80">
             <n-form-item label="Username">
               <n-input v-model:value="editForm.username" />

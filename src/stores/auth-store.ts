@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useAuthStore = defineStore(
-  'auth',
+  'authStore',
   () => {
     const isLoggedIn = ref(false)
 
@@ -29,7 +29,13 @@ export const useAuthStore = defineStore(
       return token
     }
 
-    return { isLoggedIn, getUserId, getToken, setAuth, logout }
+    const tokenInHeader = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+      },
+    }
+
+    return { isLoggedIn, getUserId, getToken, setAuth, logout, tokenInHeader }
   },
   {
     persist: true,

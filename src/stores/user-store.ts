@@ -19,12 +19,6 @@ export const useUserStore = defineStore('userStore', () => {
   const users = ref<IUser[]>([])
   const loading = ref(false)
 
-  const token = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-    },
-  }
-
   // check for data has been loading
   watch(user, (newUser) => {
     if (newUser) console.log('User data has been loading.')
@@ -33,7 +27,7 @@ export const useUserStore = defineStore('userStore', () => {
   async function getAllUsers() {
     loading.value = true
     try {
-      const res = await axios.get<IUserDTO[]>(USER_API, token)
+      const res = await axios.get<IUserDTO[]>(USER_API, authService.tokenInHeader)
       users.value = res.data.map((userDTO) => mapDtoToModel(userDTO))
       // console.log('sdfadfs: ', users.value)
     } catch (error) {
@@ -47,7 +41,7 @@ export const useUserStore = defineStore('userStore', () => {
   async function getCurrentUser() {
     try {
       loading.value = true
-      const res = await axios.get(USER_API + '/' + authService.getUserId, token)
+      const res = await axios.get(USER_API + '/' + authService.getUserId, authService.tokenInHeader)
       user.value = res.data
     } catch (error) {
       console.error('Get user failed:', error)
@@ -61,7 +55,7 @@ export const useUserStore = defineStore('userStore', () => {
     try {
       // console.log('Before update ', newUserDTO)
       // newUserDTO.id = authService.newUserDTO
-      const res = await axios.put(USER_API + '/' + userId, newUserDTO, token)
+      const res = await axios.put(USER_API + '/' + userId, newUserDTO, authService.tokenInHeader)
       console.log(res.data)
       user.value = res.data
     } catch (error) {

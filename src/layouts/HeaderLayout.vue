@@ -36,7 +36,7 @@ const goHome = () => {
   align-items: center;
   justify-content: space-between;
   margin: 10px;
-  width: calc(100% - 10px);
+  width: calc(100% - 20px); // 20px for left and right
   height: 100px;
   background-color: #000407ce;
   box-shadow:

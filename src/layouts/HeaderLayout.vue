@@ -35,8 +35,8 @@ const goHome = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 10px 0;
-  width: 100%;
+  margin: 10px;
+  width: calc(100% - 10px);
   height: 100px;
   background-color: #000407ce;
   box-shadow:
@@ -57,7 +57,7 @@ const goHome = () => {
 
   .nav {
     flex: 1;
-    margin: 0 20px;
+    margin: 5px 20px;
     display: flex;
     list-style: none;
     justify-content: flex-start;

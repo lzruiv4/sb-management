@@ -1,9 +1,5 @@
 <template>
   <div class="root-layout">
-    <div class="header-layout-container">
-      <HeaderLayout />
-    </div>
-
     <div class="inner-layout">
       <n-layout-sider
         bordered
@@ -24,8 +20,7 @@
 </template>
 
 <script setup name="LottoManagementView" lang="ts">
-import HeaderLayout from '@/layouts/HeaderLayout.vue'
-import { BarChart, Person, Speedometer, WalletSharp } from '@vicons/ionicons5'
+import { Person, Speedometer } from '@vicons/ionicons5'
 import { NIcon, NLayoutSider, NMenu, type MenuOption } from 'naive-ui'
 import { h, type Component } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -60,30 +55,30 @@ const menuOptions: MenuOption[] = [
     key: 'users',
     icon: renderIcon(Person),
   },
-  {
-    label: () =>
-      h(
-        RouterLink,
-        {
-          to: '/lotto/rechargeRecords',
-        },
-        { default: () => 'RECHARGE' },
-      ),
-    key: 'rechargeRecords',
-    icon: renderIcon(WalletSharp),
-  },
-  {
-    label: () =>
-      h(
-        RouterLink,
-        {
-          to: '/lotto/pokemonRecords',
-        },
-        { default: () => 'RECHARGE' },
-      ),
-    key: 'pokemonRecords',
-    icon: renderIcon(BarChart),
-  },
+  // {
+  //   label: () =>
+  //     h(
+  //       RouterLink,
+  //       {
+  //         to: '/lotto/rechargeRecords',
+  //       },
+  //       { default: () => 'RECHARGE' },
+  //     ),
+  //   key: 'rechargeRecords',
+  //   icon: renderIcon(WalletSharp),
+  // },
+  // {
+  //   label: () =>
+  //     h(
+  //       RouterLink,
+  //       {
+  //         to: '/lotto/pokemonRecords',
+  //       },
+  //       { default: () => 'POKEMON' },
+  //     ),
+  //   key: 'pokemonRecords',
+  //   icon: renderIcon(BarChart),
+  // },
 ]
 </script>
 <style lang="scss">
@@ -113,7 +108,7 @@ const menuOptions: MenuOption[] = [
 .content {
   flex: 1; /* 占据剩余宽度 */
   height: 100%;
-  // overflow-y: auto; /* 内容区域纵向滚动 */
+  overflow-y: auto; /* 内容区域纵向滚动 */
   padding: 16px;
   background: #fff;
 }

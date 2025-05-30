@@ -69,6 +69,7 @@ const handleLogin = async () => {
 
     if (res.data.token) {
       authStore.setAuth(res.data.token, res.data.userId)
+
       router.push('/home')
     } else {
       alert('Login successful, welcome back!')
@@ -82,12 +83,19 @@ const handleLogin = async () => {
 
 <style scoped lang="scss">
 .login-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // height: 100vh;
+  // background: linear-gradient(to right, #f8f9fa, #e9ecef);
   padding: 1rem;
+  position: absolute;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  z-index: 10;
 }
 
 .login-card {

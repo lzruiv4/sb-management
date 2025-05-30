@@ -1,20 +1,26 @@
 <template>
-  <HeaderLayout />
-
-  <button @click="toUser" style="width: 200px; height: 70px; background-color: aqua">
-    TO User
-  </button>
+  <!-- <h1>HH</h1> -->
+  <HeroLayout />
 </template>
 
 <script lang="ts" setup name="HomeView">
-import HeaderLayout from '@/layouts/HeaderLayout.vue'
-import { useRouter } from 'vue-router'
+import HeroLayout from '@/layouts/HeroLayout.vue'
 
-const router = useRouter()
+// import { useAuthStore } from '@/stores/auth-store'
+// import { onMounted } from 'vue'
 
-const toUser = () => {
-  router.push('/lotto')
-}
+// import HeaderLayout from '@/layouts/HeaderLayout.vue'
+// const authService = useAuthStore()
+
+// authService.isLoggedIn
+// console.log(isReade)
+// onMounted(async () => {
+//   try {
+//     await authService.isLoggedIn
+//   } catch (err) {
+//     console.error('Something wrong ', err)
+//   }
+// })
 </script>
 
 <style lang="scss"></style>

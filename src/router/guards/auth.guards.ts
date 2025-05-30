@@ -4,7 +4,7 @@ import { useAuthStore } from '@/stores/auth-store'
 export function setupAuthGuard(router: Router) {
   router.beforeEach((to, from, next) => {
     const authStore = useAuthStore()
-    const isLoggedIn = authStore.token || localStorage.getItem('token')
+    const isLoggedIn = authStore.token || localStorage.getItem('authToken')
 
     if (to.meta.requiresAuth && !isLoggedIn) {
       next('/login')

@@ -4,17 +4,14 @@
       <img src="/src/assets/images/logo.png" class="logo-image" @click="goHome" />
     </div>
     <div class="nav">
-      <router-link to="/home">Home</router-link>
-      <router-link to="/lotto">Lotto</router-link>
+      <router-link class="nav-link" to="/home">Home</router-link>
+      <router-link class="nav-link" to="/lotto">Lotto</router-link>
     </div>
     <div class="user-logo">
-      <img src="/src/assets/icons/user-icon.svg" class="user-image" alt="user" />
-      <LogOut @click="handleLogout" />
+      <!-- <img src="/src/assets/icons/user-icon.svg" class="user-image" alt="user" /> -->
+      <LogOut class="user-image" @click="handleLogout" />
     </div>
   </header>
-  <!-- <div>
-    <router-view />
-  </div> -->
 </template>
 
 <script lang="ts" setup name="HeaderLayout">
@@ -38,21 +35,19 @@ const goHome = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  // margin: 0 20px;
+  margin: 10px 0;
   width: 100%;
   height: 100px;
-  background-color: #f9f2e0;
+  background-color: #000407ce;
   box-shadow:
     0 4px 12px rgba(0, 0, 0, 0.1),
     0 6px 16px rgba(0, 0, 0, 0.06);
   border-radius: 20px;
 
   .logo {
-    // font-weight: bold;
-    // font-size: 24px;
-    // margin: 5px;
-    width: 90px;
-    height: 90px;
+    margin-left: 20px;
+    width: 70px;
+    height: 70px;
 
     .logo-image {
       width: 100%;
@@ -62,38 +57,31 @@ const goHome = () => {
 
   .nav {
     flex: 1;
-    margin: 0 40px;
+    margin: 0 20px;
+    display: flex;
+    list-style: none;
+    justify-content: flex-start;
+    font-size: 30px;
+    padding-left: 30px;
+    gap: 50px;
+    transition: color 0.3s;
 
-    ul {
-      display: flex;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      justify-content: flex-start;
+    .nav-link {
+      color: aliceblue;
+      text-decoration: none;
+      font-weight: bolder;
+    }
 
-      li {
-        margin: 0 15px;
-
-        a {
-          text-decoration: none;
-          font-size: 30px;
-          font-weight: bolder;
-          color: #1660ab;
-          // font-weight: 500;
-          transition: color 0.3s;
-
-          &:hover {
-            color: #f22ac3;
-          }
-        }
-      }
+    .nav-link:hover {
+      color: #ffbdf0;
     }
   }
 
   .user-logo {
     width: 90px;
     height: 90px;
-    // display: grid;
+    display: flex;
+    align-items: center;
 
     .user-image {
       width: 80px;

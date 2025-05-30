@@ -110,11 +110,19 @@ const handleRegister = async () => {
 
 <style scoped lang="scss">
 .register-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(to right, #fdfbfb, #ebedee);
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // height: 100vh;
+  // background: linear-gradient(to right, #fdfbfb, #ebedee);
+  padding: 1rem;
+  position: absolute;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  z-index: 10;
 
   .register-card {
     width: 100%;

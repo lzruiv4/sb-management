@@ -1,4 +1,4 @@
-import type { IRechargeRecordDTO } from "../dtos/recharge.record.dto"
+import type { IRechargeRecordDTO } from '../dtos/recharge.record.dto'
 
 export interface IRechargeRecord {
   rechargeRecordId?: string
@@ -15,5 +15,15 @@ export function mapDtoToModel(rechargeRecordDto: IRechargeRecordDTO): IRechargeR
     amountRecharge: rechargeRecordDto.amountRecharge,
     currentPokemonCoin: rechargeRecordDto.currentPokemonCoin,
     rechargeAt: rechargeRecordDto.rechargeAt,
+  }
+}
+
+export function mapModelToDto(rechargeRecord: IRechargeRecord): IRechargeRecordDTO {
+  return {
+    id: rechargeRecord.rechargeRecordId,
+    userId: rechargeRecord.userId,
+    amountRecharge: rechargeRecord.amountRecharge,
+    currentPokemonCoin: rechargeRecord.currentPokemonCoin,
+    rechargeAt: rechargeRecord.rechargeAt,
   }
 }

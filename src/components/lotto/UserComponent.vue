@@ -59,7 +59,7 @@ import {
   NInput,
   NInputNumber,
 } from 'naive-ui'
-import { Pencil } from '@vicons/ionicons5'
+import { Create } from '@vicons/ionicons5'
 import type { IUser } from '@/domain/models/user.model'
 import { useUserStore } from '@/stores/user-store'
 import type { IUserDTO } from '@/domain/dtos/user.dto'
@@ -95,9 +95,7 @@ const handleEdit = (row: IUser) => {
 
 const handleSave = async () => {
   const index = userData.value.findIndex((user) => user.username === editForm.value.username)
-  // console.log('sddd: ', editForm.value, index)
   if (index !== -1) {
-    // console.log('sddd: ddd')
     await userService.updateUser(userData.value[index].userId!, editForm.value)
     userData.value[index] = { ...editForm.value }
   }
@@ -134,13 +132,12 @@ const columns = [
       return h(
         NButton,
         {
-          size: 'small',
-          type: 'primary',
+          size: 'large',
           text: true,
           onClick: () => handleEdit(row),
         },
         {
-          icon: () => h(Pencil),
+          icon: () => h(Create),
         },
       )
     },

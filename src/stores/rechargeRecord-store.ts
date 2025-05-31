@@ -38,5 +38,23 @@ export const useRechargeRecordStore = defineStore('rechargeRecordStore', () => {
     }
   }
 
-  return { loading, rechargeRecord, rechargeRecords, getAllRechargeRecords }
+  async function updateRechargeRecord(newRechargeRecordDTO: IRechargeRecordDTO) {
+    try {
+      const res = await axios.put(
+        RECHARGE_RECORD_API + '/' + newRechargeRecordDTO.userId,
+        newRechargeRecordDTO,
+        authService.tokenInHeader,
+      )
+      const index = rechargeRecords.value.findIndex(
+        (rechargeRecord) => rechargeRecord.rechargeRecordId === res.data.id,
+      )
+      if (index !== -1) {
+        rechargeRecords.value[index] = res.data
+      }
+    } catch (error) {
+      console.error('Recharge record update failed', error)
+    }
+  }
+
+  return { loading, rechargeRecord, rechargeRecords, getAllRechargeRecords, updateRechargeRecord }
 })

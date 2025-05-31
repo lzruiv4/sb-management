@@ -22,9 +22,9 @@
 
         <n-modal v-model:show="showModal" title="Edit user info" preset="dialog">
           <n-form :model="editForm" label-placement="left" label-width="80">
-            <n-form-item label="Recharge record Id">
+            <!-- <n-form-item label="Recharge record Id">
               <n-input v-model:value="editForm.id" />
-            </n-form-item>
+            </n-form-item> -->
             <n-form-item label="User ID">
               <n-input v-model:value="editForm.userId" />
             </n-form-item>
@@ -34,13 +34,17 @@
             <n-form-item label="Current pokemon coin">
               <n-input-number v-model:value="editForm.currentPokemonCoin" :min="0" />
             </n-form-item>
-            <!-- <n-form-item label="Poke coins">
-              <n-input v-model:value="editForm.rechargeAt" />
+            <!-- <n-form-item label="Date">
+              <n-date-picker
+                v-model:value="editForm.rechargeAt"
+                type="date"
+                placeholder="Please choice"
+              />
             </n-form-item> -->
           </n-form>
           <template #action>
             <n-button @click="showModal = false">取消</n-button>
-            <!-- <n-button type="primary" @click="handleSave">保存</n-button> -->
+            <n-button type="primary" @click="handleSave">保存</n-button>
           </template>
         </n-modal>
       </n-card>
@@ -62,10 +66,9 @@ import {
   NInput,
   NInputNumber,
 } from 'naive-ui'
-import { Pencil } from '@vicons/ionicons5'
+import { Create } from '@vicons/ionicons5'
 import { useRechargeRecordStore } from '@/stores/rechargeRecord-store'
-import type { IRechargeRecord } from '@/domain/models/recharge.record.model'
-import type { IRechargeRecordDTO } from '@/domain/dtos/recharge.record.dto'
+import { mapModelToDto, type IRechargeRecord } from '@/domain/models/recharge.record.model'
 import PaginationComponent from '../basis/PaginationComponent.vue'
 
 const rechargeRecordService = useRechargeRecordStore()
@@ -82,12 +85,11 @@ function handlePageChanged(paginatedData: IRechargeRecord[]) {
 // 编辑功能
 const showModal = ref(false)
 const currentEditRow = ref<IRechargeRecord | null>(null)
-const editForm = ref<IRechargeRecordDTO>({
-  id: '',
+const editForm = ref<IRechargeRecord>({
+  rechargeRecordId: '',
   userId: '',
   amountRecharge: 0,
   currentPokemonCoin: 0,
-  // rechargeAt: new Date().toDateString(),
 })
 
 const handleEdit = (row: IRechargeRecord) => {
@@ -96,16 +98,15 @@ const handleEdit = (row: IRechargeRecord) => {
   showModal.value = true
 }
 
-// const handleSave = async () => {
-//   const index = tableData.value.findIndex((user) => user.username === editForm.value.username)
-//   // console.log('sddd: ', editForm.value, index)
-//   if (index !== -1) {
-//     // console.log('sddd: ddd')
-//     await rechargeRecordService.updateUser(tableData.value[index].userId!, editForm.value)
-//     tableData.value[index] = { ...editForm.value }
-//   }
-//   showModal.value = false
-// }
+const handleSave = async () => {
+  const index = paginatedRechargeRecords.value.findIndex(
+    (rechargeRecord) => rechargeRecord.rechargeRecordId === editForm.value.rechargeRecordId,
+  )
+  if (index !== -1) {
+    await rechargeRecordService.updateRechargeRecord(mapModelToDto(editForm.value))
+  }
+  showModal.value = false
+}
 
 // 表格列
 const columns = [
@@ -113,7 +114,7 @@ const columns = [
   { title: 'User ID', key: 'userId' },
   { title: 'Amount recharge', key: 'amountRecharge' },
   { title: 'Current pokemon coin', key: 'currentPokemonCoin' },
-  { title: 'Create at', key: 'createdAt' },
+  { title: 'Create at', key: 'rechargeAt' },
   {
     title: 'Edit',
     key: 'actions',
@@ -121,13 +122,12 @@ const columns = [
       return h(
         NButton,
         {
-          size: 'small',
-          type: 'primary',
+          size: 'large',
           text: true,
           onClick: () => handleEdit(row),
         },
         {
-          icon: () => h(Pencil),
+          icon: () => h(Create),
         },
       )
     },
@@ -149,44 +149,3 @@ onMounted(async () => {
   }
 })
 </script>
-
-<!-- <style scoped lang="scss">
-.layout {
-  height: 100vh;
-}
-.sider {
-  background: #fff;
-  .logo {
-    font-weight: bold;
-    font-size: 16px;
-    padding: 16px;
-    border-bottom: 1px solid #eee;
-  }
-  .menu {
-    padding: 8px 0;
-  }
-}
-.header {
-  background: #f5f7fa;
-  font-size: 20px;
-  font-weight: bold;
-  line-height: 60px;
-  padding-left: 24px;
-  border-bottom: 1px solid #eee;
-}
-.content {
-  background: #f9fafb;
-  padding: 24px;
-  height: 100%;
-}
-.card {
-  background: #fff;
-  border-radius: 8px;
-}
-.toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-</style> -->

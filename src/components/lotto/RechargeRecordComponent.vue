@@ -9,19 +9,15 @@
 
         <n-data-table
           :columns="columns"
-          :data="paginatedData"
+          :data="paginatedRechargeRecords"
           :pagination="false"
           :bordered="true"
         />
 
-        <n-pagination
-          v-model:page="currentPage"
-          :page-size="pageSize"
-          :item-count="tableData.length"
-          show-size-picker
-          :page-sizes="[5, 10, 20]"
-          @update:page-size="handlePageSizeChange"
-          class="mt-4"
+        <PaginationComponent
+          :data="rechargeRecordData"
+          :pageSizeList="pageSizeList"
+          @page-changed="handlePageChanged"
         />
 
         <n-modal v-model:show="showModal" title="Edit user info" preset="dialog">
@@ -38,9 +34,9 @@
             <n-form-item label="Current pokemon coin">
               <n-input-number v-model:value="editForm.currentPokemonCoin" :min="0" />
             </n-form-item>
-            <!-- <n-form-item label="Poke coins"> -->
-            <!-- <n-input v-model:value="editForm.rechargeAt" /> -->
-            <!-- </n-form-item> -->
+            <!-- <n-form-item label="Poke coins">
+              <n-input v-model:value="editForm.rechargeAt" />
+            </n-form-item> -->
           </n-form>
           <template #action>
             <n-button @click="showModal = false">取消</n-button>
@@ -53,7 +49,7 @@
 </template>
 
 <script setup lang="ts" name="RechargeRecordComponent">
-import { computed, h, onMounted, ref } from 'vue'
+import { h, onMounted, ref } from 'vue'
 import {
   NLayout,
   NLayoutContent,
@@ -65,31 +61,23 @@ import {
   NFormItem,
   NInput,
   NInputNumber,
-  NPagination,
 } from 'naive-ui'
 import { Pencil } from '@vicons/ionicons5'
 import { useRechargeRecordStore } from '@/stores/rechargeRecord-store'
 import type { IRechargeRecord } from '@/domain/models/recharge.record.model'
 import type { IRechargeRecordDTO } from '@/domain/dtos/recharge.record.dto'
+import PaginationComponent from '../basis/PaginationComponent.vue'
 
 const rechargeRecordService = useRechargeRecordStore()
-const tableData = ref<IRechargeRecord[]>([])
 
-// 分页状态
-const currentPage = ref(1)
-const pageSize = ref(8)
+const paginatedRechargeRecords = ref<IRechargeRecord[]>([])
+const rechargeRecordData = ref<IRechargeRecord[]>([])
 
-const handlePageSizeChange = (size: number) => {
-  pageSize.value = size
-  currentPage.value = 1
+const pageSizeList = [10, 20, 30]
+
+function handlePageChanged(paginatedData: IRechargeRecord[]) {
+  paginatedRechargeRecords.value = paginatedData
 }
-
-// 分页后的数据
-const paginatedData = computed(() => {
-  const start = (currentPage.value - 1) * pageSize.value
-  const end = start + pageSize.value
-  return tableData.value.slice(start, end)
-})
 
 // 编辑功能
 const showModal = ref(false)
@@ -155,7 +143,7 @@ const columns = [
 onMounted(async () => {
   try {
     await rechargeRecordService.getAllRechargeRecords()
-    tableData.value = rechargeRecordService.rechargeRecords
+    rechargeRecordData.value = rechargeRecordService.rechargeRecords
   } catch (err) {
     console.error('Something wrong ', err)
   }
@@ -200,9 +188,5 @@ onMounted(async () => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
-}
-
-.mt-4 {
-  margin-top: 1rem;
 }
 </style> -->

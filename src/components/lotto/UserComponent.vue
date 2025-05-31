@@ -9,19 +9,15 @@
 
         <n-data-table
           :columns="columns"
-          :data="paginatedData"
+          :data="paginatedUsers"
           :pagination="false"
           :bordered="true"
         />
 
-        <n-pagination
-          v-model:page="currentPage"
-          :page-size="pageSize"
-          :item-count="userData.length"
-          show-size-picker
-          :page-sizes="[5, 10, 20]"
-          @update:page-size="handlePageSizeChange"
-          class="mt-4"
+        <PaginationComponent
+          :data="userData"
+          :pageSizeList="pageSizeList"
+          @page-changed="handlePageChanged"
         />
 
         <n-modal v-model:show="showModal" title="Edit user info" preset="dialog">
@@ -50,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, h, onMounted, ref } from 'vue'
+import { h, onMounted, ref } from 'vue'
 import {
   NLayout,
   NLayoutContent,
@@ -62,31 +58,21 @@ import {
   NFormItem,
   NInput,
   NInputNumber,
-  NPagination,
 } from 'naive-ui'
 import { Pencil } from '@vicons/ionicons5'
 import type { IUser } from '@/domain/models/user.model'
 import { useUserStore } from '@/stores/user-store'
 import type { IUserDTO } from '@/domain/dtos/user.dto'
+import PaginationComponent from '../basis/PaginationComponent.vue'
 
 const userService = useUserStore()
 const userData = ref<IUser[]>([])
+const paginatedUsers = ref<IUser[]>([])
+const pageSizeList = [5, 10, 15, 20]
 
-// 分页状态
-const currentPage = ref(1)
-const pageSize = ref(8)
-
-const handlePageSizeChange = (size: number) => {
-  pageSize.value = size
-  currentPage.value = 1
+function handlePageChanged(paginatedData: IUser[]) {
+  paginatedUsers.value = paginatedData
 }
-
-// 分页后的数据
-const paginatedData = computed(() => {
-  const start = (currentPage.value - 1) * pageSize.value
-  const end = start + pageSize.value
-  return userData.value.slice(start, end)
-})
 
 // 编辑功能
 const showModal = ref(false)
@@ -215,9 +201,5 @@ onMounted(async () => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
-}
-
-.mt-4 {
-  margin-top: 1rem;
 }
 </style>

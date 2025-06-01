@@ -27,22 +27,26 @@ export interface IPokemonRecord {
   isRelease?: boolean
 }
 
-// export interface IPokemonRecord {
-//   pokemonRecordId?: string
-//   pokemonId: string
-//   captureTime?: Date
-//   image?: string
-//   isRelease?: boolean
-// }
+export function mapDtoToModelInPokemonRecord(pokemonRecordDto: IPokemonRecordDTO) {
+  return {
+    pokemonRecordId: pokemonRecordDto.id,
+    image: '',
+    pokemonId: pokemonRecordDto.pokemonId,
+    userId: pokemonRecordDto.userId,
+    captureTime: pokemonRecordDto.captureTime,
+    isRelease: pokemonRecordDto.isRelease,
+  } as IPokemonRecord
+}
 
-// export function mapDtoToModelInPokemonRecord(pokemonRecordDto: IPokemonRecordDTO) {
-//   return {
-//     pokemonRecordId: pokemonRecordDto.id,
-//     pokemonId: pokemonRecordDto.pokemonId,
-//     captureTime:pokemonRecordDto.captureTime,
-//     image:pokemonRecordDto.
-//   }
-// }
+export function mapModelToDtoInPokemonRecord(pokemonRecord: IPokemonRecord) {
+  return {
+    id: pokemonRecord.pokemonRecordId,
+    pokemonId: pokemonRecord.pokemonId,
+    captureTime: pokemonRecord.captureTime,
+    userId: pokemonRecord.userId,
+    isRelease: pokemonRecord.isRelease,
+  }
+}
 
 export interface IPokemonRecordInList {
   date: string

@@ -20,31 +20,24 @@
           @page-changed="handlePageChanged"
         />
 
-        <n-modal v-model:show="showModal" title="Edit user info" preset="dialog">
-          <n-form
-            :model="pokemonRecordService.pokemonRecord"
-            label-placement="left"
-            label-width="100"
-          >
+        <n-modal v-model:show="showModal" title="Edit pokemon record info" preset="dialog">
+          <n-form :model="editForm" label-placement="left" label-width="100">
             <n-form-item label="PokeRecord ID">
-              <n-input
-                v-model:value="pokemonRecordService.pokemonRecord.pokemonRecordId"
-                disabled
-              />
+              <n-input v-model:value="editForm.pokemonRecordId" disabled />
             </n-form-item>
             <n-form-item label="Pokemon ID">
-              <n-input v-model:value="pokemonRecordService.pokemonRecord.pokemonId" />
+              <n-input v-model:value="editForm.pokemonId" />
             </n-form-item>
             <n-form-item label="User ID">
-              <n-input v-model:value="pokemonRecordService.pokemonRecord.userId" />
+              <n-input v-model:value="editForm.userId" />
             </n-form-item>
             <n-form-item label="Release">
-              <n-input :v-model:value="pokemonRecordService.pokemonRecord.isRelease" />
+              <n-input :v-model:value="editForm.isRelease" />
             </n-form-item>
           </n-form>
           <template #action>
             <n-button @click="showModal = false">Cancel</n-button>
-            <!-- <n-button type="primary" @click="handleSave">Save</n-button> -->
+            <n-button type="primary" @click="handleSave">Save</n-button>
           </template>
         </n-modal>
       </n-card>
@@ -68,7 +61,7 @@ import {
 import { Create } from '@vicons/ionicons5'
 import PaginationComponent from '../basis/PaginationComponent.vue'
 import { usePokemonRecordStore } from '@/stores/pokemonRecord-store'
-import type { IPokemonRecord } from '@/domain/models/pokemen.model'
+import { mapModelToDtoInPokemonRecord, type IPokemonRecord } from '@/domain/models/pokemen.model'
 
 const pokemonRecordService = usePokemonRecordStore()
 
@@ -89,36 +82,40 @@ function handlePageChanged(paginatedData: IPokemonRecord[], page: number, size: 
 const showModal = ref(false)
 const currentEditRow = ref<IPokemonRecord | null>(null)
 
-// const editForm = ref<IPokemonRecord>({
-//   rechargeRecordId: '',
-//   userId: '',
-//   amountRecharge: 0,
-//   currentPokemonCoin: 0,
-// })
+const editForm = ref<IPokemonRecord>({
+  pokemonRecordId: '',
+  image: '',
+  pokemonId: '',
+  userId: '',
+  captureTime: new Date(),
+  isRelease: false,
+})
 
 const handleEdit = (row: IPokemonRecord) => {
   currentEditRow.value = row
-  pokemonRecordService.pokemonRecord = { ...row }
+  editForm.value = { ...row }
   showModal.value = true
 }
 
-// const handleSave = async () => {
-//   const index = paginatedPokemonRecords.value.findIndex(
-//     (rechargeRecord) => rechargeRecord.rechargeRecordId === editForm.value.rechargeRecordId,
-//   )
-//   if (index !== -1) {
-//     await pokemonRecordService.updateRechargeRecord(mapModelToDto(editForm.value))
-//     pokemonRecordData.value[index] = { ...editForm.value }
-//     refreshCurrentPage()
-//   }
-//   showModal.value = false
-// }
+const handleSave = async () => {
+  const index = paginatedPokemonRecords.value.findIndex(
+    (pokemonRecord) => pokemonRecord.pokemonRecordId === editForm.value.pokemonRecordId,
+  )
+  if (index !== -1) {
+    editForm.value.image = pokemonRecordService.getImageUrlLink(editForm.value.pokemonId)
+    await pokemonRecordService.updatePokemonRecord(mapModelToDtoInPokemonRecord(editForm.value))
+    // console.log('ddd: ', { ...editForm.value })
+    pokemonRecordData.value[index] = { ...editForm.value }
+    refreshCurrentPage()
+  }
+  showModal.value = false
+}
 
-// function refreshCurrentPage() {
-//   const start = (currentPage.value - 1) * pageSize.value
-//   const end = start + pageSize.value
-//   paginatedPokemonRecords.value = pokemonRecordData.value.slice(start, end)
-// }
+function refreshCurrentPage() {
+  const start = (currentPage.value - 1) * pageSize.value
+  const end = start + pageSize.value
+  paginatedPokemonRecords.value = pokemonRecordData.value.slice(start, end)
+}
 
 // 表格列
 const columns = [

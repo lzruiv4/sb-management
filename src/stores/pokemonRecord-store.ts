@@ -1,4 +1,8 @@
-import { type IPokemonRecord, type IPokemonRecordDTO } from '@/domain/models/pokemen.model'
+import {
+  mapDtoToModelInPokemonRecord,
+  type IPokemonRecord,
+  type IPokemonRecordDTO,
+} from '@/domain/models/pokemen.model'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useAuthStore } from './auth-store'
@@ -32,11 +36,9 @@ export const usePokemonRecordStore = defineStore('pokemonRecordStore', () => {
       )
       // console.log(pokemonStore.pokemons.indexOf(Number(dto.pokemonId) - 1))
       pokemonRecords.value = res.data.map((dto) => {
-        const index = Number(dto.pokemonId) - 1
-        // console.log(index)
         return {
           pokemonRecordId: dto.id,
-          image: pokemonService.pokemons[index].image,
+          image: getImageUrlLink(dto.pokemonId),
           pokemonId: dto.pokemonId,
           userId: dto.userId,
           captureTime: dto.captureTime,
@@ -51,5 +53,40 @@ export const usePokemonRecordStore = defineStore('pokemonRecordStore', () => {
     }
   }
 
-  return { loading, pokemonRecord, pokemonRecords, getAllPokemonRecords }
+  async function updatePokemonRecord(newPokemonRecordDTO: IPokemonRecordDTO) {
+    try {
+      console.log('Before update: ', newPokemonRecordDTO)
+      const res = await axios.put(
+        POKEMON_RECORDS_API + '/' + newPokemonRecordDTO.id,
+        newPokemonRecordDTO,
+        authService.tokenInHeader,
+      )
+      console.log('update: ', res.data)
+      const index = pokemonRecords.value.findIndex(
+        (pokemonRecord) => pokemonRecord.pokemonRecordId === res.data.id,
+      )
+      if (index !== -1) {
+        // const result: IPokemonRecord = mapDtoToModelInPokemonRecord(res.data)
+        // result.image = pokemonService.pokemons[Number(result.pokemonId) - 1].image
+        pokemonRecords.value[index] = mapDtoToModelInPokemonRecord(res.data)
+        pokemonRecords.value[index].image = getImageUrlLink(res.data.pokemonId)
+        console.log('Successful', pokemonRecords.value[index])
+      }
+    } catch (error) {
+      console.error('Recharge record update failed', error)
+    }
+  }
+
+  function getImageUrlLink(pokemonId: string): string {
+    return pokemonService.pokemons[Number(pokemonId) - 1].image
+  }
+
+  return {
+    loading,
+    pokemonRecord,
+    pokemonRecords,
+    getAllPokemonRecords,
+    updatePokemonRecord,
+    getImageUrlLink,
+  }
 })

@@ -43,8 +43,8 @@
             </n-form-item> -->
           </n-form>
           <template #action>
-            <n-button @click="showModal = false">取消</n-button>
-            <n-button type="primary" @click="handleSave">保存</n-button>
+            <n-button @click="showModal = false">Cancel</n-button>
+            <n-button type="primary" @click="handleSave">Save</n-button>
           </template>
         </n-modal>
       </n-card>

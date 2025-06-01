@@ -44,15 +44,16 @@
 <script setup lang="ts" name="LoginView">
 import { NForm, NFormItem, NInput, NButton, NIcon, NCard, NSpace } from 'naive-ui'
 import { LogIn } from '@vicons/ionicons5'
-import { reactive } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { login } from '@/api/auth-api'
 import { useAuthStore } from '@/stores/auth-store'
+import type { ILoginRequestDTO } from '@/domain/dtos/auth.dto'
 
 const router = useRouter()
-const authStore = useAuthStore()
+const authService = useAuthStore()
 
-const form = reactive({
+const form = ref<ILoginRequestDTO>({
   username: '',
   password: '',
 })
@@ -64,13 +65,11 @@ const rules = {
 
 const handleLogin = async () => {
   try {
-    const res = await login(form)
+    const res = await login(form.value)
     console.log(res.data)
-
-    if (res.data.token) {
-      authStore.setAuth(res.data.token, res.data.userId)
-
-      router.push('/home')
+    authService.setAuth(res.data.token, res.data.userId)
+    if (authService.isLoggedIn) {
+      await router.push('/home')
     } else {
       alert('Login successful, welcome back!')
     }
@@ -83,11 +82,6 @@ const handleLogin = async () => {
 
 <style scoped lang="scss">
 .login-wrapper {
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // height: 100vh;
-  // background: linear-gradient(to right, #f8f9fa, #e9ecef);
   padding: 1rem;
   position: absolute;
   width: 500px;

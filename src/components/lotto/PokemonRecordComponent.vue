@@ -15,7 +15,7 @@
         />
 
         <PaginationComponent
-          :data="pokemonRecordData"
+          :data="pokemonRecordService.pokemonRecords"
           :pageSizeList="pageSizeList"
           @page-changed="handlePageChanged"
         />
@@ -66,7 +66,6 @@ import { mapModelToDtoInPokemonRecord, type IPokemonRecord } from '@/domain/mode
 const pokemonRecordService = usePokemonRecordStore()
 
 const paginatedPokemonRecords = ref<IPokemonRecord[]>([])
-const pokemonRecordData = ref<IPokemonRecord[]>([])
 
 const pageSizeList = [10, 20, 30]
 
@@ -104,8 +103,7 @@ const handleSave = async () => {
   if (index !== -1) {
     editForm.value.image = pokemonRecordService.getImageUrlLink(editForm.value.pokemonId)
     await pokemonRecordService.updatePokemonRecord(mapModelToDtoInPokemonRecord(editForm.value))
-    // console.log('ddd: ', { ...editForm.value })
-    pokemonRecordData.value[index] = { ...editForm.value }
+    pokemonRecordService.pokemonRecords[index] = { ...editForm.value }
     refreshCurrentPage()
   }
   showModal.value = false
@@ -114,7 +112,7 @@ const handleSave = async () => {
 function refreshCurrentPage() {
   const start = (currentPage.value - 1) * pageSize.value
   const end = start + pageSize.value
-  paginatedPokemonRecords.value = pokemonRecordData.value.slice(start, end)
+  paginatedPokemonRecords.value = pokemonRecordService.pokemonRecords.slice(start, end)
 }
 
 // 表格列
@@ -157,7 +155,6 @@ const columns = [
 onMounted(async () => {
   try {
     await pokemonRecordService.getAllPokemonRecords()
-    pokemonRecordData.value = pokemonRecordService.pokemonRecords
   } catch (err) {
     console.error('Something wrong ', err)
   }

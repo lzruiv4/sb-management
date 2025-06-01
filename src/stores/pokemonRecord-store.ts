@@ -25,9 +25,10 @@ export const usePokemonRecordStore = defineStore('pokemonRecordStore', () => {
   })
 
   const pokemonService = usePokemonStore()
-  pokemonService.getPokemons()
 
   async function getAllPokemonRecords() {
+    await pokemonService.getPokemons()
+
     loading.value = true
     try {
       const res = await axios.get<IPokemonRecordDTO[]>(
@@ -66,8 +67,6 @@ export const usePokemonRecordStore = defineStore('pokemonRecordStore', () => {
         (pokemonRecord) => pokemonRecord.pokemonRecordId === res.data.id,
       )
       if (index !== -1) {
-        // const result: IPokemonRecord = mapDtoToModelInPokemonRecord(res.data)
-        // result.image = pokemonService.pokemons[Number(result.pokemonId) - 1].image
         pokemonRecords.value[index] = mapDtoToModelInPokemonRecord(res.data)
         pokemonRecords.value[index].image = getImageUrlLink(res.data.pokemonId)
         console.log('Successful', pokemonRecords.value[index])

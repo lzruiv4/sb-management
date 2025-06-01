@@ -15,7 +15,7 @@
         />
 
         <PaginationComponent
-          :data="userData"
+          :data="userService.users"
           :pageSizeList="pageSizeList"
           @page-changed="handlePageChanged"
         />
@@ -66,7 +66,6 @@ import type { IUserDTO } from '@/domain/dtos/user.dto'
 import PaginationComponent from '../basis/PaginationComponent.vue'
 
 const userService = useUserStore()
-const userData = ref<IUser[]>([])
 const paginatedUsers = ref<IUser[]>([])
 const pageSizeList = [5, 10, 15, 20]
 const currentPage = ref(1)
@@ -98,10 +97,10 @@ const handleEdit = (row: IUser) => {
 }
 
 const handleSave = async () => {
-  const index = userData.value.findIndex((user) => user.username === editForm.value.username)
+  const index = userService.users.findIndex((user) => user.username === editForm.value.username)
   if (index !== -1) {
-    await userService.updateUser(userData.value[index].userId!, editForm.value)
-    userData.value[index] = { ...editForm.value }
+    await userService.updateUser(userService.users[index].userId!, editForm.value)
+    userService.users[index] = { ...editForm.value }
     refreshCurrentPage()
   }
   showModal.value = false
@@ -110,7 +109,7 @@ const handleSave = async () => {
 function refreshCurrentPage() {
   const start = (currentPage.value - 1) * pageSize.value
   const end = start + pageSize.value
-  paginatedUsers.value = userData.value.slice(start, end)
+  paginatedUsers.value = userService.users.slice(start, end)
 }
 
 // 表格列
@@ -164,7 +163,6 @@ function onAdd() {
 onMounted(async () => {
   try {
     await userService.getAllUsers()
-    userData.value = userService.users
   } catch (err) {
     console.error('Something wrong ', err)
   }

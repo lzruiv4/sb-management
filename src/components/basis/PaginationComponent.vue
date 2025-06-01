@@ -46,7 +46,7 @@ watch(
   () => {
     emit('page-changed', paginatedData.value, currentPage.value, pageSize.value)
   },
-  { immediate: true },
+  { deep: true, immediate: true },
 )
 </script>
 <style lang="scss">

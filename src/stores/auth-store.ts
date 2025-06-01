@@ -6,13 +6,21 @@ export const useAuthStore = defineStore(
   () => {
     const isLoggedIn = ref(false)
 
-    const token = localStorage.getItem('authToken') || ''
-    const userId = localStorage.getItem('userId') || ''
+    const token = ref('')
+    const userId = ref('')
+    const tokenInHeader = ref()
 
-    function setAuth(token: string, userId: string): void {
+    function setAuth(tokenFromBackend: string, userIdFromBackend: string): void {
+      localStorage.setItem('authToken', tokenFromBackend)
+      token.value = tokenFromBackend
+      tokenInHeader.value = {
+        headers: {
+          Authorization: `Bearer ${tokenFromBackend}`,
+        },
+      }
+      localStorage.setItem('userId', userIdFromBackend)
+      userId.value = userIdFromBackend
       isLoggedIn.value = true
-      localStorage.setItem('authToken', token)
-      localStorage.setItem('userId', userId)
     }
 
     function logout() {
@@ -22,20 +30,14 @@ export const useAuthStore = defineStore(
     }
 
     function getUserId() {
-      return userId
+      return localStorage.getItem('userId')
     }
 
     function getToken() {
-      return token
+      return localStorage.getItem('authToken')
     }
 
-    const tokenInHeader = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-      },
-    }
-
-    return { isLoggedIn, getUserId, getToken, setAuth, logout, tokenInHeader }
+    return { isLoggedIn, token, userId, getUserId, getToken, setAuth, logout, tokenInHeader }
   },
   {
     persist: true,

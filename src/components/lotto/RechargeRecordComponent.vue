@@ -15,7 +15,7 @@
         />
 
         <PaginationComponent
-          :data="rechargeRecordData"
+          :data="rechargeRecordService.rechargeRecords"
           :pageSizeList="pageSizeList"
           @page-changed="handlePageChanged"
         />
@@ -74,7 +74,6 @@ import PaginationComponent from '../basis/PaginationComponent.vue'
 const rechargeRecordService = useRechargeRecordStore()
 
 const paginatedRechargeRecords = ref<IRechargeRecord[]>([])
-const rechargeRecordData = ref<IRechargeRecord[]>([])
 
 const pageSizeList = [10, 20, 30]
 
@@ -108,7 +107,7 @@ const handleSave = async () => {
   )
   if (index !== -1) {
     await rechargeRecordService.updateRechargeRecord(mapModelToDto(editForm.value))
-    rechargeRecordData.value[index] = { ...editForm.value }
+    rechargeRecordService.rechargeRecords[index] = { ...editForm.value }
     refreshCurrentPage()
   }
   showModal.value = false
@@ -117,7 +116,7 @@ const handleSave = async () => {
 function refreshCurrentPage() {
   const start = (currentPage.value - 1) * pageSize.value
   const end = start + pageSize.value
-  paginatedRechargeRecords.value = rechargeRecordData.value.slice(start, end)
+  paginatedRechargeRecords.value = rechargeRecordService.rechargeRecords.slice(start, end)
 }
 
 // 表格列
@@ -149,7 +148,6 @@ const columns = [
 onMounted(async () => {
   try {
     await rechargeRecordService.getAllRechargeRecords()
-    rechargeRecordData.value = rechargeRecordService.rechargeRecords
   } catch (err) {
     console.error('Something wrong ', err)
   }

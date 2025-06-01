@@ -32,7 +32,7 @@
               <n-input v-model:value="editForm.userId" />
             </n-form-item>
             <n-form-item label="Release">
-              <n-input :v-model:value="editForm.isRelease" />
+              <n-input :v-model:value="editForm.isRelease" type="text" />
             </n-form-item>
           </n-form>
           <template #action>

@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: sb
     ports:
-      - "9999:5432"
+      - '9999:5432'
 
   backend:
     image: lzruiv4/sb_backend:latest
@@ -19,7 +19,7 @@ services:
       SPRING_DATASOURCE_USERNAME: sa
       SPRING_DATASOURCE_PASSWORD: 123
     ports:
-      - "9090:9090"
+      - '9090:9090'
 
 volumes:
   postgres-data:

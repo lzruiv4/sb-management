@@ -23,7 +23,7 @@
         <n-modal v-model:show="showModal" title="Edit user info" preset="dialog">
           <n-form :model="editForm" label-placement="left" label-width="80">
             <n-form-item label="Username">
-              <n-input disabled v-model:value="editForm.username" />
+              <n-input v-model:value="editForm.username" disabled />
             </n-form-item>
             <n-form-item label="Firstname">
               <n-input v-model:value="editForm.firstname" />
@@ -36,8 +36,8 @@
             </n-form-item>
           </n-form>
           <template #action>
-            <n-button @click="showModal = false">取消</n-button>
-            <n-button type="primary" @click="handleSave">保存</n-button>
+            <n-button @click="showModal = false">Cancel</n-button>
+            <n-button type="primary" @click="handleSave">Save</n-button>
           </template>
         </n-modal>
       </n-card>
@@ -156,7 +156,6 @@ const columns = [
 
 // Add User 按钮回调
 function onAdd() {
-  // TODO: 弹窗或跳转添加用户
   console.log('Add User clicked')
 }
 

@@ -87,7 +87,7 @@ const menuOptions: MenuOption[] = [
 </script>
 <style lang="scss">
 .root-layout {
-  height: 100vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
 }
@@ -111,7 +111,7 @@ const menuOptions: MenuOption[] = [
 
 .content {
   flex: 1; /* 占据剩余宽度 */
-  height: 100%;
+  height: 90%;
   overflow-y: auto; /* 内容区域纵向滚动 */
   padding: 16px;
   background: #fff;

@@ -21,12 +21,12 @@
         />
 
         <n-modal v-model:show="showModal" title="Edit user info" preset="dialog">
-          <n-form :model="editForm" label-placement="left" label-width="80">
+          <n-form :model="editForm" label-placement="left" label-width="100">
             <!-- <n-form-item label="Recharge record Id">
               <n-input v-model:value="editForm.id" />
             </n-form-item> -->
             <n-form-item label="User ID">
-              <n-input v-model:value="editForm.userId" />
+              <n-input v-model:value="editForm.userId" disabled />
             </n-form-item>
             <n-form-item label="Amount recharge">
               <n-input-number v-model:value="editForm.amountRecharge" :min="0" />
@@ -78,11 +78,15 @@ const rechargeRecordData = ref<IRechargeRecord[]>([])
 
 const pageSizeList = [10, 20, 30]
 
-function handlePageChanged(paginatedData: IRechargeRecord[]) {
+const currentPage = ref(1)
+const pageSize = ref(10)
+
+function handlePageChanged(paginatedData: IRechargeRecord[], page: number, size: number) {
   paginatedRechargeRecords.value = paginatedData
+  currentPage.value = page
+  pageSize.value = size
 }
 
-// 编辑功能
 const showModal = ref(false)
 const currentEditRow = ref<IRechargeRecord | null>(null)
 const editForm = ref<IRechargeRecord>({
@@ -104,8 +108,16 @@ const handleSave = async () => {
   )
   if (index !== -1) {
     await rechargeRecordService.updateRechargeRecord(mapModelToDto(editForm.value))
+    rechargeRecordData.value[index] = { ...editForm.value }
+    refreshCurrentPage()
   }
   showModal.value = false
+}
+
+function refreshCurrentPage() {
+  const start = (currentPage.value - 1) * pageSize.value
+  const end = start + pageSize.value
+  paginatedRechargeRecords.value = rechargeRecordData.value.slice(start, end)
 }
 
 // 表格列
@@ -133,12 +145,6 @@ const columns = [
     },
   },
 ]
-
-// Add User 按钮回调
-// function onAdd() {
-//   // TODO: 弹窗或跳转添加用户
-//   console.log('Add User clicked')
-// }
 
 onMounted(async () => {
   try {

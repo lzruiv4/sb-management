@@ -23,7 +23,7 @@
         <n-modal v-model:show="showModal" title="Edit user info" preset="dialog">
           <n-form :model="editForm" label-placement="left" label-width="80">
             <n-form-item label="Username">
-              <n-input v-model:value="editForm.username" />
+              <n-input disabled v-model:value="editForm.username" />
             </n-form-item>
             <n-form-item label="Firstname">
               <n-input v-model:value="editForm.firstname" />
@@ -69,9 +69,13 @@ const userService = useUserStore()
 const userData = ref<IUser[]>([])
 const paginatedUsers = ref<IUser[]>([])
 const pageSizeList = [5, 10, 15, 20]
+const currentPage = ref(1)
+const pageSize = ref(10)
 
-function handlePageChanged(paginatedData: IUser[]) {
+function handlePageChanged(paginatedData: IUser[], page: number, size: number) {
   paginatedUsers.value = paginatedData
+  currentPage.value = page
+  pageSize.value = size
 }
 
 // 编辑功能
@@ -98,8 +102,15 @@ const handleSave = async () => {
   if (index !== -1) {
     await userService.updateUser(userData.value[index].userId!, editForm.value)
     userData.value[index] = { ...editForm.value }
+    refreshCurrentPage()
   }
   showModal.value = false
+}
+
+function refreshCurrentPage() {
+  const start = (currentPage.value - 1) * pageSize.value
+  const end = start + pageSize.value
+  paginatedUsers.value = userData.value.slice(start, end)
 }
 
 // 表格列

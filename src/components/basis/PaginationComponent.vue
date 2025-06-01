@@ -38,13 +38,13 @@ const paginatedData = computed(() => {
 
 // Send currently page data
 const emit = defineEmits<{
-  (e: 'page-changed', paginatedData: T[]): void
+  (e: 'page-changed', paginatedData: T[], currentPage: number, pageSize: number): void
 }>()
 
 watch(
   [() => props.data, currentPage, pageSize],
   () => {
-    emit('page-changed', paginatedData.value)
+    emit('page-changed', paginatedData.value, currentPage.value, pageSize.value)
   },
   { immediate: true },
 )

@@ -1,32 +1,50 @@
 export interface IPokemonWithNameAndUrl {
-  name: string;
-  url: string;
+  name: string
+  url: string
 }
 
 export interface IPokemonWithNameAndFotos {
-  id: string;
-  name: string;
-  image: string;
-  biggerImage: string;
+  id: string
+  name: string
+  image: string
+  biggerImage: string
 }
 
 export interface IPokemonRecordDTO {
-  pokemonCaptureRecordId?: string;
-  pokemonId: string;
-  captureTime?: Date;
-  userId: string;
-  isRelease?: boolean;
+  id?: string
+  pokemonId: string
+  captureTime?: Date
+  userId: string
+  isRelease?: boolean
 }
 
 export interface IPokemonRecord {
-  pokemonCaptureRecordId?: string;
-  pokemonId: string;
-  captureTime?: Date;
-  image: string;
-  isRelease?: boolean;
+  pokemonRecordId?: string
+  image?: string
+  pokemonId: string
+  userId: string
+  captureTime: Date
+  isRelease?: boolean
 }
 
+// export interface IPokemonRecord {
+//   pokemonRecordId?: string
+//   pokemonId: string
+//   captureTime?: Date
+//   image?: string
+//   isRelease?: boolean
+// }
+
+// export function mapDtoToModelInPokemonRecord(pokemonRecordDto: IPokemonRecordDTO) {
+//   return {
+//     pokemonRecordId: pokemonRecordDto.id,
+//     pokemonId: pokemonRecordDto.pokemonId,
+//     captureTime:pokemonRecordDto.captureTime,
+//     image:pokemonRecordDto.
+//   }
+// }
+
 export interface IPokemonRecordInList {
-  date: string;
-  pokemonRecordsInTheSameDay: IPokemonRecord[];
+  date: string
+  pokemonRecordsInTheSameDay: IPokemonRecord[]
 }

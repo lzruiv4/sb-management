@@ -29,7 +29,6 @@ export const useUserStore = defineStore('userStore', () => {
     try {
       const res = await axios.get<IUserDTO[]>(USER_API, authService.tokenInHeader)
       users.value = res.data.map((userDTO) => mapDtoToModel(userDTO))
-      // console.log('sdfadfs: ', users.value)
     } catch (error) {
       console.error('Get users failed:', error)
       throw error
@@ -53,8 +52,6 @@ export const useUserStore = defineStore('userStore', () => {
 
   async function updateUser(userId: string, newUserDTO: IUserDTO) {
     try {
-      // console.log('Before update ', newUserDTO)
-      // newUserDTO.id = authService.newUserDTO
       const res = await axios.put(USER_API + '/' + userId, newUserDTO, authService.tokenInHeader)
       console.log(res.data)
       user.value = res.data

@@ -29,7 +29,6 @@ export const useRechargeRecordStore = defineStore('rechargeRecordStore', () => {
         authService.tokenInHeader,
       )
       rechargeRecords.value = res.data.map((dto) => mapDtoToModel(dto))
-      console.log('sdfadfs: ', rechargeRecords.value)
     } catch (error) {
       console.error('Get rechargeRecords failed:', error)
       throw error

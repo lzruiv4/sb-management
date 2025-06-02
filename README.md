@@ -50,5 +50,5 @@ npm run dev
 ## sb_backend 👇
 
 ```
-git@github.com:lzruiv4/sb_backend.git
+https://github.com/lzruiv4/sb-backend
 ```

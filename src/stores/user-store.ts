@@ -5,6 +5,7 @@ import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 import { useAuthStore } from './auth-store'
 import type { IUserDTO } from '@/domain/dtos/user.dto'
+import type { IRegisterRequestDTO } from '@/domain/dtos/auth.dto'
 
 export const useUserStore = defineStore('userStore', () => {
   const authService = useAuthStore()
@@ -40,7 +41,10 @@ export const useUserStore = defineStore('userStore', () => {
   async function getCurrentUser() {
     try {
       loading.value = true
-      const res = await axios.get(USER_API + '/' + authService.getUserId, authService.tokenInHeader)
+      const res = await axios.get<IUserDTO>(
+        USER_API + '/' + authService.getUserId,
+        authService.tokenInHeader,
+      )
       user.value = res.data
     } catch (error) {
       console.error('Get user failed:', error)
@@ -60,5 +64,22 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
-  return { user, users, loading, getAllUsers, getCurrentUser, updateUser }
+  async function addNewUser(newUserDTO: IRegisterRequestDTO) {
+    try {
+      const registerResponse = await axios.post(
+        USER_API + '/register',
+        newUserDTO,
+        authService.tokenInHeader,
+      )
+      const res = await axios.get<IUserDTO>(
+        USER_API + '/' + registerResponse.data.userId,
+        authService.tokenInHeader,
+      )
+      users.value.unshift(mapDtoToModel(res.data))
+    } catch (error) {
+      console.error('Add user failed', error)
+    }
+  }
+
+  return { user, users, loading, getAllUsers, getCurrentUser, updateUser, addNewUser }
 })

@@ -122,16 +122,40 @@ const columns = [
     title: 'Icon',
     key: 'image',
     render(row: IPokemonRecord) {
-      return h('img', {
-        src: row.image,
-        alt: 'image',
-        style: 'width: 30px; height: 30px; object-fit: cover; border-radius: 8px;',
-      })
+      return h(
+        'div',
+        {
+          style: {
+            width: '30px',
+            height: '30px',
+            borderRadius: '8px',
+            // overflow: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+        },
+        [
+          h('img', {
+            src: row.image,
+            alt: 'image',
+            style: {
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+            },
+          }),
+        ],
+      )
     },
   },
   { title: 'Pokemon ID', key: 'pokemonId' },
   { title: 'User ID', key: 'userId' },
-  { title: 'Capture time', key: 'captureTime' },
+  {
+    title: 'Capture time',
+    key: 'captureTime',
+  },
   { title: 'Release', key: 'isRelease' },
   {
     title: 'Edit',

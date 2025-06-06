@@ -1,6 +1,11 @@
 <template>
-  <div class="login-wrapper">
-    <n-card title="Welcome" class="login-card" :bordered="false" size="huge">
+  <div class="login-container">
+    <n-card class="login-card-container" :bordered="false" size="huge">
+      <div class="logo-container">
+        <img src="/src/assets/images/logo.png" style="width: 100px" />
+        <h2 style="color: #004097; font-size: 35px">Welcome</h2>
+      </div>
+
       <n-form
         :model="form"
         :rules="rules"
@@ -8,17 +13,27 @@
         label-placement="top"
         @keyup.enter="handleLogin"
       >
-        <n-form-item label="Username" path="username">
+        <n-form-item
+          label="Username"
+          path="username"
+          :label-style="{ fontSize: '18px', fontWeight: 'bold', color: '#004097' }"
+        >
           <n-input
             type="text"
+            size="large"
             v-model:value="form.username"
             placeholder="Please enter your username"
             :input-props="{ autocomplete: 'username' }"
           />
         </n-form-item>
-        <n-form-item label="Password" path="password">
+        <n-form-item
+          label="Username"
+          path="username"
+          :label-style="{ fontSize: '18px', fontWeight: 'bold', color: '#004097' }"
+        >
           <n-input
             type="password"
+            size="large"
             v-model:value="form.password"
             placeholder="Please enter your password"
             show-password-on="mousedown"
@@ -81,22 +96,55 @@ const handleLogin = async () => {
 </script>
 
 <style scoped lang="scss">
-.login-wrapper {
-  padding: 1rem;
-  position: absolute;
-  width: 500px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 10px;
-  z-index: 10;
-}
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #004097;
 
-.login-card {
-  font-size: larger;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
+  .login-card-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    width: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    z-index: 10;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .n-button {
+      background-color: #3b3c50;
+      width: 100%;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 10px rgba(182, 195, 254, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
 }
 </style>

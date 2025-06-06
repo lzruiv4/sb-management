@@ -191,16 +191,25 @@ const columns = [
   },
 ]
 
-// Add User 按钮回调
 function openDialogForNewUser() {
   console.log('Add User clicked')
   showAddNewUserModal.value = true
 }
 
 async function handleAddNewUser() {
-  await userService.addNewUser(registerForm)
-  showAddNewUserModal.value = false
-  refreshCurrentPage()
+  // TODO: add validation
+  if (
+    Object.values(registerForm).some(
+      (value) => value === '' || value === null || value === undefined,
+    )
+  ) {
+    console.error('Please check you input')
+    alert('Please check you input')
+  } else {
+    await userService.addNewUser(registerForm)
+    showAddNewUserModal.value = false
+    refreshCurrentPage()
+  }
 }
 
 onMounted(async () => {

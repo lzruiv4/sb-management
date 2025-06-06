@@ -1,37 +1,62 @@
 <template>
   <div class="register-container">
-    <n-card title="Register" class="register-card" :bordered="false" size="huge">
+    <n-card class="register-card-container" :bordered="false" size="huge">
+      <div class="logo-container">
+        <img src="/src/assets/images/logo.png" style="width: 100px" />
+        <h2 style="color: #004097; font-size: 35px">REGISTER</h2>
+      </div>
+
       <n-form ref="formRef" :model="form" :rules="rules" label-placement="top">
-        <n-form-item label="Username" path="username">
+        <n-form-item
+          label="Username"
+          path="username"
+          :label-style="{ fontSize: '18px', fontWeight: 'bold', color: '#004097' }"
+        >
           <n-input
             v-model:value="form.username"
             placeholder="Please enter your username"
             clearable
+            size="large"
             :input-props="{ autocomplete: 'username' }"
           />
         </n-form-item>
 
-        <n-form-item label="Firstname" path="firstname">
+        <n-form-item
+          label="Firstname"
+          path="firstname"
+          :label-style="{ fontSize: '18px', fontWeight: 'bold', color: '#004097' }"
+        >
           <n-input
             v-model:value="form.firstname"
             placeholder="Please enter your firstname"
             clearable
+            size="large"
             :input-props="{ autocomplete: 'firstname' }"
           />
         </n-form-item>
 
-        <n-form-item label="Lastname" path="lastname">
+        <n-form-item
+          label="Lastname"
+          path="lastname"
+          :label-style="{ fontSize: '18px', fontWeight: 'bold', color: '#004097' }"
+        >
           <n-input
             v-model:value="form.lastname"
             placeholder="Please enter your lastname"
             clearable
+            size="large"
             :input-props="{ autocomplete: 'lastname' }"
           />
         </n-form-item>
 
-        <n-form-item label="Password" path="password">
+        <n-form-item
+          label="Password"
+          path="password"
+          :label-style="{ fontSize: '18px', fontWeight: 'bold', color: '#004097' }"
+        >
           <n-input
             type="password"
+            size="large"
             v-model:value="form.password"
             placeholder="Please enter your password"
             show-password-on="mousedown"
@@ -39,9 +64,14 @@
           />
         </n-form-item>
 
-        <n-form-item label="Confirm password" path="confirmPassword">
+        <n-form-item
+          label="Confirm password"
+          path="confirmPassword"
+          :label-style="{ fontSize: '18px', fontWeight: 'bold', color: '#004097' }"
+        >
           <n-input
             type="password"
+            size="large"
             v-model:value="form.confirmPassword"
             placeholder="Please enter your password again"
             show-password-on="mousedown"
@@ -52,7 +82,7 @@
         <n-space justify="space-between">
           <n-button color="green" size="large" @click="handleRegister">REGISTER</n-button>
           <router-link to="/login">
-            <n-button color="green" size="large">LOGIN</n-button>
+            <n-button color="green" size="large">TO LOGIN</n-button>
           </router-link>
         </n-space>
       </n-form>
@@ -110,29 +140,36 @@ const handleRegister = async () => {
 
 <style scoped lang="scss">
 .register-container {
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // height: 100vh;
-  // background: linear-gradient(to right, #fdfbfb, #ebedee);
-  padding: 1rem;
-  position: absolute;
-  width: 500px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 10px;
-  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #004097;
 
-  .register-card {
-    width: 100%;
-    max-width: 440px;
-    padding: 2rem;
+  .register-card-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    width: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    z-index: 10;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    border-radius: 16px;
     background-color: #fff;
 
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
     .n-button {
+      background-color: #3b3c50;
       width: 100%;
       color: white;
       border: none;

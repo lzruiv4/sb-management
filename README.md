@@ -35,6 +35,10 @@ npm run dev
 
 <img src="src/assets/images/markdown/login.png" width="100%" height="auto"/>
 
+#### Register page
+
+<img src="src/assets/images/markdown/register.png" width="100%" height="auto"/>
+
 #### Home page
 
 <img src="src/assets/images/markdown/home.png" width="100%" height="auto"/>
